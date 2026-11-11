@@ -58,12 +58,22 @@ h3.sec{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--i
 .note{background:var(--card);border:1px dashed var(--line2);border-radius:14px;padding:16px;color:var(--mute)}
 .note b{color:var(--ink)}
 .alert{background:var(--warnbg);color:var(--warntx);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+#splash{position:fixed;inset:0;z-index:20;background:#0E2A47;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .4s}
+#splash.off{opacity:0;pointer-events:none}
+#splash .logo{width:96px;height:96px}#splash b{font-size:26px;letter-spacing:.01em}#splash span{font-size:13px;letter-spacing:.14em;color:#A9C4DE}
+header .logo{width:34px;height:34px;flex:none}
+.hero{max-width:420px;margin:6vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center}
+.hero .mark{width:88px;height:88px;border-radius:22px;background:#0E2A47;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.hero .mark .logo{width:64px;height:64px}
+.hero h2{margin:0;font-size:24px}.hero .tl{font-size:12px;letter-spacing:.14em;color:var(--mute);margin:4px 0 14px}
+.hero p{color:var(--mute);margin:0 0 18px}.hero .btn{width:100%}.hero small{display:block;color:var(--mute);margin-top:14px;font-size:12px}
 #toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:9}
 #toast.on{opacity:.96}
 </style>
 </head>
 <body>
-<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
+<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#0E2A47"/><circle cx="51" cy="21" r="2" fill="#0E2A47"/><circle cx="13" cy="43" r="2" fill="#0E2A47"/><circle cx="51" cy="43" r="2" fill="#0E2A47"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#0E2A47"/><path d="M20 37l6 6 13-13" fill="none" stroke="#0E2A47" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Nameplate Tracker</b><span>TURBINE COMPONENT RECORDS</span></div>
+<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#0E2A47"/><circle cx="51" cy="21" r="2" fill="#0E2A47"/><circle cx="13" cy="43" r="2" fill="#0E2A47"/><circle cx="51" cy="43" r="2" fill="#0E2A47"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#0E2A47"/><path d="M20 37l6 6 13-13" fill="none" stroke="#0E2A47" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
 <main id="app"></main>
 <div id="toast"></div>
 <script>
@@ -87,6 +97,8 @@ let RECS={},ROWS={};                                                 // records 
 let Q=[];                                                            // saves not yet synced
 const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null};
 let F=null;const thumbCache=new Map();
+const LOGO='<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#0E2A47"/><circle cx="51" cy="21" r="2" fill="#0E2A47"/><circle cx="13" cy="43" r="2" fill="#0E2A47"/><circle cx="51" cy="43" r="2" fill="#0E2A47"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#0E2A47"/><path d="M20 37l6 6 13-13" fill="none" stroke="#0E2A47" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const hero=(title,tag,body)=>'<div class="hero"><div class="mark">'+LOGO+'</div><h2>'+title+'</h2><div class="tl">'+tag+'</div>'+body+'</div>';
 
 const SAMPLE=`Tower | Tower section 1
 Tower | Tower section 2
@@ -368,7 +380,7 @@ function render(force){
   const v=S.view.name;
   $('#back').style.display=(v==='home'||(v==='connect'&&(!L.clientId||!L.folderId)))?'none':'block';
   const tt=$('#title');
-  if(v==='home')tt.innerHTML='<small>NAMEPLATE TRACKER</small>'+esc(projName()==='Nameplate Tracker'?'All turbines':projName());
+  if(v==='home')tt.innerHTML=comps().length?'<small>NAMEPLATE TRACKER</small>'+esc(projName()==='Nameplate Tracker'?'All turbines':projName()):'Nameplate Tracker';
   else tt.textContent=v==='setup'?'Project setup':v==='connect'?'Connect to Google Drive':v==='issues'?'Issues':S.view.w;
   if(!force&&app.dataset.v===v){
     if(v==='form'||v==='setup'||v==='connect')return;
@@ -380,7 +392,7 @@ function render(force){
 function go(view){S.view=view;S.addArm=false;render(true);window.scrollTo(0,0);}
 
 function vConnect(){
-  app.innerHTML='<div class="note"><b>One-time connection for this phone.</b> Paste the Google OAuth Client ID and the link of the shared Drive folder. If a teammate sent you an invite link, open that link instead and these fill in by themselves.</div>'+
+  app.innerHTML=hero('Nameplate Tracker','CONNECT THIS PHONE','<p style="margin:0">One-time setup. If a teammate sent you an invite link, open that link instead.</p>')+'<div class="note" style="margin-top:14px"><b>One-time connection for this phone.</b> Paste the Google OAuth Client ID and the link of the shared Drive folder. If a teammate sent you an invite link, open that link instead and these fill in by themselves.</div>'+
     '<label class="f" for="c_id">Google OAuth Client ID</label><input type="text" id="c_id" autocomplete="off" placeholder="xxxxxxxx.apps.googleusercontent.com" value="'+esc(L.clientId)+'">'+
     '<label class="f" for="c_f">Shared Drive folder link</label><input type="text" id="c_f" autocomplete="off" placeholder="https://drive.google.com/drive/folders/…" value="'+esc(L.folderId)+'">'+
     '<div class="tools" style="margin-top:14px"><button class="btn" data-act="saveconn">Save and continue</button></div>';
@@ -389,8 +401,8 @@ function vHome(){
   if(S.working){app.innerHTML='<div class="note">'+esc(S.working)+'</div>';return;}
   if(!comps().length){
     let h;
-    if(!tokenOk())h='<p><b>Sign in with your Google email to load the project.</b></p><p>The first load needs internet. After that the app opens and works without it.</p><button class="btn" data-act="sync">Sign in with Google</button>';
-    else if(S.syncing)h='Loading project from Drive…';
+    if(!tokenOk()){app.innerHTML=hero('Nameplate Tracker','TURBINE COMPONENT RECORDS','<p>Nameplate photos and serial numbers for every turbine. Works offline and syncs to your team\'s Google Drive.</p><button class="btn go" data-act="sync">Sign in with Google</button><small>The first sign-in needs internet. After that the app opens and works without it.</small>')+'<p class="sub" style="text-align:center;margin-top:14px"><a href="#" data-act="connect">Change connection</a></p>';return;}
+    if(S.syncing)h='Loading project from Drive…';
     else if(CFG&&CFG.checked&&!CFG.sheetId)h='<p><b>This Drive folder has no project yet.</b></p><p>Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.</p><button class="btn" data-act="setup">Set up project</button>';
     else h='<p><b>No project loaded yet.</b></p>'+(S.err?'<p>'+esc(S.err)+'</p>':'')+'<button class="btn" data-act="sync">Load from Drive</button> <button class="btn ghost" data-act="setup">Set up project</button>';
     app.innerHTML='<div class="note">'+h+'</div><p class="sub" style="margin-top:12px"><a href="#" data-act="connect">Change connection</a></p>';return;
@@ -592,6 +604,7 @@ setInterval(()=>{const v=S.view.name;if(document.visibilityState==='visible'&&(Q
   const d=await kvGet('data');if(d){RECS=d.recs||{};ROWS=d.rows||{};}
   const js=await qAll();if(Array.isArray(js))Q=js.map(j=>({...j,busy:false}));
   render(true);
+  setTimeout(()=>{const s=$('#splash');if(s){s.classList.add('off');setTimeout(()=>s.remove(),500);}},900);
   if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js');}catch(e){}}
   if(navigator.onLine!==false){loadGis().catch(()=>{});loadXlsx().catch(()=>{});sync(false);}
 })();
