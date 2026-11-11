@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0E2A47">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<title>Nameplate Tracker</title>
+<style>
+:root{--bg:#F2F5F8;--card:#fff;--ink:#0F1E2E;--mute:#55657A;--line:#E1E6EC;--line2:#C6CFD9;--head:#0E2A47;--head2:#17395C;--ok:#12804F;--okbg:#DFF3E8;--oktx:#0C5C38;--warn:#B37A00;--warnbg:#FFF0CC;--warntx:#6B4700;--bad:#B3361B;--badbg:#FDE4DE;--badtx:#8F2A14;--idle:#EEF1F4;--idletx:#46566A}
+@media (prefers-color-scheme:dark){:root{--bg:#0B141D;--card:#142230;--ink:#E8EEF4;--mute:#9DB0C3;--line:#243648;--line2:#35495E;--head:#0A1E33;--head2:#17395C;--okbg:#0F3D29;--oktx:#8FE0B8;--warnbg:#4A3500;--warntx:#FFD98A;--badbg:#4F1A0E;--badtx:#FFB9A8;--idle:#1E2E3E;--idletx:#B7C6D5}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--head);color:#fff;display:flex;align-items:center;gap:10px;padding:12px 14px}
+header h1{font-size:19px;font-weight:700;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header small{display:block;font-size:11px;letter-spacing:.12em;color:#A9C4DE;font-weight:500}
+#back{width:44px;height:44px;border:0;border-radius:12px;background:var(--head2);color:#fff;font-size:24px;cursor:pointer;display:none}
+#pill{border:0;border-radius:99px;padding:8px 12px;font-size:12px;font-weight:600;background:var(--head2);color:#fff;cursor:pointer;white-space:nowrap;min-height:36px}
+#pill.wait{background:var(--warnbg);color:var(--warntx)}#pill.ok{background:var(--okbg);color:var(--oktx)}
+main{max-width:860px;margin:0 auto;padding:14px}
+.ov{background:var(--head);color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.ov .r{display:flex;justify-content:space-between;align-items:baseline}.ov .r b{font-size:18px}
+.ov .bar{background:var(--head2);height:8px;margin:10px 0}.ov .bar i{background:#4FD39A}
+.ov .m{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:#C9DAEA}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;color:inherit;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-height:104px}
+.card .h{display:flex;justify-content:space-between;align-items:center;gap:6px}.card b{font-size:18px}.card span.c{color:var(--mute);font-size:13px}
+.card.add{border:2px dashed var(--line2);background:transparent;align-items:center;justify-content:center;font-weight:600;color:var(--mute);text-align:center}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;white-space:nowrap;background:var(--idle);color:var(--idletx)}
+.tag.done{background:var(--okbg);color:var(--oktx)}.tag.partial{background:var(--warnbg);color:var(--warntx)}.tag.issue{background:var(--badbg);color:var(--badtx)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;background:var(--head);color:#fff;border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.go{background:var(--ok)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line2)}
+input[type=text],input[type=search],input[type=number],textarea{width:100%;min-height:46px;padding:10px 14px;border:1px solid var(--line2);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+#f_serial{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:18px;border:2px solid var(--head)}
+textarea{min-height:220px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+label.f{display:block;margin:12px 0 5px;font-size:13px;color:var(--idletx);font-weight:600}
+.chips{display:flex;gap:8px;margin:12px 0;overflow-x:auto}
+.chip{min-height:36px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--head);color:#fff;border-color:var(--head);font-weight:600}
+h3.sec{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--idletx);margin:18px 0 8px}
+.row{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.row .t{flex:1;min-width:0}.row b{display:block;font-weight:600}.row small{color:var(--mute);font-size:13px}
+.row small.sn{font-family:ui-monospace,Menlo,Consolas,monospace}
+.row .n{font-size:12px;color:var(--mute);white-space:nowrap;text-align:right}
+.ic{width:28px;height:28px;border-radius:50%;flex:none;border:2px dashed var(--line2);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
+.ic.done{background:var(--ok);border:0}.ic.partial{background:var(--warnbg);border:2px solid var(--warn)}.ic.issue{background:var(--bad);border:0}
+.sub{color:var(--mute);margin:2px 0 12px;font-size:13px}
+.photos{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 12px}
+.ph{position:relative;width:104px;height:104px;border-radius:14px;overflow:hidden;border:1px solid var(--line2);background:var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mute);text-align:center}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph button{position:absolute;top:2px;right:2px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:15px;cursor:pointer}
+.chk{display:flex;align-items:center;gap:12px;min-height:52px;margin:14px 0;padding:0 14px;background:var(--card);border:1px solid var(--line2);border-radius:12px;cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--bad)}
+.note{background:var(--card);border:1px dashed var(--line2);border-radius:14px;padding:16px;color:var(--mute)}
+.note b{color:var(--ink)}
+.alert{background:var(--warnbg);color:var(--warntx);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:9}
+#toast.on{opacity:.96}
+</style>
+</head>
+<body>
+<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
+<main id="app"></main>
+<div id="toast"></div>
+<script>
+const SCOPE='https://www.googleapis.com/auth/drive';
+const DRIVE='https://www.googleapis.com/drive/v3',UP='https://www.googleapis.com/upload/drive/v3',SHEETS='https://sheets.googleapis.com/v4/spreadsheets';
+const XLSX_URL='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const SHEET_NAME='Nameplate Master';
+const HEAD=['id','Section','Component','Serial number','Manufacturer','Model / type','Status','Remarks','Photos','Saved by','Saved at'];
+const $=(s,r=document)=>r.querySelector(s);
+const enc=encodeURIComponent;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const app=$('#app');
+const ls=k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+
+let L=ls('np_local')||{clientId:'',folderId:'',email:'',name:''};   // this phone's connection + signed-in user
+let T=ls('np_tok');                                                  // Google access token
+let CFG=null;                                                        // project config (copy of the sheet's Config tab)
+let RECS={},ROWS={};                                                 // records + sheet row numbers, per WTG
+let Q=[];                                                            // saves not yet synced
+const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null};
+let F=null;const thumbCache=new Map();
+
+const SAMPLE=`Tower | Tower section 1
+Tower | Tower section 2
+Tower | Tower section 3
+Tower | Service lift
+Nacelle | Generator | 2
+Nacelle | Main bearing
+Nacelle | Yaw drive 1
+Nacelle | Yaw drive 2
+Nacelle | Yaw drive 3
+Nacelle | Yaw bearing
+Nacelle | Hydraulic station
+Nacelle | Nacelle control cabinet
+Hub | Hub casting
+Hub | Pitch motor 1
+Hub | Pitch motor 2
+Hub | Pitch motor 3
+Hub | Pitch bearing 1
+Hub | Pitch bearing 2
+Hub | Pitch bearing 3
+Hub | Pitch control cabinet
+Blades | Blade A | 2
+Blades | Blade B | 2
+Blades | Blade C | 2
+Electrical | Converter cabinet
+Electrical | Transformer | 2
+Electrical | Main control cabinet
+Electrical | Switchgear
+Electrical | UPS`;
+
+function toast(m,ms=2800){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),ms);}
+
+/* ---------- storage on the phone ---------- */
+let idb=null;
+function idbOpen(){return new Promise(res=>{try{const r=indexedDB.open('nameplate',1);r.onupgradeneeded=()=>{r.result.createObjectStore('jobs',{keyPath:'id'});r.result.createObjectStore('kv');};r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);}catch(e){res(null);}});}
+function tx(store,mode,fn){return new Promise(res=>{if(!idb)return res(null);try{const t=idb.transaction(store,mode);const rq=fn(t.objectStore(store));t.oncomplete=()=>res(rq&&rq.result);t.onerror=t.onabort=()=>res(null);}catch(e){res(null);}});}
+const strip=j=>({id:j.id,wtg:j.wtg,comp:j.comp,rec:j.rec,blobs:j.blobs,done:j.done});
+const qPut=j=>tx('jobs','readwrite',s=>s.put(strip(j)));
+const qDel=id=>tx('jobs','readwrite',s=>s.delete(id));
+const qAll=()=>tx('jobs','readonly',s=>s.getAll());
+const kvGet=k=>tx('kv','readonly',s=>s.get(k));
+const kvSet=(k,v)=>tx('kv','readwrite',s=>s.put(v,k));
+
+/* ---------- model ---------- */
+const comps=()=>(CFG&&Array.isArray(CFG.comps))?CFG.comps:[];
+const projName=()=>(CFG&&CFG.name)||'Nameplate Tracker';
+function wtgIds(){const p=(CFG&&CFG.prefix)||'WTG',n=Math.max(1,Math.min(200,+(CFG&&CFG.count)||1));return Array.from({length:n},(_,i)=>p+String(i+1).padStart(2,'0'));}
+function recOf(w,c){
+  let r=(RECS[w]&&RECS[w][c])||null;
+  for(const j of Q)if(j.wtg===w&&j.comp===c)r={...j.rec,photos:[...(j.rec.photos||[]),...j.done],_blobs:j.blobs.slice(j.done.length),_pending:true};
+  return r;
+}
+const nPhotos=r=>r?((r.photos||[]).length+((r._blobs||[]).length)):0;
+const need=c=>Math.max(1,+(c&&c.p)||1);
+function status(r,c){if(!r)return 'pending';if(r.issue)return 'issue';if(r.serial&&nPhotos(r)>=need(c))return 'done';if(r.serial||nPhotos(r)>0||r.remarks)return 'partial';return 'pending';}
+function stats(w){const o={done:0,partial:0,pending:0,issue:0};for(const c of comps())o[status(recOf(w,c.id),c)]++;return o;}
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'x';
+const clean=s=>String(s).replace(/[^\w.-]+/g,'_').replace(/^_+|_+$/g,'');
+const link=id=>'https://drive.google.com/file/d/'+id+'/view';
+const linkId=l=>{const m=/\/d\/([\w-]+)/.exec(l);return m?m[1]:'';};
+function findDup(serial,w,c){
+  const s=serial.trim().toLowerCase();if(!s)return null;
+  for(const x of wtgIds())for(const cc of comps()){if(x===w&&cc.id===c)continue;const r=recOf(x,cc.id);if(r&&r.serial&&r.serial.trim().toLowerCase()===s)return x+' · '+cc.n;}
+  return null;
+}
+
+/* ---------- Google ---------- */
+const tokenOk=()=>!!(T&&T.token&&T.exp>Date.now());
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>{s.remove();rej(new Error('load'));};document.head.appendChild(s);});}
+async function loadGis(){if(window.google&&google.accounts&&google.accounts.oauth2)return;try{await loadScript('https://accounts.google.com/gsi/client');}catch(e){throw new Error('Google sign-in could not load. Check the internet connection.');}}
+async function loadXlsx(){if(window.XLSX)return;try{await loadScript(XLSX_URL);}catch(e){throw new Error('The Excel tool is not on this phone yet. Open the app once with internet.');}}
+async function requestToken(){
+  await loadGis();
+  return new Promise((res,rej)=>{
+    const tc=google.accounts.oauth2.initTokenClient({client_id:L.clientId,scope:SCOPE,login_hint:L.email||undefined,
+      callback:r=>{if(r.error){rej(new Error('Sign-in failed: '+r.error));return;}T={token:r.access_token,exp:Date.now()+((+r.expires_in||3600)-90)*1000};lsSet('np_tok',T);res();},
+      error_callback:e=>rej(new Error((e&&(e.message||e.type))||'Sign-in was cancelled'))});
+    tc.requestAccessToken({prompt:''});
+  });
+}
+async function api(url,o={}){
+  const h={Authorization:'Bearer '+T.token};let body=o.body;
+  if(o.json!==undefined){h['Content-Type']='application/json';body=JSON.stringify(o.json);}
+  let r;try{r=await fetch(url,{method:o.method||'GET',headers:h,body});}catch(e){throw new Error('No connection to Google');}
+  if(r.status===401){T=null;lsSet('np_tok',null);throw new Error('auth');}
+  if(!r.ok){let m='';try{m=(await r.json()).error.message;}catch(e){}throw new Error('Google: '+(m||('error '+r.status)));}
+  if(o.blob)return r.blob();
+  return r.status===204?null:r.json();
+}
+async function listFolder(){
+  let out=[],tok='';
+  do{const r=await api(DRIVE+'/files?q='+enc("'"+L.folderId+"' in parents and trashed=false")+'&fields=nextPageToken,files(id,name,mimeType)&pageSize=1000&supportsAllDrives=true&includeItemsFromAllDrives=true'+(tok?'&pageToken='+enc(tok):''));out=out.concat(r.files||[]);tok=r.nextPageToken||'';}while(tok);
+  return out;
+}
+async function mkFolder(name){const f=await api(DRIVE+'/files?supportsAllDrives=true&fields=id',{method:'POST',json:{name,mimeType:'application/vnd.google-apps.folder',parents:[L.folderId]}});return f.id;}
+function blankCfg(){return {sheetId:'',name:'',prefix:'WTG',count:27,comps:[],folders:{},xls:{}};}
+async function connect(){
+  const who=await api(DRIVE+'/about?fields=user(displayName,emailAddress)');
+  L.email=who.user.emailAddress||'';L.name=who.user.displayName||L.email;lsSet('np_local',L);
+  const kids=await listFolder();
+  const sh=kids.find(f=>f.mimeType==='application/vnd.google-apps.spreadsheet'&&f.name===SHEET_NAME);
+  if(!CFG)CFG=blankCfg();
+  CFG.folders={};kids.filter(f=>f.mimeType==='application/vnd.google-apps.folder').forEach(f=>{if(!CFG.folders[f.name])CFG.folders[f.name]=f.id;});
+  CFG.sheetId=sh?sh.id:'';CFG.checked=true;
+  await kvSet('cfg',CFG);
+}
+async function pull(){
+  const id=CFG.sheetId;
+  const c=await api(SHEETS+'/'+id+'/values:batchGet?ranges='+enc("'Config'!A2:D")+'&ranges='+enc("'Config'!F1:G3"));
+  const list=(c.valueRanges[0].values||[]).filter(r=>r[0]&&r[2]).map(r=>({id:r[0],s:r[1]||'General',n:r[2],p:Math.max(1,parseInt(r[3],10)||1)}));
+  const kv={};(c.valueRanges[1].values||[]).forEach(r=>kv[r[0]]=r[1]);
+  CFG.comps=list;CFG.prefix=kv.prefix||'WTG';CFG.count=+kv.count||1;CFG.name=kv.name||'';
+  if(!list.length){await kvSet('cfg',CFG);return;}
+  const ws=wtgIds();
+  const d=await api(SHEETS+'/'+id+'/values:batchGet?'+ws.map(w=>'ranges='+enc("'"+w+"'!A2:K")).join('&'));
+  const recs={},rows={};
+  d.valueRanges.forEach((vr,i)=>{const w=ws[i];recs[w]={};rows[w]={};
+    (vr.values||[]).forEach((r,k)=>{const cid=r[0];if(!cid)return;rows[w][cid]=k+2;
+      const rec={serial:r[3]||'',maker:r[4]||'',model:r[5]||'',issue:r[6]==='issue',remarks:r[7]||'',photos:String(r[8]||'').split(/\s+/).filter(Boolean),by:r[9]||'',at:r[10]||''};
+      if(rec.serial||rec.maker||rec.model||rec.issue||rec.remarks||rec.photos.length||rec.at)recs[w][cid]=rec;});});
+  RECS=recs;ROWS=rows;
+  await kvSet('cfg',CFG);await kvSet('data',{recs,rows});
+}
+async function uploadTo(w,name,blob){
+  if(!CFG.folders[w]){CFG.folders[w]=await mkFolder(w);await kvSet('cfg',CFG);}
+  const fd=new FormData();
+  fd.append('metadata',new Blob([JSON.stringify({name,parents:[CFG.folders[w]]})],{type:'application/json'}));
+  fd.append('file',blob);
+  const f=await api(UP+'/files?uploadType=multipart&fields=id&supportsAllDrives=true',{method:'POST',body:fd});
+  return f.id;
+}
+async function push(){
+  const batch=Q.filter(j=>!j.busy);if(!batch.length)return [];
+  batch.forEach(j=>j.busy=true);const touched=new Set();
+  try{
+    for(const j of batch){
+      const comp=comps().find(c=>c.id===j.comp)||{s:'',n:j.comp};
+      while(j.done.length<j.blobs.length){
+        const n=(j.rec.photos||[]).length+j.done.length+1;
+        const name=clean(j.wtg+'_'+comp.s+'_'+comp.n+'_'+(j.rec.serial||'NOSN')+'_'+n)+'.jpg';
+        const id=await uploadTo(j.wtg,name,j.blobs[j.done.length]);
+        j.done.push(link(id));await qPut(j);pill();
+      }
+    }
+    const data=[],sent=[];let missing=0;
+    for(const j of batch){
+      const row=ROWS[j.wtg]&&ROWS[j.wtg][j.comp];if(!row){missing++;continue;}
+      const comp=comps().find(c=>c.id===j.comp);
+      const rec={...j.rec,photos:[...(j.rec.photos||[]),...j.done]};
+      data.push({range:"'"+j.wtg+"'!D"+row+':K'+row,values:[[rec.serial,rec.maker,rec.model,status(rec,comp),rec.remarks,rec.photos.join('\n'),rec.by,rec.at]]});
+      sent.push([j,rec]);
+    }
+    for(let i=0;i<data.length;i+=200){
+      await api(SHEETS+'/'+CFG.sheetId+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'RAW',data:data.slice(i,i+200)}});
+      for(const [j,rec] of sent.slice(i,i+200)){if(!RECS[j.wtg])RECS[j.wtg]={};RECS[j.wtg][j.comp]=rec;touched.add(j.wtg);const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);}
+    }
+    if(missing)throw new Error(missing+' item(s) have no row in the sheet. Open Setup and save the project again.');
+  }finally{batch.forEach(j=>j.busy=false);}
+  return [...touched];
+}
+/* Excel status file kept inside each WTG folder on Drive */
+async function uploadStatus(w){
+  await loadXlsx();
+  const blob=new Blob([XLSX.write(buildWb([w]),{type:'array',bookType:'xlsx'})],{type:XLSX_MIME});
+  const name=w+'_status.xlsx';
+  if(!CFG.folders[w]){CFG.folders[w]=await mkFolder(w);}
+  if(!CFG.xls)CFG.xls={};
+  let id=CFG.xls[w];
+  if(!id){const r=await api(DRIVE+'/files?q='+enc("name='"+name+"' and '"+CFG.folders[w]+"' in parents and trashed=false")+'&fields=files(id)&supportsAllDrives=true&includeItemsFromAllDrives=true');id=(r.files&&r.files[0]&&r.files[0].id)||'';}
+  if(id){try{await api(UP+'/files/'+id+'?uploadType=media&supportsAllDrives=true',{method:'PATCH',body:blob});}catch(e){if(e.message==='auth')throw e;id='';}}
+  if(!id)id=await uploadTo(w,name,blob);
+  CFG.xls[w]=id;await kvSet('cfg',CFG);
+}
+async function sync(interactive){
+  if(S.syncing||!L.clientId||!L.folderId)return;
+  if(navigator.onLine===false){if(interactive)toast('No internet. Data stays on this phone until you are online.');pill();return;}
+  if(!tokenOk()){
+    if(!interactive){pill();return;}
+    try{await requestToken();}catch(e){toast(e.message,4500);pill();return;}
+  }
+  S.syncing=true;pill();
+  try{
+    if(!CFG||!CFG.sheetId||!CFG.checked)await connect();
+    if(CFG.sheetId){
+      let touched=[];
+      if(Q.length){if(!Object.keys(ROWS).length)await pull();touched=await push();}
+      await pull();
+      for(const w of touched){try{await uploadStatus(w);}catch(e){if(e.message==='auth')throw e;S.err='Excel file for '+w+' was not updated: '+e.message;}}
+    }
+    if(!S.err||!/Excel file/.test(S.err))S.err='';
+    S.last=Date.now();
+  }catch(e){if(e.message!=='auth')S.err=e.message;if(interactive&&e.message!=='auth')toast(e.message,5000);}
+  finally{S.syncing=false;render();}
+}
+async function provision(name,prefix,count,list){
+  let fresh=false;
+  if(!CFG)CFG=blankCfg();
+  if(!CFG.sheetId){
+    const f=await api(DRIVE+'/files?supportsAllDrives=true&fields=id',{method:'POST',json:{name:SHEET_NAME,mimeType:'application/vnd.google-apps.spreadsheet',parents:[L.folderId]}});
+    CFG.sheetId=f.id;fresh=true;
+  }
+  CFG.name=name;CFG.prefix=prefix;CFG.count=count;CFG.comps=list;CFG.checked=true;
+  const id=CFG.sheetId,ws=wtgIds();
+  S.working='Creating sheet tabs…';render(true);
+  const meta=await api(SHEETS+'/'+id+'?fields=sheets.properties(sheetId,title)');
+  const have=meta.sheets.map(s=>s.properties.title),reqs=[];
+  if(!have.includes('Summary')){
+    if(fresh&&meta.sheets.length===1)reqs.push({updateSheetProperties:{properties:{sheetId:meta.sheets[0].properties.sheetId,title:'Summary'},fields:'title'}});
+    else reqs.push({addSheet:{properties:{title:'Summary'}}});
+  }
+  for(const t of ['Config',...ws])if(!have.includes(t))reqs.push({addSheet:{properties:{title:t,gridProperties:{frozenRowCount:1}}}});
+  if(reqs.length)await api(SHEETS+'/'+id+':batchUpdate',{method:'POST',json:{requests:reqs}});
+  S.working='Writing component lists…';render(true);
+  await api(SHEETS+'/'+id+'/values/'+enc("'Config'!A2:D")+':clear',{method:'POST',json:{}});
+  const cur=await api(SHEETS+'/'+id+'/values:batchGet?'+ws.map(w=>'ranges='+enc("'"+w+"'!A2:A")).join('&'));
+  const data=[{range:"'Config'!A1:D"+(list.length+1),values:[['id','Section','Component','Photos required'],...list.map(c=>[c.id,c.s,c.n,String(need(c))])]},{range:"'Config'!F1:G3",values:[['prefix',prefix],['count',String(count)],['name',name]]}];
+  cur.valueRanges.forEach((vr,i)=>{
+    const w=ws[i],vals=vr.values||[],ex=new Set(vals.map(r=>r[0]).filter(Boolean));
+    data.push({range:"'"+w+"'!A1:K1",values:[HEAD]});
+    const add=list.filter(c=>!ex.has(c.id)).map(c=>[c.id,c.s,c.n,'','','','pending']);
+    if(add.length){const st=vals.length+2;data.push({range:"'"+w+"'!A"+st+':G'+(st+add.length-1),values:add});}
+  });
+  await api(SHEETS+'/'+id+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'RAW',data}});
+  const sum=[['WTG','Total','Done','Partial','Pending','Issues'],...ws.map(w=>{const g="'"+w+"'!G2:G";return [w,"=COUNTA('"+w+"'!A2:A)",'=COUNTIF('+g+',"done")','=COUNTIF('+g+',"partial")','=COUNTIF('+g+',"pending")','=COUNTIF('+g+',"issue")'];})];
+  await api(SHEETS+'/'+id+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'USER_ENTERED',data:[{range:"'Summary'!A1:F"+sum.length,values:sum}]}});
+  S.working='Creating turbine folders…';render(true);
+  for(const w of ws)if(!CFG.folders[w])CFG.folders[w]=await mkFolder(w);
+  await kvSet('cfg',CFG);
+  await pull();
+}
+async function withDrive(okMsg,fn){
+  if(navigator.onLine===false){toast('This needs internet');return;}
+  try{
+    if(!tokenOk())await requestToken();
+    S.syncing=true;S.working='Connecting to Drive…';go({name:'home'});
+    if(!CFG||!CFG.checked)await connect();
+    await fn();
+    S.err='';S.last=Date.now();toast(okMsg());
+  }catch(e){toast('Could not save: '+(e.message==='auth'?'sign in again':e.message),6000);}
+  finally{S.syncing=false;S.working='';render(true);}
+}
+
+/* ---------- Excel export ---------- */
+function wtgRows(w){
+  const rows=[['Section','Component','Serial number','Manufacturer','Model / type','Status','Photos taken','Photos required','Remarks','Photo links','Saved by','Saved at']];
+  for(const c of comps()){const r=recOf(w,c.id),x=r||{};rows.push([c.s,c.n,x.serial||'',x.maker||'',x.model||'',status(r,c),nPhotos(r),need(c),x.remarks||'',(x.photos||[]).join('\n'),x.by||'',x.at?new Date(x.at).toLocaleString():'']);}
+  return rows;
+}
+function buildWb(ws){
+  const wb=XLSX.utils.book_new(),sum=[['WTG','Total','Done','Partial','Pending','Issues']];
+  ws.forEach(w=>{const s=stats(w);sum.push([w,comps().length,s.done,s.partial,s.pending,s.issue]);});
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sum),'Summary');
+  ws.forEach(w=>XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(wtgRows(w)),w.slice(0,31)));
+  return wb;
+}
+async function exportLocal(ws,filename){
+  try{
+    await loadXlsx();
+    const url=URL.createObjectURL(new Blob([XLSX.write(buildWb(ws),{type:'array',bookType:'xlsx'})],{type:XLSX_MIME}));
+    const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),20000);toast('Excel saved to Downloads: '+filename);
+  }catch(e){toast(e.message,5000);}
+}
+
+function pill(){
+  const p=$('#pill'),n=Q.length;p.className='';
+  if(!L.clientId||!L.folderId){p.textContent='Not connected';return;}
+  if(S.syncing){p.className='wait';p.textContent='Syncing…';return;}
+  if(navigator.onLine===false){p.className=n?'wait':'';p.textContent='Offline'+(n?' · '+n+' waiting':'');return;}
+  if(!tokenOk()){p.className='wait';p.textContent=(n?n+' waiting · ':'')+'Tap to sign in';return;}
+  if(n){p.className='wait';p.textContent=n+' waiting · tap to sync';return;}
+  p.className='ok';p.textContent=S.last?'Synced '+new Date(S.last).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Signed in';
+}
+
+/* ---------- screens ---------- */
+function render(force){
+  pill();
+  if(!L.clientId||!L.folderId){if(S.view.name!=='connect')S.view={name:'connect'};}
+  const v=S.view.name;
+  $('#back').style.display=(v==='home'||(v==='connect'&&(!L.clientId||!L.folderId)))?'none':'block';
+  const tt=$('#title');
+  if(v==='home')tt.innerHTML='<small>NAMEPLATE TRACKER</small>'+esc(projName()==='Nameplate Tracker'?'All turbines':projName());
+  else tt.textContent=v==='setup'?'Project setup':v==='connect'?'Connect to Google Drive':v==='issues'?'Issues':S.view.w;
+  if(!force&&app.dataset.v===v){
+    if(v==='form'||v==='setup'||v==='connect')return;
+    if(v==='wtg'&&app.dataset.w===S.view.w){renderList();return;}
+  }
+  app.dataset.v=v;app.dataset.w=S.view.w||'';
+  ({home:vHome,wtg:vWtg,form:vForm,setup:vSetup,connect:vConnect,issues:vIssues})[v]();
+}
+function go(view){S.view=view;S.addArm=false;render(true);window.scrollTo(0,0);}
+
+function vConnect(){
+  app.innerHTML='<div class="note"><b>One-time connection for this phone.</b> Paste the Google OAuth Client ID and the link of the shared Drive folder. If a teammate sent you an invite link, open that link instead and these fill in by themselves.</div>'+
+    '<label class="f" for="c_id">Google OAuth Client ID</label><input type="text" id="c_id" autocomplete="off" placeholder="xxxxxxxx.apps.googleusercontent.com" value="'+esc(L.clientId)+'">'+
+    '<label class="f" for="c_f">Shared Drive folder link</label><input type="text" id="c_f" autocomplete="off" placeholder="https://drive.google.com/drive/folders/…" value="'+esc(L.folderId)+'">'+
+    '<div class="tools" style="margin-top:14px"><button class="btn" data-act="saveconn">Save and continue</button></div>';
+}
+function vHome(){
+  if(S.working){app.innerHTML='<div class="note">'+esc(S.working)+'</div>';return;}
+  if(!comps().length){
+    let h;
+    if(!tokenOk())h='<p><b>Sign in with your Google email to load the project.</b></p><p>The first load needs internet. After that the app opens and works without it.</p><button class="btn" data-act="sync">Sign in with Google</button>';
+    else if(S.syncing)h='Loading project from Drive…';
+    else if(CFG&&CFG.checked&&!CFG.sheetId)h='<p><b>This Drive folder has no project yet.</b></p><p>Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.</p><button class="btn" data-act="setup">Set up project</button>';
+    else h='<p><b>No project loaded yet.</b></p>'+(S.err?'<p>'+esc(S.err)+'</p>':'')+'<button class="btn" data-act="sync">Load from Drive</button> <button class="btn ghost" data-act="setup">Set up project</button>';
+    app.innerHTML='<div class="note">'+h+'</div><p class="sub" style="margin-top:12px"><a href="#" data-act="connect">Change connection</a></p>';return;
+  }
+  const total=comps().length,ws=wtgIds();let done=0,iss=0;
+  const cards=ws.map(w=>{const st=stats(w);done+=st.done;iss+=st.issue;
+    const tag=st.issue?['issue',st.issue+' issue'+(st.issue>1?'s':'')]:st.done===total?['done','Complete']:(st.done||st.partial)?['partial','In progress']:['','Not started'];
+    return '<button class="card" data-act="wtg" data-w="'+esc(w)+'"><span class="h"><b>'+esc(w)+'</b><span class="tag '+tag[0]+'">'+tag[1]+'</span></span><span class="c">'+st.done+' / '+total+' done</span><span class="bar"><i style="width:'+(100*st.done/total)+'%"></i></span></button>';}).join('');
+  const all=total*ws.length,next=(CFG.prefix||'WTG')+String(ws.length+1).padStart(2,'0');
+  app.innerHTML=(S.err?'<div class="alert">Last sync problem: '+esc(S.err)+'</div>':'')+
+    '<div class="ov"><div class="r"><span>Overall progress</span><b>'+done.toLocaleString()+' / '+all.toLocaleString()+'</b></div><div class="bar"><i style="width:'+(100*done/all)+'%"></i></div>'+
+    '<div class="m"><span>'+ws.length+' turbines</span><span>'+total+' components each</span><span>'+iss+' issue'+(iss===1?'':'s')+'</span>'+(L.email?'<span>'+esc(L.email)+'</span>':'')+'</div></div>'+
+    '<div class="tools"><button class="btn" data-act="sync">Sync now</button><button class="btn ghost" data-act="xlsxall">Export Excel</button><button class="btn ghost" data-act="issues">Issues ('+iss+')</button>'+
+    (CFG.sheetId?'<a class="btn ghost" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/'+esc(CFG.sheetId)+'">Open sheet</a>':'')+
+    '<button class="btn ghost" data-act="invite">Invite link</button><button class="btn ghost" data-act="setup">Setup</button></div>'+
+    '<div class="grid">'+cards+'<button class="card add" data-act="addwtg">'+(S.addArm?'Tap again to add '+esc(next):'+ Add turbine')+'</button></div>';
+}
+function vWtg(){
+  const chips=[['all','All'],['pending','Pending'],['partial','Partial'],['done','Done'],['issue','Issues']];
+  const w=S.view.w,fid=CFG.folders&&CFG.folders[w],st=stats(w),total=comps().length;
+  app.innerHTML='<div class="ov"><div class="r"><span>'+esc(w)+'</span><b>'+st.done+' / '+total+' done</b></div><div class="bar"><i style="width:'+(100*st.done/total)+'%"></i></div><div class="m"><span>'+st.partial+' partial</span><span>'+st.pending+' pending</span><span>'+st.issue+' issue'+(st.issue===1?'':'s')+'</span></div></div>'+
+    '<div class="tools"><button class="btn ghost" data-act="xlsxwtg">Export Excel</button>'+(fid?'<a class="btn ghost" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/'+esc(fid)+'">Open Drive folder</a>':'')+'</div>'+
+    '<input type="search" id="q" placeholder="Search component or serial no." value="'+esc(S.q)+'">'+
+    '<div class="chips">'+chips.map(c=>'<button class="chip'+(S.filter===c[0]?' on':'')+'" data-act="filter" data-f="'+c[0]+'">'+c[1]+'</button>').join('')+'</div>'+
+    '<div id="list"></div>';
+  $('#q').addEventListener('input',e=>{S.q=e.target.value;renderList();});
+  renderList();
+}
+function rowHtml(w,c,showW){
+  const r=recOf(w,c.id),st=status(r,c),np=nPhotos(r);
+  const sub=st==='issue'?'Issue'+(r.remarks?': '+r.remarks:''):(r&&r.serial)?r.serial:st==='partial'?'Serial number missing':'Pending';
+  return '<button class="row" data-act="open" data-w="'+esc(w)+'" data-c="'+esc(c.id)+'"><i class="ic '+st+'">'+(st==='done'?'✓':st==='issue'?'!':'')+'</i><span class="t"><b>'+esc((showW?w+' · ':'')+c.n)+'</b><small class="'+((r&&r.serial&&st!=='issue')?'sn':'')+'">'+esc(sub)+'</small></span><span class="n">'+np+' / '+need(c)+' photo'+(need(c)>1?'s':'')+(r&&r._pending?'<br>not synced':'')+'</span></button>';
+}
+function renderList(){
+  const el=$('#list');if(!el)return;
+  const w=S.view.w,q=S.q.trim().toLowerCase();let html='',sec=null,n=0;
+  for(const c of comps()){
+    const r=recOf(w,c.id),st=status(r,c);
+    if(S.filter!=='all'&&st!==S.filter)continue;
+    if(q&&!(c.n+' '+c.s+' '+((r&&r.serial)||'')).toLowerCase().includes(q))continue;
+    if(c.s!==sec){sec=c.s;html+='<h3 class="sec">'+esc(sec)+'</h3>';}
+    n++;html+=rowHtml(w,c,false);
+  }
+  el.innerHTML=n?html:'<div class="note">Nothing matches.</div>';
+}
+function vIssues(){
+  let html='';
+  for(const w of wtgIds())for(const c of comps())if(status(recOf(w,c.id),c)==='issue')html+=rowHtml(w,c,true);
+  app.innerHTML=html||'<div class="note"><b>No issues recorded.</b> Items marked as issue on any turbine show up here.</div>';
+}
+function vForm(){
+  const {w,c}=S.view,comp=comps().find(x=>x.id===c);
+  if(!comp){go({name:'wtg',w});return;}
+  const r=recOf(w,c)||{};
+  F={w,c,comp,links:[...(r.photos||[])],blobs:[...(r._blobs||[])],dupOk:''};
+  app.innerHTML='<h2 style="margin:0">'+esc(comp.n)+'</h2><p class="sub">'+esc(w)+' · '+esc(comp.s)+' · <span id="pc"></span></p>'+
+    '<div class="photos" id="ph"></div>'+
+    '<div class="tools"><label class="btn"><input type="file" accept="image/*" capture="environment" hidden id="cam">Take photo</label>'+
+    '<label class="btn ghost"><input type="file" accept="image/*" multiple hidden id="gal">From gallery</label></div>'+
+    '<label class="f" for="f_serial">Serial number</label><input type="text" id="f_serial" autocapitalize="characters" autocomplete="off" value="'+esc(r.serial)+'">'+
+    '<div id="dup"></div>'+
+    '<label class="f" for="f_maker">Manufacturer</label><input type="text" id="f_maker" value="'+esc(r.maker)+'">'+
+    '<label class="f" for="f_model">Model / type / rating</label><input type="text" id="f_model" value="'+esc(r.model)+'">'+
+    '<label class="f" for="f_remarks">Remarks</label><input type="text" id="f_remarks" maxlength="300" value="'+esc(r.remarks)+'">'+
+    '<label class="chk"><input type="checkbox" id="f_issue"'+(r.issue?' checked':'')+'> Mark as issue (damaged, mismatch, missing)</label>'+
+    '<div class="tools"><button class="btn go" data-act="save" style="flex:1">Save</button><button class="btn ghost" data-act="back">Cancel</button></div>'+
+    '<p class="sub">'+(r.at?'Last saved '+esc(new Date(r.at).toLocaleString())+(r.by?' by '+esc(r.by):''):'')+'</p>';
+  const add=async e=>{const fs=[...e.target.files];e.target.value='';for(const f of fs)F.blobs.push(await compress(f,w+' · '+comp.n));thumbs();};
+  $('#cam').addEventListener('change',add);$('#gal').addEventListener('change',add);
+  thumbs();
+  try{if(!S.pos&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{S.pos=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5);},()=>{}, {maximumAge:600000,timeout:15000});}catch(e){}
+}
+function thumbs(){
+  const el=$('#ph');if(!el)return;
+  const n=F.links.length+F.blobs.length,pc=$('#pc');if(pc)pc.textContent=n+' of '+need(F.comp)+' required photo'+(need(F.comp)>1?'s':'');
+  el.innerHTML=F.links.map((l,i)=>'<div class="ph" data-id="'+esc(linkId(l))+'"><a href="'+esc(l)+'" target="_blank" rel="noopener">On Drive<br>tap to open</a><button data-act="rmlink" data-i="'+i+'" aria-label="Remove photo">×</button></div>').join('')+
+    F.blobs.map((b,i)=>'<div class="ph"><img alt="Photo, not synced yet" src="'+URL.createObjectURL(b)+'"><button data-act="rmblob" data-i="'+i+'" aria-label="Remove photo">×</button></div>').join('');
+  if(navigator.onLine!==false&&tokenOk())el.querySelectorAll('.ph[data-id]').forEach(async d=>{
+    const id=d.dataset.id;if(!id)return;
+    try{let u=thumbCache.get(id);if(!u){u=URL.createObjectURL(await api(DRIVE+'/files/'+id+'?alt=media&supportsAllDrives=true',{blob:true}));thumbCache.set(id,u);}
+      const a=d.querySelector('a');if(a)a.innerHTML='<img alt="Nameplate photo" src="'+u+'">';}catch(e){}
+  });
+}
+/* shrink the photo and print turbine, component, time and location on it */
+async function compress(file,label){
+  try{
+    const bmp=await createImageBitmap(file);const sc=Math.min(1,1600/Math.max(bmp.width,bmp.height));
+    const cv=document.createElement('canvas');cv.width=Math.round(bmp.width*sc);cv.height=Math.round(bmp.height*sc);
+    const g=cv.getContext('2d');g.drawImage(bmp,0,0,cv.width,cv.height);
+    const fs=Math.max(14,Math.round(cv.width/45)),pad=Math.round(fs*0.5);
+    const d=new Date(),p2=n=>String(n).padStart(2,'0');
+    const text=label+' · '+d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes())+(S.pos?' · '+S.pos:'');
+    g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,cv.height-fs-pad*2,cv.width,fs+pad*2);
+    g.fillStyle='#fff';g.font='600 '+fs+'px sans-serif';g.textBaseline='middle';g.fillText(text,pad,cv.height-pad-fs/2,cv.width-pad*2);
+    const b=await new Promise(r=>cv.toBlob(r,'image/jpeg',0.8));return b||file;
+  }catch(e){return file;}
+}
+async function saveForm(){
+  const {w,c}=F;
+  if(Q.find(j=>j.wtg===w&&j.comp===c&&j.busy)){toast('This item is syncing right now. Try again in a moment.');return;}
+  const serial=$('#f_serial').value.trim();
+  const dup=findDup(serial,w,c);
+  if(dup&&F.dupOk!==serial){F.dupOk=serial;$('#dup').innerHTML='<div class="alert"><b>Same serial number already saved on '+esc(dup)+'.</b> Check the nameplate. Tap Save again to keep it anyway.</div>';return;}
+  const rec={serial,maker:$('#f_maker').value.trim(),model:$('#f_model').value.trim(),remarks:$('#f_remarks').value.trim(),issue:$('#f_issue').checked,photos:F.links,by:L.name||L.email||'',at:new Date().toISOString()};
+  let j=Q.find(x=>x.wtg===w&&x.comp===c);
+  if(j){j.rec=rec;j.blobs=F.blobs;j.done=[];}
+  else{j={id:Date.now()+'-'+Math.random().toString(36).slice(2,8),wtg:w,comp:c,rec,blobs:F.blobs,done:[],busy:false};Q.push(j);}
+  await qPut(j);
+  toast(idb?'Saved on this phone':'Saved, but this browser is not keeping data on the device. Stay online and sync now.',idb?2200:6000);
+  go({name:'wtg',w});sync(false);
+}
+function vSetup(){
+  const cfg=CFG||{};
+  app.innerHTML='<label class="f" for="s_name">Project name</label><input type="text" id="s_name" maxlength="40" value="'+esc(cfg.name||'')+'" placeholder="Infinity Project">'+
+    '<label class="f" for="s_prefix">Turbine prefix</label><input type="text" id="s_prefix" value="'+esc(cfg.prefix||'WTG')+'">'+
+    '<label class="f" for="s_count">Number of turbines</label><input type="number" id="s_count" min="1" max="200" value="'+esc(cfg.count||27)+'">'+
+    '<label class="f" for="s_list">Component list: one per line, as <b>Section | Component | photos required</b></label>'+
+    '<textarea id="s_list" spellcheck="false">'+esc(comps().map(c=>c.s+' | '+c.n+(need(c)>1?' | '+need(c):'')).join('\n'))+'</textarea>'+
+    '<p class="sub">Paste straight from Excel (two or three columns) or type it. The photo number is optional; without it one photo is required. Saving needs internet. Renaming a component later detaches the data already saved for it.</p>'+
+    '<div class="tools"><button class="btn" data-act="savecfg">Save project to Drive</button><button class="btn ghost" data-act="sample">Load sample list</button><button class="btn ghost" data-act="connect">Change connection</button></div>';
+}
+function saveCfg(){
+  const name=$('#s_name').value.trim().slice(0,40);
+  const prefix=($('#s_prefix').value.replace(/[^A-Za-z0-9-]/g,'')||'WTG').slice(0,12);
+  const count=Math.max(1,Math.min(200,parseInt($('#s_count').value,10)||1));
+  const old={};comps().forEach(c=>old[c.s+'|'+c.n]=c.id);
+  const used=new Set(),list=[];
+  for(const line of $('#s_list').value.split('\n')){
+    const p=line.split(/\||\t/).map(x=>x.trim()).filter(Boolean);if(!p.length)continue;
+    let ph=1;if(p.length>=3&&/^\d$/.test(p[p.length-1]))ph=Math.max(1,+p.pop());
+    const s=p.length>1?p[0]:'General',n=p.length>1?p.slice(1).join(' '):p[0];
+    let id=old[s+'|'+n]||slug(s+'-'+n),k=2;const base=id;while(used.has(id))id=base+'-'+(k++);
+    used.add(id);list.push({id,s,n,p:ph});
+  }
+  if(!list.length){toast('Add at least one component');return;}
+  withDrive(()=>'Project saved: '+list.length+' components × '+count+' turbines',()=>provision(name,prefix,count,list));
+}
+function addTurbine(){
+  if(!S.addArm){S.addArm=true;render(true);return;}
+  S.addArm=false;const n=(+CFG.count||0)+1;
+  if(n>200){toast('200 turbines is the limit');return;}
+  withDrive(()=>'Turbine added',()=>provision(CFG.name||'',CFG.prefix||'WTG',n,comps()));
+}
+function saveConn(){
+  const cid=$('#c_id').value.trim(),raw=$('#c_f').value.trim();
+  const m=/folders\/([\w-]+)/.exec(raw)||/[?&]id=([\w-]+)/.exec(raw);const fid=m?m[1]:raw;
+  if(!/\.apps\.googleusercontent\.com$/.test(cid)){toast('The Client ID should end with .apps.googleusercontent.com');return;}
+  if(!/^[\w-]{10,}$/.test(fid)){toast('That does not look like a Drive folder link');return;}
+  if(fid!==L.folderId){CFG=null;RECS={};ROWS={};kvSet('cfg',null);kvSet('data',null);}
+  L.clientId=cid;L.folderId=fid;lsSet('np_local',L);
+  go({name:'home'});
+}
+async function invite(){
+  const url=location.origin+location.pathname+'#c='+enc(L.clientId)+'&f='+enc(L.folderId);
+  try{await navigator.clipboard.writeText(url);toast('Invite link copied. Send it to your team.');}
+  catch(e){app.insertAdjacentHTML('afterbegin','<div class="note" style="margin-bottom:12px">Copy this link and send it to your team:<br><input type="text" readonly value="'+esc(url)+'"></div>');}
+}
+
+/* ---------- taps ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+  if(a==='back'){const v=S.view.name;go(v==='form'?(S.view.from==='issues'?{name:'issues'}:{name:'wtg',w:S.view.w}):{name:'home'});}
+  else if(a==='sync')sync(true);
+  else if(a==='wtg'){S.q='';S.filter='all';go({name:'wtg',w:b.dataset.w});}
+  else if(a==='open')go({name:'form',w:b.dataset.w,c:b.dataset.c,from:S.view.name});
+  else if(a==='filter'){S.filter=b.dataset.f;render(true);}
+  else if(a==='setup')go({name:'setup'});
+  else if(a==='issues')go({name:'issues'});
+  else if(a==='connect'){e.preventDefault();go({name:'connect'});}
+  else if(a==='saveconn')saveConn();
+  else if(a==='sample'){$('#s_list').value=SAMPLE;}
+  else if(a==='savecfg')saveCfg();
+  else if(a==='addwtg')addTurbine();
+  else if(a==='save')saveForm();
+  else if(a==='invite')invite();
+  else if(a==='xlsxall')exportLocal(wtgIds(),clean(projName())+'_status.xlsx');
+  else if(a==='xlsxwtg')exportLocal([S.view.w],S.view.w+'_status.xlsx');
+  else if(a==='rmlink'){F.links.splice(+b.dataset.i,1);thumbs();}
+  else if(a==='rmblob'){F.blobs.splice(+b.dataset.i,1);thumbs();}
+});
+window.addEventListener('online',()=>{pill();sync(false);});
+window.addEventListener('offline',pill);
+setInterval(()=>{const v=S.view.name;if(document.visibilityState==='visible'&&(Q.length||(v!=='form'&&v!=='setup'&&v!=='connect')))sync(false);else pill();},60000);
+
+/* ---------- start ---------- */
+(async()=>{
+  const h=new URLSearchParams(location.hash.slice(1));
+  let changed=false;
+  if(h.get('c')&&h.get('f')){
+    changed=h.get('f')!==L.folderId;
+    if(changed){L.email='';L.name='';}
+    L.clientId=h.get('c');L.folderId=h.get('f');lsSet('np_local',L);
+    try{history.replaceState(null,'',location.pathname);}catch(e){}
+  }
+  idb=await idbOpen();
+  if(changed){await kvSet('cfg',null);await kvSet('data',null);}
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+  CFG=(await kvGet('cfg'))||null;
+  const d=await kvGet('data');if(d){RECS=d.recs||{};ROWS=d.rows||{};}
+  const js=await qAll();if(Array.isArray(js))Q=js.map(j=>({...j,busy:false}));
+  render(true);
+  if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js');}catch(e){}}
+  if(navigator.onLine!==false){loadGis().catch(()=>{});loadXlsx().catch(()=>{});sync(false);}
+})();
+</script>
+</body>
+</html>
