@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0E2A47">
+<meta name="theme-color" content="#003163">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <title>Nameplate Tracker</title>
 <style>
-:root{--bg:#F2F5F8;--card:#fff;--ink:#0F1E2E;--mute:#55657A;--line:#E1E6EC;--line2:#C6CFD9;--head:#0E2A47;--head2:#17395C;--ok:#12804F;--okbg:#DFF3E8;--oktx:#0C5C38;--warn:#B37A00;--warnbg:#FFF0CC;--warntx:#6B4700;--bad:#B3361B;--badbg:#FDE4DE;--badtx:#8F2A14;--idle:#EEF1F4;--idletx:#46566A}
-@media (prefers-color-scheme:dark){:root{--bg:#0B141D;--card:#142230;--ink:#E8EEF4;--mute:#9DB0C3;--line:#243648;--line2:#35495E;--head:#0A1E33;--head2:#17395C;--okbg:#0F3D29;--oktx:#8FE0B8;--warnbg:#4A3500;--warntx:#FFD98A;--badbg:#4F1A0E;--badtx:#FFB9A8;--idle:#1E2E3E;--idletx:#B7C6D5}}
+:root{--bg:#F2F5F8;--card:#fff;--ink:#0F1E2E;--mute:#55657A;--line:#E1E6EC;--line2:#C6CFD9;--head:#003163;--head2:#0B4A8A;--ok:#12804F;--okbg:#DFF3E8;--oktx:#0C5C38;--warn:#B37A00;--warnbg:#FFF0CC;--warntx:#6B4700;--bad:#B3361B;--badbg:#FDE4DE;--badtx:#8F2A14;--idle:#EEF1F4;--idletx:#46566A}
+@media (prefers-color-scheme:dark){:root{--bg:#0B141D;--card:#142230;--ink:#E8EEF4;--mute:#9DB0C3;--line:#243648;--line2:#35495E;--head:#003163;--head2:#0B4A8A;--okbg:#0F3D29;--oktx:#8FE0B8;--warnbg:#4A3500;--warntx:#FFD98A;--badbg:#4F1A0E;--badtx:#FFB9A8;--idle:#1E2E3E;--idletx:#B7C6D5}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 header{position:sticky;top:0;z-index:5;background:var(--head);color:#fff;display:flex;align-items:center;gap:10px;padding:12px 14px}
@@ -58,12 +58,12 @@ h3.sec{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--i
 .note{background:var(--card);border:1px dashed var(--line2);border-radius:14px;padding:16px;color:var(--mute)}
 .note b{color:var(--ink)}
 .alert{background:var(--warnbg);color:var(--warntx);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
-#splash{position:fixed;inset:0;z-index:20;background:#0E2A47;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .4s}
+#splash{position:fixed;inset:0;z-index:20;background:#003163;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .4s}
 #splash.off{opacity:0;pointer-events:none}
 #splash .logo{width:96px;height:96px}#splash b{font-size:26px;letter-spacing:.01em}#splash span{font-size:13px;letter-spacing:.14em;color:#A9C4DE}
 header .logo{width:34px;height:34px;flex:none}
 .hero{max-width:420px;margin:6vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center}
-.hero .mark{width:88px;height:88px;border-radius:22px;background:#0E2A47;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.hero .mark{width:88px;height:88px;border-radius:22px;background:#003163;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
 .hero .mark .logo{width:64px;height:64px}
 .hero h2{margin:0;font-size:24px}.hero .tl{font-size:12px;letter-spacing:.14em;color:var(--mute);margin:4px 0 14px}
 .hero p{color:var(--mute);margin:0 0 18px}.hero .btn{width:100%}.hero small{display:block;color:var(--mute);margin-top:14px;font-size:12px}
@@ -72,8 +72,8 @@ header .logo{width:34px;height:34px;flex:none}
 </style>
 </head>
 <body>
-<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#0E2A47"/><circle cx="51" cy="21" r="2" fill="#0E2A47"/><circle cx="13" cy="43" r="2" fill="#0E2A47"/><circle cx="51" cy="43" r="2" fill="#0E2A47"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#0E2A47"/><path d="M20 37l6 6 13-13" fill="none" stroke="#0E2A47" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Nameplate Tracker</b><span>TURBINE COMPONENT RECORDS</span></div>
-<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#0E2A47"/><circle cx="51" cy="21" r="2" fill="#0E2A47"/><circle cx="13" cy="43" r="2" fill="#0E2A47"/><circle cx="51" cy="43" r="2" fill="#0E2A47"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#0E2A47"/><path d="M20 37l6 6 13-13" fill="none" stroke="#0E2A47" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
+<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Nameplate Tracker</b><span>TURBINE COMPONENT RECORDS</span></div>
+<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
 <main id="app"></main>
 <div id="toast"></div>
 <script>
@@ -97,7 +97,7 @@ let RECS={},ROWS={};                                                 // records 
 let Q=[];                                                            // saves not yet synced
 const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null};
 let F=null;const thumbCache=new Map();
-const LOGO='<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#0E2A47"/><circle cx="51" cy="21" r="2" fill="#0E2A47"/><circle cx="13" cy="43" r="2" fill="#0E2A47"/><circle cx="51" cy="43" r="2" fill="#0E2A47"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#0E2A47"/><path d="M20 37l6 6 13-13" fill="none" stroke="#0E2A47" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const LOGO='<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const hero=(title,tag,body)=>'<div class="hero"><div class="mark">'+LOGO+'</div><h2>'+title+'</h2><div class="tl">'+tag+'</div>'+body+'</div>';
 
 const SAMPLE=`Tower | Tower section 1
