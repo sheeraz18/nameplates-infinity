@@ -1,0 +1,109 @@
+Nacelle | Nacelle Nameplate
+Nacelle | Nacelle control cabinet
+Nacelle | Nacelle control cabinet PLC
+Nacelle | Nacelle distribution cabinet
+Nacelle | Nacelle Junction box 1
+Nacelle | Nacelle Junction box 2
+Nacelle | Wind Vane
+Nacelle | Anemometer
+Nacelle | Aviation light 1
+Nacelle | Aviation light 2
+Nacelle | Cam counter
+Nacelle | Central Monitoring System - CMS
+Nacelle | Chain Hoist
+Nacelle | LiDAR Nameplate
+Nacelle | Yaw bearing lubrication pump
+Nacelle | Yaw Caliper 1
+Nacelle | Yaw Caliper 2
+Nacelle | Yaw Caliper 3
+Nacelle | Yaw Caliper 4
+Nacelle | Yaw Caliper 5
+Nacelle | Yaw Caliper 6
+Nacelle | Yaw Caliper 7
+Nacelle | Yaw Caliper 8
+Nacelle | Yaw Caliper 9
+Nacelle | Yaw Caliper 10
+Nacelle | Yaw Caliper 11
+Nacelle | Yaw Caliper 12
+Nacelle | Yaw Caliper 13
+Nacelle | Yaw Caliper 14
+Nacelle | Yaw Bearing
+Nacelle | Yaw Collector Ring
+Nacelle | Yaw Motor - Left 1
+Nacelle | Yaw Motor - Left 2
+Nacelle | Yaw Motor - Left 3
+Nacelle | Yaw Motor - Left 4
+Nacelle | Yaw Motor - Right 1
+Nacelle | Yaw Motor - Right 2
+Nacelle | Yaw Motor - Right 3
+Nacelle | Yaw Motor - Right 4
+Nacelle | Tower Clearance Device
+Drivetrain | Stator
+Drivetrain | Drive Train Nameplate
+Drivetrain | Gearbox Nameplate
+Drivetrain | Gearbox air radiator 1
+Drivetrain | Gearbox air radiator 2
+Drivetrain | Gearbox air radiator fan 1
+Drivetrain | Gearbox air radiator fan 2
+Drivetrain | Gearbox oil circulation pump 1
+Drivetrain | Gearbox oil circulation pump 2
+Drivetrain | Generator Nameplate
+Drivetrain | Generator Stator Nameplate
+Drivetrain | Hydraulic Rotor lock 1
+Drivetrain | Hydraulic Rotor lock 2
+Drivetrain | Hydraulic Station
+Drivetrain | Main bearing grease lubrication pump
+Tower | Tower Section (S1)
+Tower | Tower Section (S2)
+Tower | Tower Section (S3)
+Tower | Tower Section (S4)
+Tower | Tower Section (S5)
+Tower | Dehumidifier
+Tower | Fire Module Subsystem
+Tower | Isolation Transformer
+Tower | Lights UPS
+Tower | Wind Turbine Nameplate
+Hub | Pitch 1 Control Cabinet
+Hub | Pitch 2 Control Cabinet
+Hub | Pitch 3 Control Cabinet
+Hub | Pitch 1 Motor
+Hub | Pitch 2 Motor
+Hub | Pitch 3 Motor
+Hub | Pitch Bearing 1
+Hub | Pitch Bearing 2
+Hub | Pitch Bearing 3
+Hub | Pitch Control Slipring
+Hub | Pitch Lubrication system (Bearings)
+Hub | Pitch Lubrication system (Gears)
+Hub | Rotor
+Hub | Pitch Reducer-01
+Hub | Pitch Reducer-02
+Hub | Pitch Reducer-03
+Blade | Blade 1
+Blade | Blade 2
+Blade | Blade 3
+Service Lift | Elevator safe lock
+Service Lift | Service Lift
+Service Lift | Service Lift Motor
+Service Lift | Service Lift Suspension Beam
+Converter system | Air radiator 1
+Converter system | Air radiator 2
+Converter system | Air radiator fans 1
+Converter system | Air radiator fans 2
+Converter system | Air radiator fans 3
+Converter system | Air radiator fans 4
+Converter system | Air radiator fans 5
+Converter system | Air radiator fans 6
+Converter system | Converter Cabinet
+Converter system | Converter Cooling Unit
+Converter system | Coolant Pump
+Converter system | Resistance Box 1
+Converter system | Resistance box 2
+Main control | Main Control Cabinet Nameplate
+Main control | Main Control Cabinet PLC
+GSU | GSU HV side
+GSU | GSU LV side
+GSU | GSU Relay
+GSU | RMU-01
+GSU | RMU-02
+GSU | RMU-03

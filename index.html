@@ -67,12 +67,26 @@ header .logo{width:34px;height:34px;flex:none}
 .hero .mark .logo{width:64px;height:64px}
 .hero h2{margin:0;font-size:24px}.hero .tl{font-size:12px;letter-spacing:.14em;color:var(--mute);margin:4px 0 14px}
 .hero p{color:var(--mute);margin:0 0 18px}.hero .btn{width:100%}.hero small{display:block;color:var(--mute);margin-top:14px;font-size:12px}
+@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes up{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+#splash .logo{animation:pop .7s cubic-bezier(.2,.8,.2,1) both}
+#splash b{animation:up .5s .35s both}#splash span{animation:up .5s .5s both}
+#splash i{width:120px;height:3px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden;margin-top:14px;animation:up .4s .6s both}
+#splash i::after{content:"";display:block;width:40%;height:100%;background:#4FD39A;border-radius:2px;animation:load 1.1s .6s ease-in-out infinite}
+main>*{animation:up .35s both}
+.grid .card{animation:up .35s both}
+.hero .mark{animation:pop .6s cubic-bezier(.2,.8,.2,1) both}
+.btn,.card,.row,.chip{transition:transform .12s,background-color .15s}
+.btn:active,.card:active,.row:active,.chip:active{transform:scale(.97)}
+.bar i{transition:width .6s ease}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 #toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:9}
 #toast.on{opacity:.96}
 </style>
 </head>
 <body>
-<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Nameplate Tracker</b><span>TURBINE COMPONENT RECORDS</span></div>
+<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Nameplate Tracker</b><span>TURBINE COMPONENT RECORDS</span><i></i></div>
 <header><button id="back" data-act="back" aria-label="Back">&#8249;</button><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
 <main id="app"></main>
 <div id="toast"></div>
@@ -95,7 +109,7 @@ let T=ls('np_tok');                                                  // Google a
 let CFG=null;                                                        // project config (copy of the sheet's Config tab)
 let RECS={},ROWS={};                                                 // records + sheet row numbers, per WTG
 let Q=[];                                                            // saves not yet synced
-const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null};
+const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null,entered:false};
 let F=null;const thumbCache=new Map();
 const LOGO='<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#4FD39A"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const hero=(title,tag,body)=>'<div class="hero"><div class="mark">'+LOGO+'</div><h2>'+title+'</h2><div class="tl">'+tag+'</div>'+body+'</div>';
@@ -377,20 +391,39 @@ function pill(){
 function render(force){
   pill();
   if(!L.clientId||!L.folderId){if(S.view.name!=='connect')S.view={name:'connect'};}
+  else if(!S.entered&&S.view.name!=='connect')S.view={name:'welcome'};
   const v=S.view.name;
-  $('#back').style.display=(v==='home'||(v==='connect'&&(!L.clientId||!L.folderId)))?'none':'block';
+  $('#back').style.display=(v==='home'||v==='welcome'||(v==='connect'&&(!L.clientId||!L.folderId)))?'none':'block';
+  $('#pill').style.display=v==='welcome'?'none':'';
   const tt=$('#title');
   if(v==='home')tt.innerHTML=comps().length?'<small>NAMEPLATE TRACKER</small>'+esc(projName()==='Nameplate Tracker'?'All turbines':projName()):'Nameplate Tracker';
-  else tt.textContent=v==='setup'?'Project setup':v==='connect'?'Connect to Google Drive':v==='issues'?'Issues':S.view.w;
+  else tt.textContent=v==='welcome'?'Nameplate Tracker':v==='setup'?'Project setup':v==='connect'?'Connect to Google Drive':v==='issues'?'Issues':S.view.w;
   if(!force&&app.dataset.v===v){
-    if(v==='form'||v==='setup'||v==='connect')return;
+    if(v==='form'||v==='setup'||v==='connect'||v==='welcome')return;
     if(v==='wtg'&&app.dataset.w===S.view.w){renderList();return;}
   }
   app.dataset.v=v;app.dataset.w=S.view.w||'';
-  ({home:vHome,wtg:vWtg,form:vForm,setup:vSetup,connect:vConnect,issues:vIssues})[v]();
+  ({home:vHome,wtg:vWtg,form:vForm,setup:vSetup,connect:vConnect,issues:vIssues,welcome:vWelcome})[v]();
 }
 function go(view){S.view=view;S.addArm=false;render(true);window.scrollTo(0,0);}
 
+function vWelcome(){
+  const known=!!L.email,off=navigator.onLine===false,who=esc(L.name||L.email);
+  const tag=esc(CFG&&CFG.name?CFG.name.toUpperCase():'TURBINE COMPONENT RECORDS');
+  let body;
+  if(known&&off)body='<p>Signed in as <b>'+who+'</b>.<br>No internet right now, so the app works offline and syncs later.</p><button class="btn go" data-act="enter">Continue offline</button>';
+  else if(known&&tokenOk())body='<p>Welcome back, <b>'+who+'</b>.</p><button class="btn go" data-act="enter">Continue</button><small><a href="#" data-act="switch">Sign in with a different account</a></small>';
+  else if(off)body='<p>The first sign-in needs internet. Connect and try again.</p><button class="btn go" data-act="signin">Sign in with Google</button>';
+  else body='<p>Nameplate photos and serial numbers for every turbine. Works offline and syncs to your team\'s Google Drive.</p><button class="btn go" data-act="signin">Sign in with Google</button>'+(known?'<small>Last used by '+esc(L.email)+' · <a href="#" data-act="switch">different account</a></small>':'<small>Use the Google account your team shared the project with.</small>');
+  app.innerHTML=hero('Nameplate Tracker',tag,body);
+}
+async function signIn(fresh){
+  if(navigator.onLine===false){toast('Sign-in needs internet');return;}
+  if(fresh){L.email='';L.name='';lsSet('np_local',L);if(CFG)CFG.checked=false;}
+  try{await requestToken();}catch(e){toast(e.message,4500);return;}
+  S.entered=true;go({name:'home'});sync(true);
+}
+function signOut(){T=null;lsSet('np_tok',null);S.entered=false;go({name:'welcome'});}
 function vConnect(){
   app.innerHTML=hero('Nameplate Tracker','CONNECT THIS PHONE','<p style="margin:0">One-time setup. If a teammate sent you an invite link, open that link instead.</p>')+'<div class="note" style="margin-top:14px"><b>One-time connection for this phone.</b> Paste the Google OAuth Client ID and the link of the shared Drive folder. If a teammate sent you an invite link, open that link instead and these fill in by themselves.</div>'+
     '<label class="f" for="c_id">Google OAuth Client ID</label><input type="text" id="c_id" autocomplete="off" placeholder="xxxxxxxx.apps.googleusercontent.com" value="'+esc(L.clientId)+'">'+
@@ -417,7 +450,7 @@ function vHome(){
     '<div class="m"><span>'+ws.length+' turbines</span><span>'+total+' components each</span><span>'+iss+' issue'+(iss===1?'':'s')+'</span>'+(L.email?'<span>'+esc(L.email)+'</span>':'')+'</div></div>'+
     '<div class="tools"><button class="btn" data-act="sync">Sync now</button><button class="btn ghost" data-act="xlsxall">Export Excel</button><button class="btn ghost" data-act="issues">Issues ('+iss+')</button>'+
     (CFG.sheetId?'<a class="btn ghost" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/'+esc(CFG.sheetId)+'">Open sheet</a>':'')+
-    '<button class="btn ghost" data-act="invite">Invite link</button><button class="btn ghost" data-act="setup">Setup</button></div>'+
+    '<button class="btn ghost" data-act="invite">Invite link</button><button class="btn ghost" data-act="setup">Setup</button><button class="btn ghost" data-act="signout">Sign out</button></div>'+
     '<div class="grid">'+cards+'<button class="card add" data-act="addwtg">'+(S.addArm?'Tap again to add '+esc(next):'+ Add turbine')+'</button></div>';
 }
 function vWtg(){
@@ -566,6 +599,10 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
   if(a==='back'){const v=S.view.name;go(v==='form'?(S.view.from==='issues'?{name:'issues'}:{name:'wtg',w:S.view.w}):{name:'home'});}
   else if(a==='sync')sync(true);
+  else if(a==='enter'){S.entered=true;go({name:'home'});sync(false);}
+  else if(a==='signin')signIn(false);
+  else if(a==='switch'){e.preventDefault();signIn(true);}
+  else if(a==='signout')signOut();
   else if(a==='wtg'){S.q='';S.filter='all';go({name:'wtg',w:b.dataset.w});}
   else if(a==='open')go({name:'form',w:b.dataset.w,c:b.dataset.c,from:S.view.name});
   else if(a==='filter'){S.filter=b.dataset.f;render(true);}
@@ -604,7 +641,7 @@ setInterval(()=>{const v=S.view.name;if(document.visibilityState==='visible'&&(Q
   const d=await kvGet('data');if(d){RECS=d.recs||{};ROWS=d.rows||{};}
   const js=await qAll();if(Array.isArray(js))Q=js.map(j=>({...j,busy:false}));
   render(true);
-  setTimeout(()=>{const s=$('#splash');if(s){s.classList.add('off');setTimeout(()=>s.remove(),500);}},900);
+  setTimeout(()=>{const s=$('#splash');if(s){s.classList.add('off');setTimeout(()=>s.remove(),500);}},1600);
   if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js');}catch(e){}}
   if(navigator.onLine!==false){loadGis().catch(()=>{});loadXlsx().catch(()=>{});sync(false);}
 })();
