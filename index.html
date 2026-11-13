@@ -696,7 +696,7 @@ function vCat(){
   if(isFree(m)){
     const fs=freeStats(m);
     app.innerHTML='<div class="ov"><div class="r"><span>'+esc(modLabel(m))+'</span><b>'+t('{0} photos',fs.ph)+'</b></div><div class="m" style="margin-top:8px"><span>'+t('{0} of {1} turbines have photos',fs.tw,ws.length)+'</span><span>'+t('{0} issues',fs.is)+'</span></div></div>'+
-      '<div class="grid">'+ws.map((w,i)=>{const s=freeStats(m,w);return '<button class="card" style="animation-delay:'+Math.min(i,24)*30+'ms" data-act="wtg" data-w="'+esc(w)+'"><span class="h"><b>'+esc(w)+'</b><span class="tag '+(s.is?'issue':s.ph?'done':'')+'">'+(s.is?t('{0} issues',s.is):s.ph?t('{0} photos',s.ph):t('No photos'))+'</span></span><span class="c">'+t('{0} entries',s.n)+'</span></button>';}).join('')+'</div>';
+      '<div class="grid">'+ws.map((w,i)=>{const s=freeStats(m,w);return '<button class="card" style="animation-delay:'+Math.min(i,24)*30+'ms" data-act="wtg" data-w="'+esc(w)+'"><span class="h"><b>'+esc(w)+'</b><span class="tag '+(s.is?'issue':s.ph?'done':'')+'">'+(s.is?t('{0} issues',s.is):s.ph?t('{0} photos',s.ph):t('No photos'))+'</span></span><span class="c">'+t('{0} entries',s.n)+'</span></button>';}).join('')+'<button class="card add" data-act="addwtg">'+(S.addArm?t('Tap again to add {0}',esc((CFG.prefix||'WTG')+String(ws.length+1).padStart(2,'0'))):'+ '+t('Add turbine'))+'</button></div>';
     return;
   }
   const cards=ws.map((w,i)=>{const st=stats(w,m);done+=st.done;all+=st.total;iss+=st.issue;
