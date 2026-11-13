@@ -145,17 +145,18 @@ const ls=k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return nul
 const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
 
 /* ---------- language: English + Chinese ---------- */
-const ZH={"Google sign-in could not load. Check the internet connection.": "无法加载 Google 登录，请检查网络连接。", "The Excel tool is not on this phone yet. Open the app once with internet.": "此手机尚未下载 Excel 工具，请联网打开一次应用。", "Sign-in failed": "登录失败", "Sign-in was cancelled": "登录已取消", "No connection to Google": "无法连接 Google", "{0} item(s) have no row in the sheet. Open Setup and save the project again.": "{0} 个项目在表格中没有对应行。请打开设置并重新保存项目。", "No internet. Data stays on this phone until you are online.": "没有网络。数据会保存在手机上，联网后再同步。", "Excel file for {0} was not updated": "{0} 的 Excel 文件未更新", "Creating sheet tabs…": "正在创建表格页…", "Writing component lists…": "正在写入部件清单…", "Creating turbine folders…": "正在创建机组文件夹…", "This needs internet": "此操作需要网络", "Connecting to Drive…": "正在连接云端硬盘…", "Could not save": "保存失败", "sign in again": "请重新登录", "Excel saved to Downloads": "Excel 已保存到下载文件夹", "Not connected": "未连接", "Syncing…": "同步中…", "Offline": "离线", "{0} waiting": "{0} 条待同步", "Tap to sign in": "点击登录", "tap to sync": "点击同步", "Synced": "已同步", "Signed in": "已登录", "All turbines": "全部机组", "Project setup": "项目设置", "Connect to Google Drive": "连接 Google 云端硬盘", "Issues": "问题", "Projects": "项目", "TURBINE COMPONENT RECORDS": "风机部件铭牌记录", "Open the app from its web address": "请通过网址打开应用", "Google sign-in does not work when the app is opened as a file from the computer. Open the app link in the browser instead.": "从电脑文件打开应用时无法使用 Google 登录。请在浏览器中打开应用链接。", "No internet, so Google sign-in is not possible right now. You can keep working as {0}; everything syncs after the next sign-in.": "当前没有网络，无法进行 Google 登录。您可以以 {0} 的身份继续工作，下次登录后会全部同步。", "Continue offline": "离线继续", "Sign in": "登录", "The first sign-in needs internet. Connect and try again.": "首次登录需要网络，请联网后重试。", "Sign in with Google": "使用 Google 登录", "Use the Google account your team shared the project with.": "请使用团队共享项目时所用的 Google 账号。", "Last used by {0}": "上次使用者：{0}", "Secure sign-in with Google · Data stays in your team's Drive": "通过 Google 安全登录 · 数据保存在团队的云端硬盘", "Saved": "已保存", "Sign-in needs internet": "登录需要网络", "CONNECT THIS PHONE": "连接此手机", "One-time setup. If a teammate sent you an invite link, open that link instead.": "只需设置一次。如果同事发来了邀请链接，请直接打开该链接。", "Google OAuth Client ID": "Google OAuth 客户端 ID", "Shared Drive folder link": "共享的云端硬盘文件夹链接", "Save and continue": "保存并继续", "Sign in to load the project.": "请登录以加载项目。", "Loading project from Drive…": "正在从云端硬盘加载项目…", "This Drive folder has no project yet.": "此云端硬盘文件夹中还没有项目。", "Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.": "设置机组数量和部件清单后，应用会在云端硬盘文件夹中创建总表，并为每台机组创建一个文件夹。", "Set up project": "设置项目", "No project loaded yet.": "尚未加载项目。", "Load from Drive": "从云端硬盘加载", "Change connection": "更改连接", "Sign out": "退出登录", "{0} issues": "{0} 个问题", "Complete": "已完成", "In progress": "进行中", "Not started": "未开始", "{0} / {1} done": "已完成 {0} / {1}", "Last sync problem": "上次同步出现问题", "Overall progress": "总体进度", "{0} turbines": "{0} 台机组", "{0} components each": "每台 {0} 个部件", "Sync now": "立即同步", "Export Excel": "导出 Excel", "Open sheet": "打开表格", "Invite link": "邀请链接", "Setup": "设置", "Tap again to add {0}": "再点一次以添加 {0}", "Add turbine": "添加机组", "{0} partial": "{0} 个未完成", "{0} pending": "{0} 个待处理", "Next pending item": "下一个待处理项", "Open Drive folder": "打开云端硬盘文件夹", "Search component or serial no.": "搜索部件或序列号", "Issue": "问题", "issue resolved": "问题已解决", "Serial number missing": "缺少序列号", "Pending": "待处理", "{0} / {1} photos": "照片 {0} / {1}", "not synced": "未同步", "Nothing matches.": "没有匹配的项目。", "No open issues.": "没有未解决的问题。", "Items marked as issue on any turbine show up here.": "任何机组上标记为问题的项目都会显示在这里。", "Resolved": "已解决", "Unnamed project": "未命名项目", "Open now": "当前项目", "Tap to open": "点击打开", "Add a project": "添加项目", "Make a new folder in Drive for the new project and paste its link. The component list of the current project is offered as the starting list.": "请在云端硬盘中为新项目新建一个文件夹并粘贴其链接。系统会以当前项目的部件清单作为初始清单。", "Add project": "添加项目", "That does not look like a Drive folder link": "这不像是云端硬盘文件夹链接", "Take photo": "拍照", "From gallery": "从相册选择", "Serial number": "序列号", "Scan barcode / QR": "扫描条码 / 二维码", "Read number from photo": "从照片识别编号", "Manufacturer": "制造商", "Model / type / rating": "型号 / 类型 / 额定值", "Remarks": "备注", "Mark as issue": "标记为问题", "Issue details": "问题详情", "Issue type": "问题类型", "Take issue photo": "拍摄问题照片", "Issue resolved": "问题已解决", "Save and next": "保存并下一个", "Save": "保存", "Cancel": "取消", "Last saved {0}": "上次保存：{0}", "Write a note or question for the team": "给团队写备注或问题", "Add": "添加", "Code scanning is not supported on this device. Use Chrome on an Android phone.": "此设备不支持扫码，请在安卓手机上使用 Chrome。", "No barcode or QR code found in the photo.": "照片中未发现条码或二维码。", "On Drive, tap to open": "已在云端硬盘，点击打开", "Remove photo": "删除照片", "Photo, not synced yet": "照片，尚未同步", "{0} of {1} required photos": "必需照片 {0} / {1}", "Nameplate photo": "铭牌照片", "Number filled in. Check it against the nameplate.": "编号已填入，请与铭牌核对。", "Tap the correct number": "请点击正确的编号", "Take a photo first": "请先拍照", "Reading text from the photo…": "正在识别照片中的文字…", "No serial-like text found. Type it in.": "未识别到类似序列号的文字，请手动输入。", "Text reading is not available right now. It needs internet the first time.": "文字识别暂时不可用，首次使用需要网络。", "Comments": "备注留言", "No comments yet.": "暂无留言。", "Change history": "修改记录", "No changes recorded yet.": "暂无修改记录。", "This item is syncing right now. Try again in a moment.": "此项目正在同步，请稍后再试。", "Same serial number already saved on {0}.": "相同的序列号已保存在 {0}。", "Check the nameplate. Tap Save again to keep it anyway.": "请核对铭牌。如仍要保存，请再点一次保存。", "Saved, but this browser is not keeping data on the device. Stay online and sync now.": "已保存，但此浏览器不会在设备上保留数据。请保持联网并立即同步。", "All items of {0} are done or flagged.": "{0} 的所有项目均已完成或已标记。", "Project name": "项目名称", "Turbine prefix": "机组编号前缀", "Number of turbines": "机组数量", "Component list: one per line, as Section | Component | photos required": "部件清单：每行一个，格式为 位置 | 部件 | 所需照片数", "The photo number is optional; without it one photo is required. Saving needs internet. Renaming a component later detaches the data already saved for it.": "照片数可不填，默认需要 1 张。保存需要网络。之后重命名部件会使其已保存的数据脱离。", "Save project to Drive": "保存项目到云端硬盘", "Load master list (109 items)": "加载主清单（109 项）", "Add at least one component": "请至少添加一个部件", "Project saved: {0} components × {1} turbines": "项目已保存：{0} 个部件 × {1} 台机组", "200 turbines is the limit": "最多 200 台机组", "Turbine added": "机组已添加", "The Client ID should end with .apps.googleusercontent.com": "客户端 ID 应以 .apps.googleusercontent.com 结尾", "Invite link copied. Send it to your team.": "邀请链接已复制，请发给团队。", "Copy this link and send it to your team:": "请复制此链接并发给团队：", "A photo looks blurry. Retake it if the text is not readable.": "有照片看起来模糊。如果文字看不清，请重拍。", "A photo looks too dark. Use the torch and retake it.": "有照片太暗。请打开手电筒后重拍。", "A photo looks too bright. Avoid glare and retake it.": "有照片过亮。请避开反光后重拍。", "All": "全部", "Partial": "未完成", "Done": "已完成", "Damaged": "损坏", "Missing": "缺失", "Mismatch": "不符", "Other": "其他", "Model": "型号", "Photos": "照片", "Nameplates": "铭牌", "MCC photos": "MCC 照片", "Installation photos": "安装照片", "Commissioning photos": "调试照片", "{0} items per turbine": "每台 {0} 项", "{0} categories": "{0} 个类别", "Photos missing": "缺少照片", "Categories": "类别", "List for this category: one per line, as Section | Item | photos required": "此类别的清单：每行一个，格式为 位置 | 项目 | 所需照片数", "Reset this list": "重置此清单", "New category name": "新类别名称", "Add category": "添加类别", "Type a new category name": "请输入新的类别名称", "MCC, Installation and Commissioning start with sample lists; replace them with your own. The photo number is optional; without it one photo is required. Saving needs internet. Renaming an item later detaches the data already saved for it.": "MCC、安装和调试类别默认使用示例清单，请替换为您自己的清单。照片数可不填，默认需要 1 张。保存需要网络。之后重命名项目会使其已保存的数据脱离。", "Project saved: {0} items × {1} turbines": "项目已保存：{0} 项 × {1} 台机组", "{0} photos": "{0} 张照片", "General photos": "通用照片", "{0} of {1} turbines have photos": "{1} 台机组中有 {0} 台已有照片", "No photos": "暂无照片", "{0} entries": "{0} 条记录", "Add photo": "添加照片", "No photos yet.": "还没有照片。", "Tap Add photo, take the picture and write what it shows.": "点击“添加照片”，拍照并写明照片内容。", "New photo": "新照片", "Title: what does the photo show?": "标题：照片内容是什么？", "e.g. Tower S2 flange bolts": "例如：塔筒 S2 法兰螺栓", "Details": "详细说明", "Location, measurement, work step, anything worth recording": "位置、测量值、工序等任何需要记录的内容", "Save and add another": "保存并继续添加", "Photo": "照片", "Add at least one photo": "请至少添加一张照片", "Write a short title for the photo": "请为照片写一个简短标题", "general photos": "通用照片", "A category with an empty list is for general photos: the team takes a photo and writes its title and details. A category with a list becomes a checklist. Saving needs internet.": "清单为空的类别用于通用照片：团队拍照并填写标题和说明。有清单的类别则作为检查清单。保存需要网络。"};
+const ZH={"Google sign-in could not load. Check the internet connection.": "无法加载 Google 登录，请检查网络连接。", "The Excel tool is not on this phone yet. Open the app once with internet.": "此手机尚未下载 Excel 工具，请联网打开一次应用。", "Sign-in failed": "登录失败", "Sign-in was cancelled": "登录已取消", "No connection to Google": "无法连接 Google", "{0} item(s) have no row in the sheet. Open Setup and save the project again.": "{0} 个项目在表格中没有对应行。请打开设置并重新保存项目。", "No internet. Data stays on this phone until you are online.": "没有网络。数据会保存在手机上，联网后再同步。", "Excel file for {0} was not updated": "{0} 的 Excel 文件未更新", "Creating sheet tabs…": "正在创建表格页…", "Writing component lists…": "正在写入部件清单…", "Creating turbine folders…": "正在创建机组文件夹…", "This needs internet": "此操作需要网络", "Connecting to Drive…": "正在连接云端硬盘…", "Could not save": "保存失败", "sign in again": "请重新登录", "Excel saved to Downloads": "Excel 已保存到下载文件夹", "Not connected": "未连接", "Syncing…": "同步中…", "Offline": "离线", "{0} waiting": "{0} 条待同步", "Tap to sign in": "点击登录", "tap to sync": "点击同步", "Synced": "已同步", "Signed in": "已登录", "All turbines": "全部机组", "Project setup": "项目设置", "Connect to Google Drive": "连接 Google 云端硬盘", "Issues": "问题", "Projects": "项目", "TURBINE COMPONENT RECORDS": "风机部件铭牌记录", "Open the app from its web address": "请通过网址打开应用", "Google sign-in does not work when the app is opened as a file from the computer. Open the app link in the browser instead.": "从电脑文件打开应用时无法使用 Google 登录。请在浏览器中打开应用链接。", "No internet, so Google sign-in is not possible right now. You can keep working as {0}; everything syncs after the next sign-in.": "当前没有网络，无法进行 Google 登录。您可以以 {0} 的身份继续工作，下次登录后会全部同步。", "Continue offline": "离线继续", "Sign in": "登录", "The first sign-in needs internet. Connect and try again.": "首次登录需要网络，请联网后重试。", "Sign in with Google": "使用 Google 登录", "Use the Google account your team shared the project with.": "请使用团队共享项目时所用的 Google 账号。", "Last used by {0}": "上次使用者：{0}", "Secure sign-in with Google · Data stays in your team's Drive": "通过 Google 安全登录 · 数据保存在团队的云端硬盘", "Saved": "已保存", "Sign-in needs internet": "登录需要网络", "CONNECT THIS PHONE": "连接此手机", "One-time setup. If a teammate sent you an invite link, open that link instead.": "只需设置一次。如果同事发来了邀请链接，请直接打开该链接。", "Google OAuth Client ID": "Google OAuth 客户端 ID", "Shared Drive folder link": "共享的云端硬盘文件夹链接", "Save and continue": "保存并继续", "Sign in to load the project.": "请登录以加载项目。", "Loading project from Drive…": "正在从云端硬盘加载项目…", "This Drive folder has no project yet.": "此云端硬盘文件夹中还没有项目。", "Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.": "设置机组数量和部件清单后，应用会在云端硬盘文件夹中创建总表，并为每台机组创建一个文件夹。", "Set up project": "设置项目", "No project loaded yet.": "尚未加载项目。", "Load from Drive": "从云端硬盘加载", "Change connection": "更改连接", "Sign out": "退出登录", "{0} issues": "{0} 个问题", "Complete": "已完成", "In progress": "进行中", "Not started": "未开始", "{0} / {1} done": "已完成 {0} / {1}", "Last sync problem": "上次同步出现问题", "Overall progress": "总体进度", "{0} turbines": "{0} 台机组", "{0} components each": "每台 {0} 个部件", "Sync now": "立即同步", "Export Excel": "导出 Excel", "Open sheet": "打开表格", "Invite link": "邀请链接", "Setup": "设置", "Tap again to add {0}": "再点一次以添加 {0}", "Add turbine": "添加机组", "{0} partial": "{0} 个未完成", "{0} pending": "{0} 个待处理", "Next pending item": "下一个待处理项", "Open Drive folder": "打开云端硬盘文件夹", "Search component or serial no.": "搜索部件或序列号", "Issue": "问题", "issue resolved": "问题已解决", "Serial number missing": "缺少序列号", "Pending": "待处理", "{0} / {1} photos": "照片 {0} / {1}", "not synced": "未同步", "Nothing matches.": "没有匹配的项目。", "No open issues.": "没有未解决的问题。", "Items marked as issue on any turbine show up here.": "任何机组上标记为问题的项目都会显示在这里。", "Resolved": "已解决", "Unnamed project": "未命名项目", "Open now": "当前项目", "Tap to open": "点击打开", "Add a project": "添加项目", "Make a new folder in Drive for the new project and paste its link. The component list of the current project is offered as the starting list.": "请在云端硬盘中为新项目新建一个文件夹并粘贴其链接。系统会以当前项目的部件清单作为初始清单。", "Add project": "添加项目", "That does not look like a Drive folder link": "这不像是云端硬盘文件夹链接", "Take photo": "拍照", "From gallery": "从相册选择", "Serial number": "序列号", "Scan barcode / QR": "扫描条码 / 二维码", "Read number from photo": "从照片识别编号", "Manufacturer": "制造商", "Model / type / rating": "型号 / 类型 / 额定值", "Remarks": "备注", "Mark as issue": "标记为问题", "Issue details": "问题详情", "Issue type": "问题类型", "Take issue photo": "拍摄问题照片", "Issue resolved": "问题已解决", "Save and next": "保存并下一个", "Save": "保存", "Cancel": "取消", "Last saved {0}": "上次保存：{0}", "Write a note or question for the team": "给团队写备注或问题", "Add": "添加", "Code scanning is not supported on this device. Use Chrome on an Android phone.": "此设备不支持扫码，请在安卓手机上使用 Chrome。", "No barcode or QR code found in the photo.": "照片中未发现条码或二维码。", "On Drive, tap to open": "已在云端硬盘，点击打开", "Remove photo": "删除照片", "Photo, not synced yet": "照片，尚未同步", "{0} of {1} required photos": "必需照片 {0} / {1}", "Nameplate photo": "铭牌照片", "Number filled in. Check it against the nameplate.": "编号已填入，请与铭牌核对。", "Tap the correct number": "请点击正确的编号", "Take a photo first": "请先拍照", "Reading text from the photo…": "正在识别照片中的文字…", "No serial-like text found. Type it in.": "未识别到类似序列号的文字，请手动输入。", "Text reading is not available right now. It needs internet the first time.": "文字识别暂时不可用，首次使用需要网络。", "Comments": "备注留言", "No comments yet.": "暂无留言。", "Change history": "修改记录", "No changes recorded yet.": "暂无修改记录。", "This item is syncing right now. Try again in a moment.": "此项目正在同步，请稍后再试。", "Same serial number already saved on {0}.": "相同的序列号已保存在 {0}。", "Check the nameplate. Tap Save again to keep it anyway.": "请核对铭牌。如仍要保存，请再点一次保存。", "Saved, but this browser is not keeping data on the device. Stay online and sync now.": "已保存，但此浏览器不会在设备上保留数据。请保持联网并立即同步。", "All items of {0} are done or flagged.": "{0} 的所有项目均已完成或已标记。", "Project name": "项目名称", "Turbine prefix": "机组编号前缀", "Number of turbines": "机组数量", "Component list: one per line, as Section | Component | photos required": "部件清单：每行一个，格式为 位置 | 部件 | 所需照片数", "The photo number is optional; without it one photo is required. Saving needs internet. Renaming a component later detaches the data already saved for it.": "照片数可不填，默认需要 1 张。保存需要网络。之后重命名部件会使其已保存的数据脱离。", "Save project to Drive": "保存项目到云端硬盘", "Load master list (109 items)": "加载主清单（109 项）", "Add at least one component": "请至少添加一个部件", "Project saved: {0} components × {1} turbines": "项目已保存：{0} 个部件 × {1} 台机组", "200 turbines is the limit": "最多 200 台机组", "Turbine added": "机组已添加", "The Client ID should end with .apps.googleusercontent.com": "客户端 ID 应以 .apps.googleusercontent.com 结尾", "Invite link copied. Send it to your team.": "邀请链接已复制，请发给团队。", "Copy this link and send it to your team:": "请复制此链接并发给团队：", "A photo looks blurry. Retake it if the text is not readable.": "有照片看起来模糊。如果文字看不清，请重拍。", "A photo looks too dark. Use the torch and retake it.": "有照片太暗。请打开手电筒后重拍。", "A photo looks too bright. Avoid glare and retake it.": "有照片过亮。请避开反光后重拍。", "All": "全部", "Partial": "未完成", "Done": "已完成", "Damaged": "损坏", "Missing": "缺失", "Mismatch": "不符", "Other": "其他", "Model": "型号", "Photos": "照片", "Nameplates": "铭牌", "MCC photos": "MCC 照片", "Installation photos": "安装照片", "Commissioning photos": "调试照片", "{0} items per turbine": "每台 {0} 项", "{0} categories": "{0} 个类别", "Photos missing": "缺少照片", "Categories": "类别", "List for this category: one per line, as Section | Item | photos required": "此类别的清单：每行一个，格式为 位置 | 项目 | 所需照片数", "Reset this list": "重置此清单", "New category name": "新类别名称", "Add category": "添加类别", "Type a new category name": "请输入新的类别名称", "MCC, Installation and Commissioning start with sample lists; replace them with your own. The photo number is optional; without it one photo is required. Saving needs internet. Renaming an item later detaches the data already saved for it.": "MCC、安装和调试类别默认使用示例清单，请替换为您自己的清单。照片数可不填，默认需要 1 张。保存需要网络。之后重命名项目会使其已保存的数据脱离。", "Project saved: {0} items × {1} turbines": "项目已保存：{0} 项 × {1} 台机组", "{0} photos": "{0} 张照片", "General photos": "通用照片", "{0} of {1} turbines have photos": "{1} 台机组中有 {0} 台已有照片", "No photos": "暂无照片", "{0} entries": "{0} 条记录", "Add photo": "添加照片", "No photos yet.": "还没有照片。", "Tap Add photo, take the picture and write what it shows.": "点击“添加照片”，拍照并写明照片内容。", "New photo": "新照片", "Title: what does the photo show?": "标题：照片内容是什么？", "e.g. Tower S2 flange bolts": "例如：塔筒 S2 法兰螺栓", "Details": "详细说明", "Location, measurement, work step, anything worth recording": "位置、测量值、工序等任何需要记录的内容", "Save and add another": "保存并继续添加", "Photo": "照片", "Add at least one photo": "请至少添加一张照片", "Write a short title for the photo": "请为照片写一个简短标题", "general photos": "通用照片", "A category with an empty list is for general photos: the team takes a photo and writes its title and details. A category with a list becomes a checklist. Saving needs internet.": "清单为空的类别用于通用照片：团队拍照并填写标题和说明。有清单的类别则作为检查清单。保存需要网络。", "The server did not answer correctly. Check the server link.": "服务器响应不正确，请检查服务器链接。", "No connection to the server": "无法连接服务器", "Sign out and sign in again to sync.": "请退出后重新登录以同步。", "Saving the project on the server. This can take a minute…": "正在服务器上保存项目，可能需要一分钟…", "Connecting to the server…": "正在连接服务器…", "Saved on Drive": "已保存到云端硬盘", "No internet. You can sign in offline if you have signed in on this phone before.": "没有网络。如果您之前在此手机上登录过，可以离线登录。", "Username": "用户名", "Password": "密码", "Ask your project admin for a username and password.": "请向项目管理员索取用户名和密码。", "Your data is saved in the project's Google Drive": "数据保存在项目的 Google 云端硬盘中", "Server link": "服务器链接", "Type your username and password": "请输入用户名和密码", "Wrong username or password.": "用户名或密码错误。", "Cannot sign in offline: wrong password, or this user has not signed in on this phone before.": "无法离线登录：密码错误，或该用户未在此手机上登录过。", "Server link (from the project admin)": "服务器链接（由项目管理员提供）", "Loading the project…": "正在加载项目…", "This needs internet the first time.": "首次需要网络。", "This project is not set up yet.": "此项目尚未设置。", "Ask the project admin to set it up.": "请让项目管理员进行设置。", "Try again": "重试", "Users": "用户", "Admin": "管理员", "View only": "仅查看", "User": "用户", "Each project has its own server link, users and Drive folder. After adding it, sign in with your username for that project.": "每个项目都有自己的服务器链接、用户和云端硬盘文件夹。添加后，请使用该项目的用户名登录。", "The server link should start with https://script.google.com/ and end with /exec": "服务器链接应以 https://script.google.com/ 开头并以 /exec 结尾", "Loading users…": "正在加载用户…", "Disabled": "已停用", "Add a user": "添加用户", "Full name": "姓名", "Password (at least 6 characters)": "密码（至少 6 个字符）", "Role": "角色", "adds photos and data": "添加照片和数据", "also setup and users": "还可设置项目和管理用户", "Active (can sign in)": "启用（可以登录）", "Save user": "保存用户", "Clear form": "清空表单", "To change a password, tap the user, type a new password and save. Leave the password empty to keep the old one.": "如需修改密码，请点击该用户，输入新密码并保存。密码留空则保持不变。", "Edit user": "编辑用户", "Type a username": "请输入用户名", "User saved": "用户已保存", "Invite link copied. Send it to your team with their username and password.": "邀请链接已复制。请连同用户名和密码一起发给团队成员。", "This account can only view.": "此账号只能查看。", "Sign in to sync": "登录后同步", "Connect this phone": "连接此手机"};
 let LANG=ls('np_lang')==='zh'?'zh':'en';
 function t(s,...a){let r=(LANG==='zh'&&ZH[s])||s;a.forEach((v,i)=>{r=r.split('{'+i+'}').join(v);});return r;}
 
-let L=ls('np_local')||{clientId:'',folderId:'',email:'',name:''};    // this phone: connection, signed-in user, project list
+let L=ls('np_local')||{folderId:'',email:'',name:''};    // this phone: connection, signed-in user, project list
+if(L.folderId&&!/^https:\/\/script\.google\.com\//.test(L.folderId)){L.folderId='';L.projects=[];L.email='';}   // older versions connected straight to Google Drive
 if(!Array.isArray(L.projects))L.projects=[];
 if(L.folderId&&!L.projects.find(p=>p.f===L.folderId))L.projects.push({f:L.folderId,name:''});
 let T=null;lsSet('np_tok',null);                                     // Google token: memory only, so every app open asks for sign-in
 let CFG=null,RECS={},ROWS={},HIST=[],COMM=[],ENT={},EROW={};                        // active project: config, records, sheet rows, history, comments
 let Q=[],REST=[];                                                    // unsynced saves: active project / other projects
-const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null,entered:false,fresh:false,tabsOk:{},template:'',ocr:null};
+const S={view:{name:'home'},filter:'all',q:'',err:'',syncing:false,last:0,working:'',addArm:false,pos:null,entered:false,fresh:false,tabsOk:{},template:'',ocr:null,role:'user',cred:null,warn:'',signing:false};
 let F=null;const thumbCache=new Map();
 const LOGO='<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#FFFFFF"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const hero=(title,tag,body)=>'<div class="hero"><div class="mark">'+LOGO+'</div><h2>'+title+'</h2><div class="tl">'+tag+'</div>'+body+'</div>';
@@ -338,164 +339,94 @@ function nextPending(w,c,m){
   return null;
 }
 
-/* ---------- Google ---------- */
-const tokenOk=()=>!!(T&&T.token&&T.exp>Date.now());
+/* ---------- server: a Google Apps Script web app run by the project owner; the team signs in with username + password ---------- */
+const tokenOk=()=>!!T;
+const isAdmin=()=>S.role==='admin';
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>{s.remove();rej(new Error('load'));};document.head.appendChild(s);});}
-async function loadGis(){if(window.google&&google.accounts&&google.accounts.oauth2)return;try{await loadScript('https://accounts.google.com/gsi/client');}catch(e){throw new Error(t('Google sign-in could not load. Check the internet connection.'));}}
 async function loadXlsx(){if(window.XLSX)return;try{await loadScript(XLSX_URL);}catch(e){throw new Error(t('The Excel tool is not on this phone yet. Open the app once with internet.'));}}
-async function requestToken(prompt){
-  await loadGis();
-  return new Promise((res,rej)=>{
-    const tc=google.accounts.oauth2.initTokenClient({client_id:L.clientId,scope:SCOPE,login_hint:L.email||undefined,
-      callback:r=>{if(r.error){rej(new Error(t('Sign-in failed')+': '+r.error));return;}T={token:r.access_token,exp:Date.now()+((+r.expires_in||3600)-90)*1000};res();},
-      error_callback:e=>rej(new Error((e&&(e.message||e.type))||t('Sign-in was cancelled')))});
-    tc.requestAccessToken({prompt:prompt||''});
-  });
+async function call(a,p){
+  let r;try{r=await fetch(L.folderId,{method:'POST',body:JSON.stringify({a,tok:T||'',...(p||{})})});}catch(e){throw new Error('net');}
+  let d;try{d=await r.json();}catch(e){throw new Error(t('The server did not answer correctly. Check the server link.'));}
+  if(d&&d.err==='auth'){T=null;throw new Error('auth');}
+  if(d&&d.err)throw new Error(d.err);
+  return d;
 }
-async function api(url,o={}){
-  const h={Authorization:'Bearer '+T.token};let body=o.body;
-  if(o.json!==undefined){h['Content-Type']='application/json';body=JSON.stringify(o.json);}
-  let r;try{r=await fetch(url,{method:o.method||'GET',headers:h,body});}catch(e){throw new Error(t('No connection to Google'));}
-  if(r.status===401){T=null;throw new Error('auth');}
-  if(!r.ok){let m='';try{m=(await r.json()).error.message;}catch(e){}throw new Error('Google: '+(m||('error '+r.status)));}
-  if(o.blob)return r.blob();
-  return r.status===204?null:r.json();
+const netMsg=e=>e.message==='net'?t('No connection to the server'):e.message;
+const toB64=blob=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(',')[1]||'');fr.onerror=()=>rej(new Error('read'));fr.readAsDataURL(blob);});
+/* offline sign-in: a salted password check kept on this phone for people who signed in here before */
+async function pwHash(pw,salt){
+  const enc=new TextEncoder(),k=await crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveBits']);
+  const b=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:enc.encode(salt),iterations:60000},k,256);
+  return btoa(String.fromCharCode(...new Uint8Array(b)));
 }
-async function listFolder(){
-  let out=[],tok='';
-  do{const r=await api(DRIVE+'/files?q='+enc("'"+L.folderId+"' in parents and trashed=false")+'&fields=nextPageToken,files(id,name,mimeType)&pageSize=1000&supportsAllDrives=true&includeItemsFromAllDrives=true'+(tok?'&pageToken='+enc(tok):''));out=out.concat(r.files||[]);tok=r.nextPageToken||'';}while(tok);
-  return out;
+const accKey=u=>L.folderId+'|'+u;
+async function doLogin(u,pw){
+  const d=await call('login',{u,p:pw});
+  T=d.tok;L.email=d.u;L.name=d.name||d.u;S.role=d.role||'user';
+  if(!L.acc)L.acc={};
+  try{const salt=newId();L.acc[accKey(d.u)]={name:L.name,role:S.role,salt,hash:await pwHash(pw,salt)};}catch(e){}
+  lsSet('np_local',L);
 }
-async function mkFolder(name){const f=await api(DRIVE+'/files?supportsAllDrives=true&fields=id',{method:'POST',json:{name,mimeType:'application/vnd.google-apps.folder',parents:[L.folderId]}});return f.id;}
-function blankCfg(){return {sheetId:'',name:'',prefix:'WTG',count:27,comps:[],folders:{},xls:{}};}
-async function connect(){
-  const who=await api(DRIVE+'/about?fields=user(displayName,emailAddress)');
-  L.email=who.user.emailAddress||'';L.name=who.user.displayName||L.email;lsSet('np_local',L);
-  const kids=await listFolder();
-  const sh=kids.find(f=>f.mimeType==='application/vnd.google-apps.spreadsheet'&&f.name===SHEET_NAME);
-  if(!CFG)CFG=blankCfg();
-  CFG.folders={};kids.filter(f=>f.mimeType==='application/vnd.google-apps.folder').forEach(f=>{if(!CFG.folders[f.name])CFG.folders[f.name]=f.id;});
-  CFG.sheetId=sh?sh.id:'';CFG.checked=true;
-  await saveCfgLocal();
+async function offlineLogin(u,pw){
+  const a=L.acc&&L.acc[accKey(u)];if(!a)return false;
+  try{if(await pwHash(pw,a.salt)!==a.hash)return false;}catch(e){return false;}
+  L.email=u;L.name=a.name||u;S.role=a.role||'user';lsSet('np_local',L);return true;
 }
-/* older project sheets get the History and Comments tabs and the new issue columns */
-async function ensureTabs(ws){
-  const id=CFG.sheetId;if(S.tabsOk[id])return;
-  const meta=await api(SHEETS+'/'+id+'?fields=sheets.properties(title)');
-  const have=meta.sheets.map(s=>s.properties.title);
-  const reqs=['History','Comments','Entries'].filter(x=>!have.includes(x)).map(x=>({addSheet:{properties:{title:x,gridProperties:{frozenRowCount:1}}}}));
-  if(reqs.length)await api(SHEETS+'/'+id+':batchUpdate',{method:'POST',json:{requests:reqs}});
-  const data=[{range:"'History'!A1:H1",values:[HIST_HEAD]},{range:"'Comments'!A1:F1",values:[COMM_HEAD]},{range:"'Entries'!A1:J1",values:[ENT_HEAD]}];
-  ws.filter(w=>have.includes(w)).forEach(w=>data.push({range:"'"+w+"'!A1:N1",values:[HEAD]}));
-  await api(SHEETS+'/'+id+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'RAW',data}});
-  S.tabsOk[id]=true;
+async function ensureToken(){
+  if(T)return true;
+  if(S.cred&&navigator.onLine!==false){try{await doLogin(S.cred.u,S.cred.p);return true;}catch(e){return false;}}
+  return false;
 }
+function blankCfg(){return {sheetId:'',name:'',prefix:'WTG',count:27,comps:[],free:[],folders:{}};}
 async function pull(){
-  const id=CFG.sheetId;
-  const c=await api(SHEETS+'/'+id+'/values:batchGet?ranges='+enc("'Config'!A2:E")+'&ranges='+enc("'Config'!F1:G4"));
-  const list=(c.valueRanges[0].values||[]).filter(r=>r[0]&&r[2]).map(r=>({id:r[0],s:r[1]||'General',n:r[2],p:Math.max(1,parseInt(r[3],10)||1),m:r[4]||'Nameplates'}));
-  const kv={};(c.valueRanges[1].values||[]).forEach(r=>kv[r[0]]=r[1]);
-  CFG.comps=list;CFG.prefix=kv.prefix||'WTG';CFG.count=+kv.count||1;CFG.name=kv.name||'';CFG.free=String(kv.free||'').split(',').map(x=>x.trim()).filter(Boolean);
-  const pr=L.projects.find(p=>p.f===L.folderId);if(pr&&pr.name!==CFG.name){pr.name=CFG.name;lsSet('np_local',L);}
-  if(!list.length){await saveCfgLocal();return;}
-  const ws=wtgIds();
-  await ensureTabs(ws);
-  const d=await api(SHEETS+'/'+id+'/values:batchGet?'+ws.map(w=>'ranges='+enc("'"+w+"'!A2:N")).join('&')+'&ranges='+enc("'History'!A2:H")+'&ranges='+enc("'Comments'!A2:F")+'&ranges='+enc("'Entries'!A2:J"));
-  const recs={},rows={};
-  ws.forEach((w,i)=>{const vr=d.valueRanges[i];recs[w]={};rows[w]={};
-    (vr.values||[]).forEach((r,k)=>{const cid=r[0];if(!cid)return;rows[w][cid]=k+2;
-      const links=linksOf;
-      const rec={serial:r[3]||'',maker:r[4]||'',model:r[5]||'',issue:r[6]==='issue'||!!r[11],itype:r[11]||'',resolved:r[12]==='yes',remarks:r[7]||'',photos:links(r[8]),iphotos:links(r[13]),by:r[9]||'',at:r[10]||''};
-      if(rec.serial||rec.maker||rec.model||rec.issue||rec.remarks||rec.photos.length||rec.at)recs[w][cid]=rec;});});
-  RECS=recs;ROWS=rows;
-  HIST=(d.valueRanges[ws.length].values||[]).map(r=>({at:r[0]||'',by:r[1]||'',w:r[2]||'',c:r[3]||'',field:r[5]||'',old:r[6]||'',val:r[7]||''}));
-  COMM=(d.valueRanges[ws.length+1].values||[]).map(r=>({at:r[0]||'',by:r[1]||'',w:r[2]||'',c:r[3]||'',text:r[5]||''}));
-  const ents={},erow={};
-  (d.valueRanges[ws.length+2].values||[]).forEach((r,k)=>{if(!r[0])return;erow[r[0]]=k+2;const e={id:r[0],cat:r[1]||'',w:r[2]||'',title:r[3]||'',details:r[4]||'',photos:linksOf(r[5]),issue:!!r[6],itype:r[6]||'',resolved:r[7]==='yes',by:r[8]||'',at:r[9]||''};(ents[e.w]=ents[e.w]||[]).push(e);});
-  ENT=ents;EROW=erow;
-  await saveCfgLocal();await kvSet(pk('data'),{recs,rows,hist:HIST,comm:COMM,ent:ENT,erow:EROW});
-}
-async function subFolder(w,m){
-  if(!CFG.sub)CFG.sub={};const k=w+'|'+m;if(CFG.sub[k])return CFG.sub[k];
-  const r=await api(DRIVE+'/files?q='+enc("name='"+m+"' and '"+CFG.folders[w]+"' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false")+'&fields=files(id)&supportsAllDrives=true&includeItemsFromAllDrives=true');
-  let id=(r.files&&r.files[0]&&r.files[0].id)||'';
-  if(!id){const f=await api(DRIVE+'/files?supportsAllDrives=true&fields=id',{method:'POST',json:{name:m,mimeType:'application/vnd.google-apps.folder',parents:[CFG.folders[w]]}});id=f.id;}
-  CFG.sub[k]=id;await saveCfgLocal();return id;
-}
-async function uploadTo(w,name,blob,m){
-  if(!CFG.folders[w]){CFG.folders[w]=await mkFolder(w);await saveCfgLocal();}
-  const parent=m?await subFolder(w,m):CFG.folders[w];
-  const fd=new FormData();
-  fd.append('metadata',new Blob([JSON.stringify({name,parents:[parent]})],{type:'application/json'}));
-  fd.append('file',blob);
-  const f=await api(UP+'/files?uploadType=multipart&fields=id&supportsAllDrives=true',{method:'POST',body:fd});
-  return f.id;
+  const d=await call('pull');
+  S.role=d.role||S.role;if(d.name)L.name=d.name;
+  if(!CFG)CFG=blankCfg();
+  CFG.checked=true;
+  if(!d.cfg){CFG.sheetId='';CFG.comps=[];CFG.free=[];await saveCfgLocal();return;}
+  Object.assign(CFG,{sheetId:'server',name:d.cfg.name||'',prefix:d.cfg.prefix||'WTG',count:+d.cfg.count||1,free:d.cfg.free||[],comps:d.cfg.comps||[],sheetUrl:d.cfg.sheetUrl||''});
+  const pr=L.projects.find(x=>x.f===L.folderId);if(pr&&pr.name!==CFG.name){pr.name=CFG.name;}
+  lsSet('np_local',L);
+  RECS=d.recs||{};HIST=d.hist||[];COMM=d.comm||[];ENT=d.ent||{};
+  await saveCfgLocal();await kvSet(pk('data'),{recs:RECS,hist:HIST,comm:COMM,ent:ENT});
 }
 const rowVals=(rec,comp)=>[rec.serial,rec.maker,rec.model,status(rec,comp),rec.remarks,(rec.photos||[]).join('\n'),rec.by,rec.at,rec.issue?(rec.itype||'Other'):'',rec.issue&&rec.resolved?'yes':'',(rec.iphotos||[]).join('\n')];
+async function sendPhoto(w,cat,name,blob){const d=await call('photo',{w,cat,name,b64:await toB64(blob)});return link(d.id);}
 async function push(){
   const batch=Q.filter(j=>!j.busy);if(!batch.length)return [];
   batch.forEach(j=>j.busy=true);const touched=new Set();
   try{
-    const recJobs=batch.filter(j=>j.kind==='rec');
+    const recJobs=batch.filter(j=>j.kind==='rec'),entJobs=batch.filter(j=>j.kind==='ent'),logJobs=batch.filter(j=>j.kind==='log');
     for(const j of recJobs){
       const comp=comps().find(c=>c.id===j.comp)||{s:'',n:j.comp};
       const m=modOf(comp),base=clean(isNp(comp)?j.wtg+'_'+comp.s+'_'+comp.n+'_'+(j.rec.serial||'NOSN'):j.wtg+'_'+m+'_'+comp.s+'_'+comp.n);
-      while(j.done.length<j.blobs.length){
-        const id=await uploadTo(j.wtg,base+'_'+((j.rec.photos||[]).length+j.done.length+1)+'.jpg',j.blobs[j.done.length],m);
-        j.done.push(link(id));await qPut(j);pill();
-      }
-      while(j.idone.length<j.iblobs.length){
-        const id=await uploadTo(j.wtg,base+'_ISSUE_'+((j.rec.iphotos||[]).length+j.idone.length+1)+'.jpg',j.iblobs[j.idone.length],m);
-        j.idone.push(link(id));await qPut(j);pill();
-      }
+      while(j.done.length<j.blobs.length){j.done.push(await sendPhoto(j.wtg,m,base+'_'+((j.rec.photos||[]).length+j.done.length+1)+'.jpg',j.blobs[j.done.length]));await qPut(j);pill();}
+      while(j.idone.length<j.iblobs.length){j.idone.push(await sendPhoto(j.wtg,m,base+'_ISSUE_'+((j.rec.iphotos||[]).length+j.idone.length+1)+'.jpg',j.iblobs[j.idone.length]));await qPut(j);pill();}
     }
-    const data=[],sent=[];let missing=0;
-    for(const j of recJobs){
-      const row=ROWS[j.wtg]&&ROWS[j.wtg][j.comp];if(!row){missing++;continue;}
-      const comp=comps().find(c=>c.id===j.comp);
-      const rec={...j.rec,photos:[...(j.rec.photos||[]),...j.done],iphotos:[...(j.rec.iphotos||[]),...j.idone]};
-      data.push({range:"'"+j.wtg+"'!D"+row+':N'+row,values:[rowVals(rec,comp)]});
-      sent.push([j,rec]);
-    }
-    for(let i=0;i<data.length;i+=200){
-      await api(SHEETS+'/'+CFG.sheetId+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'RAW',data:data.slice(i,i+200)}});
-      for(const [j,rec] of sent.slice(i,i+200)){
-        if(!RECS[j.wtg])RECS[j.wtg]={};RECS[j.wtg][j.comp]=rec;touched.add(j.wtg);
-        if(j.log&&j.log.length){const rows=j.log;Object.keys(j).forEach(k=>{if(!['id','f','busy'].includes(k))delete j[k];});j.kind='log';j.tab='History';j.rows=rows;await qPut(j);}
-        else{const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);}
-      }
-    }
-    const entJobs=batch.filter(j=>j.kind==='ent');
     for(const j of entJobs){
       const base=clean(j.wtg+'_'+j.cat+'_'+(j.ent.title||'photo')).slice(0,90);
-      while(j.done.length<j.blobs.length){
-        const id=await uploadTo(j.wtg,base+'_'+((j.ent.photos||[]).length+j.done.length+1)+'.jpg',j.blobs[j.done.length],j.cat);
-        j.done.push(link(id));await qPut(j);pill();
-      }
+      while(j.done.length<j.blobs.length){j.done.push(await sendPhoto(j.wtg,j.cat,base+'_'+((j.ent.photos||[]).length+j.done.length+1)+'.jpg',j.blobs[j.done.length]));await qPut(j);pill();}
     }
-    if(entJobs.length){
-      const upd=[],add=[],fin=[];
-      for(const j of entJobs){
-        const e={...j.ent,photos:[...(j.ent.photos||[]),...j.done]};
-        const vals=[j.eid,j.cat,j.wtg,e.title,e.details,e.photos.join('\n'),e.issue?(e.itype||'Other'):'',e.issue&&e.resolved?'yes':'',e.by,e.at];
-        const row=EROW[j.eid];if(row)upd.push({range:"'Entries'!A"+row+':J'+row,values:[vals]});else add.push(vals);
-        fin.push([j,e]);
-      }
-      if(upd.length)await api(SHEETS+'/'+CFG.sheetId+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'RAW',data:upd}});
-      if(add.length)await api(SHEETS+'/'+CFG.sheetId+'/values/'+enc("'Entries'!A1")+':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS',{method:'POST',json:{values:add}});
-      for(const [j,e] of fin){
-        const l=(ENT[j.wtg]=ENT[j.wtg]||[]),x={id:j.eid,cat:j.cat,w:j.wtg,...e},i=l.findIndex(y=>y.id===j.eid);if(i>=0)l[i]=x;else l.push(x);
-        touched.add(j.wtg);const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);
-      }
+    const recs=[],ents=[],hist=[],comm=[],fin=[];
+    for(const j of recJobs){
+      const comp=comps().find(c=>c.id===j.comp);
+      const rec={...j.rec,photos:[...(j.rec.photos||[]),...j.done],iphotos:[...(j.rec.iphotos||[]),...j.idone]};
+      recs.push({w:j.wtg,c:j.comp,vals:rowVals(rec,comp)});(j.log||[]).forEach(r=>hist.push(r));fin.push([j,rec]);
     }
-    for(const tab of ['History','Comments']){
-      const logs=Q.filter(j=>j.kind==='log'&&j.tab===tab&&batch.includes(j));if(!logs.length)continue;
-      const rows=logs.flatMap(j=>j.rows);
-      await api(SHEETS+'/'+CFG.sheetId+'/values/'+enc("'"+tab+"'!A1")+':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS',{method:'POST',json:{values:rows}});
-      for(const r of rows){if(tab==='History')HIST.push({at:r[0],by:r[1],w:r[2],c:r[3],field:r[5],old:r[6],val:r[7]});else COMM.push({at:r[0],by:r[1],w:r[2],c:r[3],text:r[5]});}
-      for(const j of logs){const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);}
+    for(const j of entJobs){
+      const e={...j.ent,photos:[...(j.ent.photos||[]),...j.done]};
+      ents.push({eid:j.eid,cat:j.cat,w:j.wtg,vals:[e.title,e.details,e.photos.join('\n'),e.issue?(e.itype||'Other'):'',e.issue&&e.resolved?'yes':'',e.by,e.at]});fin.push([j,e]);
     }
-    if(missing)throw new Error(t('{0} item(s) have no row in the sheet. Open Setup and save the project again.',missing));
+    for(const j of logJobs){(j.tab==='History'?hist:comm).push(...j.rows);fin.push([j,null]);}
+    const res=await call('push',{recs,ents,hist,comm});
+    for(const [j,x] of fin){
+      if(j.kind==='rec'){if(!RECS[j.wtg])RECS[j.wtg]={};RECS[j.wtg][j.comp]=x;touched.add(j.wtg);}
+      else if(j.kind==='ent'){const l=(ENT[j.wtg]=ENT[j.wtg]||[]),y={id:j.eid,cat:j.cat,w:j.wtg,...x},i=l.findIndex(z=>z.id===j.eid);if(i>=0)l[i]=y;else l.push(y);touched.add(j.wtg);}
+      const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);
+    }
+    for(const r of hist)HIST.push({at:r[0],by:r[1],w:r[2],c:r[3],field:r[5],old:r[6],val:r[7]});
+    for(const r of comm)COMM.push({at:r[0],by:r[1],w:r[2],c:r[3],text:r[5]});
+    if(res&&res.missing)S.warn=t('{0} item(s) have no row in the sheet. Open Setup and save the project again.',res.missing);
   }finally{batch.forEach(j=>j.busy=false);}
   return [...touched];
 }
@@ -503,83 +434,41 @@ async function push(){
 async function uploadStatus(w){
   await loadXlsx();
   const blob=new Blob([XLSX.write(buildWb([w]),{type:'array',bookType:'xlsx'})],{type:XLSX_MIME});
-  const name=w+'_status.xlsx';
-  if(!CFG.folders[w]){CFG.folders[w]=await mkFolder(w);}
-  if(!CFG.xls)CFG.xls={};
-  let id=CFG.xls[w];
-  if(!id){const r=await api(DRIVE+'/files?q='+enc("name='"+name+"' and '"+CFG.folders[w]+"' in parents and trashed=false")+'&fields=files(id)&supportsAllDrives=true&includeItemsFromAllDrives=true');id=(r.files&&r.files[0]&&r.files[0].id)||'';}
-  if(id){try{await api(UP+'/files/'+id+'?uploadType=media&supportsAllDrives=true',{method:'PATCH',body:blob});}catch(e){if(e.message==='auth')throw e;id='';}}
-  if(!id)id=await uploadTo(w,name,blob);
-  CFG.xls[w]=id;await saveCfgLocal();
+  await call('status',{w,name:w+'_status.xlsx',b64:await toB64(blob)});
 }
 async function sync(interactive){
-  if(S.syncing||!L.clientId||!L.folderId)return;
+  if(S.syncing||!L.folderId||!S.entered)return;
   if(navigator.onLine===false){if(interactive)toast(t('No internet. Data stays on this phone until you are online.'));pill();return;}
-  if(!tokenOk()){
-    if(!interactive){pill();return;}
-    try{await requestToken();}catch(e){toast(e.message,4500);pill();return;}
-  }
-  S.syncing=true;pill();let xerr='';
+  if(!(await ensureToken())){if(interactive)toast(t('Sign out and sign in again to sync.'),4500);pill();return;}
+  S.syncing=true;S.warn='';pill();let xerr='';
   try{
-    if(!CFG||!CFG.sheetId||!CFG.checked)await connect();
-    if(CFG.sheetId){
-      let touched=[];
-      if(Q.length){await pull();touched=await push();}
-      await pull();
-      for(const w of touched){try{await uploadStatus(w);}catch(e){if(e.message==='auth')throw e;xerr=t('Excel file for {0} was not updated',w)+': '+e.message;}}
-    }
-    S.err=xerr;S.last=Date.now();
-  }catch(e){if(e.message!=='auth')S.err=e.message;if(interactive&&e.message!=='auth')toast(e.message,5000);}
+    let touched=[];
+    if(Q.length&&comps().length)touched=await push();
+    await pull();
+    for(const w of touched){try{await uploadStatus(w);}catch(e){if(e.message==='auth')throw e;xerr=t('Excel file for {0} was not updated',w)+': '+netMsg(e);}}
+    S.err=S.warn||xerr;S.last=Date.now();
+  }catch(e){if(e.message!=='auth')S.err=netMsg(e);if(interactive&&e.message!=='auth')toast(netMsg(e),5000);}
   finally{S.syncing=false;render();}
 }
 async function provision(name,prefix,count,list,free){
-  let fresh=false;
-  if(!CFG)CFG=blankCfg();
-  if(!CFG.sheetId){
-    const f=await api(DRIVE+'/files?supportsAllDrives=true&fields=id',{method:'POST',json:{name:SHEET_NAME,mimeType:'application/vnd.google-apps.spreadsheet',parents:[L.folderId]}});
-    CFG.sheetId=f.id;fresh=true;
-  }
-  CFG.name=name;CFG.prefix=prefix;CFG.count=count;CFG.comps=list;CFG.free=free||[];CFG.checked=true;
-  const id=CFG.sheetId,ws=wtgIds();
-  S.working=t('Creating sheet tabs…');render(true);
-  const meta=await api(SHEETS+'/'+id+'?fields=sheets.properties(sheetId,title)');
-  const have=meta.sheets.map(s=>s.properties.title),reqs=[];
-  if(!have.includes('Summary')){
-    if(fresh&&meta.sheets.length===1)reqs.push({updateSheetProperties:{properties:{sheetId:meta.sheets[0].properties.sheetId,title:'Summary'},fields:'title'}});
-    else reqs.push({addSheet:{properties:{title:'Summary'}}});
-  }
-  for(const x of ['Config','History','Comments','Entries',...ws])if(!have.includes(x))reqs.push({addSheet:{properties:{title:x,gridProperties:{frozenRowCount:1}}}});
-  if(reqs.length)await api(SHEETS+'/'+id+':batchUpdate',{method:'POST',json:{requests:reqs}});
-  S.working=t('Writing component lists…');render(true);
-  await api(SHEETS+'/'+id+'/values/'+enc("'Config'!A2:E")+':clear',{method:'POST',json:{}});
-  const cur=await api(SHEETS+'/'+id+'/values:batchGet?'+ws.map(w=>'ranges='+enc("'"+w+"'!A2:A")).join('&'));
-  const data=[{range:"'Config'!A1:E"+(list.length+1),values:[['id','Section','Component','Photos required','Category'],...list.map(c=>[c.id,c.s,c.n,String(need(c)),modOf(c)])]},{range:"'Config'!F1:G4",values:[['prefix',prefix],['count',String(count)],['name',name],['free',(free||[]).join(',')]]},
-    {range:"'History'!A1:H1",values:[HIST_HEAD]},{range:"'Comments'!A1:F1",values:[COMM_HEAD]},{range:"'Entries'!A1:J1",values:[ENT_HEAD]}];
-  cur.valueRanges.forEach((vr,i)=>{
-    const w=ws[i],vals=vr.values||[],ex=new Set(vals.map(r=>r[0]).filter(Boolean));
-    data.push({range:"'"+w+"'!A1:N1",values:[HEAD]});
-    const add=list.filter(c=>!ex.has(c.id)).map(c=>[c.id,(isNp(c)?'':modOf(c)+' · ')+c.s,c.n,'','','','pending']);
-    if(add.length){const st=vals.length+2;data.push({range:"'"+w+"'!A"+st+':G'+(st+add.length-1),values:add});}
-  });
-  await api(SHEETS+'/'+id+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'RAW',data}});
-  const sum=[['WTG','Total','Done','Partial','Pending','Issues'],...ws.map(w=>{const g="'"+w+"'!G2:G";return [w,"=COUNTA('"+w+"'!A2:A)",'=COUNTIF('+g+',"done")','=COUNTIF('+g+',"partial")','=COUNTIF('+g+',"pending")','=COUNTIF('+g+',"issue")'];})];
-  await api(SHEETS+'/'+id+'/values:batchUpdate',{method:'POST',json:{valueInputOption:'USER_ENTERED',data:[{range:"'Summary'!A1:F"+sum.length,values:sum}]}});
-  S.tabsOk[id]=true;
-  S.working=t('Creating turbine folders…');render(true);
-  for(const w of ws)if(!CFG.folders[w])CFG.folders[w]=await mkFolder(w);
-  await saveCfgLocal();
+  S.working=t('Saving the project on the server. This can take a minute…');render(true);
+  await call('provision',{name,prefix,count,list,free});
   await pull();
 }
 async function withDrive(okMsg,fn){
   if(navigator.onLine===false){toast(t('This needs internet'));return;}
   try{
-    if(!tokenOk())await requestToken();
-    S.syncing=true;S.working=t('Connecting to Drive…');go({name:'home'});
-    if(!CFG||!CFG.checked)await connect();
+    if(!(await ensureToken()))throw new Error(t('Sign out and sign in again to sync.'));
+    S.syncing=true;S.working=t('Connecting to the server…');go({name:'home'});
     await fn();
     S.err='';S.last=Date.now();toast(okMsg());
-  }catch(e){toast(t('Could not save')+': '+(e.message==='auth'?t('sign in again'):e.message),6000);}
+  }catch(e){toast(t('Could not save')+': '+(e.message==='auth'?t('sign in again'):netMsg(e)),6000);}
   finally{S.syncing=false;S.working='';render(true);}
+}
+async function photoSrc(id){
+  let u=thumbCache.get(id);
+  if(!u){const d=await call('file',{id});u='data:'+(d.mime||'image/jpeg')+';base64,'+d.b64;thumbCache.set(id,u);}
+  return u;
 }
 
 /* ---------- Excel export ---------- */
@@ -611,10 +500,10 @@ async function exportLocal(ws,filename){
 
 function pill(){
   const p=$('#pill'),n=Q.length;p.className='';
-  if(!L.clientId||!L.folderId){p.textContent=t('Not connected');return;}
+  if(!L.folderId){p.textContent=t('Not connected');return;}
   if(S.syncing){p.className='wait sync';p.textContent=t('Syncing…');return;}
   if(navigator.onLine===false){p.className=n?'wait':'';p.textContent=t('Offline')+(n?' · '+t('{0} waiting',n):'');return;}
-  if(!tokenOk()){p.className='wait';p.textContent=(n?t('{0} waiting',n)+' · ':'')+t('Tap to sign in');return;}
+  if(!tokenOk()&&!S.cred){p.className='wait';p.textContent=(n?t('{0} waiting',n)+' · ':'')+t('Sign in to sync');return;}
   if(n){p.className='wait';p.textContent=t('{0} waiting',n)+' · '+t('tap to sync');return;}
   p.className='ok';p.textContent=S.last?t('Synced')+' '+new Date(S.last).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):t('Signed in');
 }
@@ -622,57 +511,72 @@ function pill(){
 /* ---------- screens ---------- */
 function render(force){
   pill();
-  if(!L.clientId||!L.folderId){if(S.view.name!=='connect')S.view={name:'connect'};}
+  if(!L.folderId){if(S.view.name!=='connect')S.view={name:'connect'};}
   else if(!S.entered&&S.view.name!=='connect')S.view={name:'welcome'};
   const v=S.view.name;
-  $('#back').style.display=(v==='home'||v==='welcome'||(v==='connect'&&(!L.clientId||!L.folderId)))?'none':'block';
+  $('#back').style.display=(v==='home'||v==='welcome'||(v==='connect'&&(!L.folderId)))?'none':'block';
   $('#pill').style.display=v==='welcome'?'none':'';
   document.body.classList.toggle('lock',v==='welcome');
   document.documentElement.lang=LANG==='zh'?'zh-CN':'en';
   const tt=$('#title');
   if(v==='home')tt.innerHTML=comps().length?'<small>NAMEPLATE TRACKER</small>'+esc(projName()||t('All turbines')):'Nameplate Tracker';
-  else tt.textContent=v==='welcome'?'Nameplate Tracker':v==='cat'?modLabel(S.view.m):v==='setup'?t('Project setup'):v==='connect'?t('Connect to Google Drive'):v==='issues'?t('Issues'):v==='projects'?t('Projects'):S.view.w;
+  else tt.textContent=v==='welcome'?'Nameplate Tracker':v==='users'?t('Users'):v==='cat'?modLabel(S.view.m):v==='setup'?t('Project setup'):v==='connect'?t('Connect this phone'):v==='issues'?t('Issues'):v==='projects'?t('Projects'):S.view.w;
   if(!force&&app.dataset.v===v){
-    if(v==='form'||v==='entry'||v==='setup'||v==='connect'||v==='welcome'||v==='projects')return;
+    if(v==='form'||v==='entry'||v==='setup'||v==='connect'||v==='welcome'||v==='projects'||v==='users')return;
     if(v==='wtg'&&app.dataset.w===S.view.w&&app.dataset.m===S.view.m){renderList();return;}
   }
   app.dataset.v=v;app.dataset.w=S.view.w||'';app.dataset.m=S.view.m||'';
-  ({home:vHome,wtg:vWtg,form:vForm,setup:vSetup,connect:vConnect,issues:vIssues,welcome:vWelcome,projects:vProjects,cat:vCat,ents:vEnts,entry:vEntry})[v]();
+  ({home:vHome,wtg:vWtg,form:vForm,setup:vSetup,connect:vConnect,issues:vIssues,welcome:vWelcome,projects:vProjects,cat:vCat,ents:vEnts,entry:vEntry,users:vUsers})[v]();
 }
-function go(view){S.view=view;S.addArm=false;S.fresh=true;render(true);window.scrollTo(0,0);}
+function go(view){S.view=view;S.addArm=false;S.fresh=true;render(true);window.scrollTo(0,0);syncGuard();}
 
 function vWelcome(){
-  const known=!!L.email,off=navigator.onLine===false,who=esc(L.name||L.email);
+  const off=navigator.onLine===false;
   const tag=esc(projName()?projName().toUpperCase():t('TURBINE COMPONENT RECORDS'));
-  let body;
-  if(location.protocol==='file:')body='<h3>'+t('Open the app from its web address')+'</h3><p>'+t('Google sign-in does not work when the app is opened as a file from the computer. Open the app link in the browser instead.')+'</p>';
-  else if(known&&off)body='<h3>'+t('Offline')+'</h3><p>'+t('No internet, so Google sign-in is not possible right now. You can keep working as {0}; everything syncs after the next sign-in.','<b>'+who+'</b>')+'</p><button class="btn go" data-act="enter">'+t('Continue offline')+'</button>';
-  else if(off)body='<h3>'+t('Sign in')+'</h3><p>'+t('The first sign-in needs internet. Connect and try again.')+'</p><button class="btn go" data-act="signin">'+t('Sign in with Google')+'</button>';
-  else body='<h3>'+t('Sign in')+'</h3><p>'+t('Use the Google account your team shared the project with.')+'</p><button class="btn go" data-act="signin">'+t('Sign in with Google')+'</button>'+(known?'<small>'+t('Last used by {0}',esc(L.email))+'</small>':'');
-  app.innerHTML='<div class="lock-top"><button class="lang" data-act="lang">'+(LANG==='zh'?'English':'中文')+'</button>'+LOGO+'<h2>Nameplate Tracker</h2><div class="tl">'+tag+'</div></div><div class="lock-card">'+body+'</div><div class="lock-foot">'+t('Secure sign-in with Google · Data stays in your team\'s Drive')+'</div>';
+  app.innerHTML='<div class="lock-top"><button class="lang" data-act="lang">'+(LANG==='zh'?'English':'中文')+'</button>'+LOGO+'<h2>Nameplate Tracker</h2><div class="tl">'+tag+'</div></div>'+
+    '<div class="lock-card" style="text-align:left"><h3 style="text-align:center">'+t('Sign in')+'</h3>'+
+    (off?'<div class="alert" style="margin-top:8px">'+t('No internet. You can sign in offline if you have signed in on this phone before.')+'</div>':'')+
+    '<label class="f" for="w_u">'+t('Username')+'</label><input type="text" id="w_u" autocapitalize="none" autocomplete="username" spellcheck="false" value="'+esc(L.email||'')+'">'+
+    '<label class="f" for="w_p">'+t('Password')+'</label><input type="password" id="w_p" autocomplete="current-password" style="width:100%;min-height:46px;padding:10px 14px;border:1px solid var(--line2);border-radius:12px;font:inherit">'+
+    '<button class="btn go" data-act="signin" style="margin-top:18px">'+t('Sign in')+'</button>'+
+    '<small style="text-align:center">'+t('Ask your project admin for a username and password.')+'</small></div>'+
+    '<div class="lock-foot">'+t('Your data is saved in the project\'s Google Drive')+' · <a href="#" data-act="connect">'+t('Server link')+'</a></div>';
+  const pw=$('#w_p');pw.addEventListener('keydown',e=>{if(e.key==='Enter')signIn();});
+  if(L.email)pw.focus();
 }
 function flashSaved(){const d=document.createElement('div');d.id='done';d.innerHTML='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#003163"/><path d="M19 33l9 9 17-19"/></svg>'+t('Saved');document.body.appendChild(d);setTimeout(()=>d.remove(),1000);}
 function countUp(el,to,all){if(!el)return;const t0=performance.now(),dur=700;(function f(now){const k=Math.min(1,(now-t0)/dur);el.textContent=Math.round(to*k).toLocaleString()+' / '+all.toLocaleString();if(k<1)requestAnimationFrame(f);})(t0);}
 async function signIn(){
-  if(navigator.onLine===false){toast(t('Sign-in needs internet'));return;}
-  try{await requestToken('select_account');}catch(e){toast(e.message,4500);return;}
-  S.entered=true;go({name:'home'});sync(true);
+  if(S.signing)return;
+  const u=$('#w_u').value.trim().toLowerCase(),pw=$('#w_p').value;
+  if(!u||!pw){toast(t('Type your username and password'));return;}
+  S.signing=true;
+  try{
+    let ok=false;
+    if(navigator.onLine!==false){
+      try{await doLogin(u,pw);ok=true;}
+      catch(e){if(e.message!=='net'){toast(e.message==='auth'?t('Wrong username or password.'):e.message,4500);return;}}
+    }
+    if(!ok){
+      ok=await offlineLogin(u,pw);
+      if(!ok){toast(t('Cannot sign in offline: wrong password, or this user has not signed in on this phone before.'),6000);return;}
+    }
+    S.cred={u,p:pw};S.entered=true;go({name:'home'});sync(true);
+  }finally{S.signing=false;}
 }
-function signOut(){T=null;S.entered=false;go({name:'welcome'});}
+function signOut(){T=null;S.cred=null;S.entered=false;go({name:'welcome'});}
 function vConnect(){
   app.innerHTML=hero('Nameplate Tracker',t('CONNECT THIS PHONE'),'<p style="margin:0">'+t('One-time setup. If a teammate sent you an invite link, open that link instead.')+'</p>')+
-    '<label class="f" for="c_id">'+t('Google OAuth Client ID')+'</label><input type="text" id="c_id" autocomplete="off" placeholder="xxxxxxxx.apps.googleusercontent.com" value="'+esc(L.clientId)+'">'+
-    '<label class="f" for="c_f">'+t('Shared Drive folder link')+'</label><input type="text" id="c_f" autocomplete="off" placeholder="https://drive.google.com/drive/folders/…" value="'+esc(L.folderId)+'">'+
+    '<label class="f" for="c_s">'+t('Server link (from the project admin)')+'</label><input type="text" id="c_s" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec" value="'+esc(L.folderId)+'">'+
     '<div class="tools" style="margin-top:14px"><button class="btn" data-act="saveconn">'+t('Save and continue')+'</button></div>';
 }
 function vHome(){
   if(S.working){app.innerHTML='<div class="note">'+esc(S.working)+'</div>';return;}
   if(!comps().length){
     let h;
-    if(!tokenOk())h='<p><b>'+t('Sign in to load the project.')+'</b></p><button class="btn" data-act="sync">'+t('Sign in with Google')+'</button>';
-    else if(S.syncing)h=t('Loading project from Drive…');
-    else if(CFG&&CFG.checked&&!CFG.sheetId)h='<p><b>'+t('This Drive folder has no project yet.')+'</b></p><p>'+t('Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.')+'</p><button class="btn" data-act="setup">'+t('Set up project')+'</button>';
-    else h='<p><b>'+t('No project loaded yet.')+'</b></p>'+(S.err?'<p>'+esc(S.err)+'</p>':'')+'<button class="btn" data-act="sync">'+t('Load from Drive')+'</button> <button class="btn ghost" data-act="setup">'+t('Set up project')+'</button>';
+    if(S.syncing||!CFG||!CFG.checked)h=t('Loading the project…')+(navigator.onLine===false?' '+t('This needs internet the first time.'):'');
+    else if(CFG&&CFG.checked&&!CFG.sheetId)h=isAdmin()?'<p><b>'+t('This project is not set up yet.')+'</b></p><p>'+t('Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.')+'</p><button class="btn" data-act="setup">'+t('Set up project')+'</button>':'<p><b>'+t('This project is not set up yet.')+'</b></p><p>'+t('Ask the project admin to set it up.')+'</p>';
+    else h='<p><b>'+t('No project loaded yet.')+'</b></p>'+(S.err?'<p>'+esc(S.err)+'</p>':'')+'<button class="btn" data-act="sync">'+t('Try again')+'</button>';
     app.innerHTML='<div class="note">'+h+'</div><div class="tools" style="margin-top:12px"><button class="btn ghost" data-act="projects">'+t('Projects')+'</button><button class="btn ghost" data-act="connect">'+t('Change connection')+'</button><button class="btn ghost" data-act="signout">'+t('Sign out')+'</button></div>';return;
   }
   const ws=wtgIds(),ms=mods();let done=0,all=0,iss=0;
@@ -684,11 +588,11 @@ function vHome(){
     return '<button class="card cat" style="animation-delay:'+i*70+'ms" data-act="cat" data-m="'+esc(m)+'"><span class="h"><b>'+esc(modLabel(m))+'</b><span class="tag '+tag[0]+'">'+tag[1]+'</span></span><span class="c">'+t('{0} / {1} done',d.toLocaleString(),tot.toLocaleString())+' · '+t('{0} items per turbine',Math.round(tot/ws.length))+'</span><span class="bar"><i style="width:'+(tot?100*d/tot:0)+'%"></i></span></button>';}).join('');
   app.innerHTML=(S.err?'<div class="alert">'+t('Last sync problem')+': '+esc(S.err)+'</div>':'')+
     '<div class="ov"><div class="r"><span>'+t('Overall progress')+'</span><b>'+done.toLocaleString()+' / '+all.toLocaleString()+'</b></div><div class="bar"><i style="width:'+(all?100*done/all:0)+'%"></i></div>'+
-    '<div class="m"><span>'+t('{0} turbines',ws.length)+'</span><span>'+t('{0} categories',ms.length)+'</span><span>'+t('{0} issues',iss)+'</span>'+(L.email?'<span>'+esc(L.email)+'</span>':'')+'</div></div>'+
+    '<div class="m"><span>'+t('{0} turbines',ws.length)+'</span><span>'+t('{0} categories',ms.length)+'</span><span>'+t('{0} issues',iss)+'</span>'+(L.name?'<span>'+esc(L.name)+(isAdmin()?' · '+t('Admin'):S.role==='viewer'?' · '+t('View only'):'')+'</span>':'')+'</div></div>'+
     '<div class="grid cats">'+cards+'</div>'+
     '<div class="tools" style="margin-top:14px"><button class="btn" data-act="sync">'+t('Sync now')+'</button><button class="btn ghost" data-act="xlsxall">'+t('Export Excel')+'</button><button class="btn ghost" data-act="issues">'+t('Issues')+' ('+iss+')</button>'+
-    (CFG.sheetId?'<a class="btn ghost" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/'+esc(CFG.sheetId)+'">'+t('Open sheet')+'</a>':'')+
-    '<button class="btn ghost" data-act="projects">'+t('Projects')+'</button><button class="btn ghost" data-act="invite">'+t('Invite link')+'</button><button class="btn ghost" data-act="setup">'+t('Setup')+'</button><button class="btn ghost" data-act="lang">'+(LANG==='zh'?'English':'中文')+'</button><button class="btn ghost" data-act="signout">'+t('Sign out')+'</button></div>';
+    (isAdmin()&&CFG.sheetUrl?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(CFG.sheetUrl)+'">'+t('Open sheet')+'</a>':'')+
+    '<button class="btn ghost" data-act="projects">'+t('Projects')+'</button>'+(isAdmin()?'<button class="btn ghost" data-act="users">'+t('Users')+'</button><button class="btn ghost" data-act="invite">'+t('Invite link')+'</button><button class="btn ghost" data-act="setup">'+t('Setup')+'</button>':'')+'<button class="btn ghost" data-act="lang">'+(LANG==='zh'?'English':'中文')+'</button><button class="btn ghost" data-act="signout">'+t('Sign out')+'</button></div>';
   if(S.fresh){S.fresh=false;countUp($('.ov .r b'),done,all);}
 }
 function vCat(){
@@ -696,7 +600,7 @@ function vCat(){
   if(isFree(m)){
     const fs=freeStats(m);
     app.innerHTML='<div class="ov"><div class="r"><span>'+esc(modLabel(m))+'</span><b>'+t('{0} photos',fs.ph)+'</b></div><div class="m" style="margin-top:8px"><span>'+t('{0} of {1} turbines have photos',fs.tw,ws.length)+'</span><span>'+t('{0} issues',fs.is)+'</span></div></div>'+
-      '<div class="grid">'+ws.map((w,i)=>{const s=freeStats(m,w);return '<button class="card" style="animation-delay:'+Math.min(i,24)*30+'ms" data-act="wtg" data-w="'+esc(w)+'"><span class="h"><b>'+esc(w)+'</b><span class="tag '+(s.is?'issue':s.ph?'done':'')+'">'+(s.is?t('{0} issues',s.is):s.ph?t('{0} photos',s.ph):t('No photos'))+'</span></span><span class="c">'+t('{0} entries',s.n)+'</span></button>';}).join('')+'<button class="card add" data-act="addwtg">'+(S.addArm?t('Tap again to add {0}',esc((CFG.prefix||'WTG')+String(ws.length+1).padStart(2,'0'))):'+ '+t('Add turbine'))+'</button></div>';
+      '<div class="grid">'+ws.map((w,i)=>{const s=freeStats(m,w);return '<button class="card" style="animation-delay:'+Math.min(i,24)*30+'ms" data-act="wtg" data-w="'+esc(w)+'"><span class="h"><b>'+esc(w)+'</b><span class="tag '+(s.is?'issue':s.ph?'done':'')+'">'+(s.is?t('{0} issues',s.is):s.ph?t('{0} photos',s.ph):t('No photos'))+'</span></span><span class="c">'+t('{0} entries',s.n)+'</span></button>';}).join('')+(isAdmin()?'<button class="card add" data-act="addwtg">'+(S.addArm?t('Tap again to add {0}',esc((CFG.prefix||'WTG')+String(ws.length+1).padStart(2,'0'))):'+ '+t('Add turbine'))+'</button>':'')+'</div>';
     return;
   }
   const cards=ws.map((w,i)=>{const st=stats(w,m);done+=st.done;all+=st.total;iss+=st.issue;
@@ -705,7 +609,7 @@ function vCat(){
   const next=(CFG.prefix||'WTG')+String(ws.length+1).padStart(2,'0');
   app.innerHTML='<div class="ov"><div class="r"><span>'+esc(modLabel(m))+'</span><b>'+done.toLocaleString()+' / '+all.toLocaleString()+'</b></div><div class="bar"><i style="width:'+(all?100*done/all:0)+'%"></i></div>'+
     '<div class="m"><span>'+t('{0} turbines',ws.length)+'</span><span>'+t('{0} items per turbine',Math.round(all/ws.length))+'</span><span>'+t('{0} issues',iss)+'</span></div></div>'+
-    '<div class="grid">'+cards+'<button class="card add" data-act="addwtg">'+(S.addArm?t('Tap again to add {0}',esc(next)):'+ '+t('Add turbine'))+'</button></div>';
+    '<div class="grid">'+cards+(isAdmin()?'<button class="card add" data-act="addwtg">'+(S.addArm?t('Tap again to add {0}',esc(next)):'+ '+t('Add turbine'))+'</button>':'')+'</div>';
   if(S.fresh){S.fresh=false;countUp($('.ov .r b'),done,all);}
 }
 let E=null;
@@ -746,12 +650,12 @@ function entThumbs(){
   $('#eqw').innerHTML=[...new Set(wl.filter(Boolean))].map(x=>'<div class="alert">'+t(x==='blurry'?'A photo looks blurry. Retake it if the text is not readable.':x==='dark'?'A photo looks too dark. Use the torch and retake it.':'A photo looks too bright. Avoid glare and retake it.')+'</div>').join('');
   if(navigator.onLine!==false&&tokenOk())el.querySelectorAll('.ph[data-id]').forEach(async d=>{
     const id=d.dataset.id;if(!id)return;
-    try{let u=thumbCache.get(id);if(!u){u=URL.createObjectURL(await api(DRIVE+'/files/'+id+'?alt=media&supportsAllDrives=true',{blob:true}));thumbCache.set(id,u);}
-      const a=d.querySelector('a');if(a)a.innerHTML='<img alt="'+esc(t('Photo'))+'" src="'+u+'">';}catch(e){}
+    try{const u=await photoSrc(id);const a=d.querySelector('a');if(a)a.outerHTML='<img alt="'+esc(t('Photo'))+'" src="'+u+'">';}catch(e){}
   });
 }
 async function saveEntry(again){
   const {w,m}=E,title=$('#e_title').value.trim();
+  if(S.role==='viewer'){toast(t('This account can only view.'));return;}
   if(!(E.links.length+E.blobs.length)){toast(t('Add at least one photo'));return;}
   if(!title){toast(t('Write a short title for the photo'));$('#e_title').focus();return;}
   const eid=E.eid||('e'+newId());
@@ -802,20 +706,49 @@ function vIssues(){
 }
 function vProjects(){
   app.innerHTML=L.projects.map(p=>{const on=p.f===L.folderId;return '<button class="row" data-act="useproj" data-f="'+esc(p.f)+'"><i class="ic '+(on?'done':'')+'">'+(on?'✓':'')+'</i><span class="t"><b>'+esc(p.name||t('Unnamed project'))+'</b><small>'+(on?t('Open now'):t('Tap to open'))+'</small></span></button>';}).join('')+
-    '<div class="box"><h4>'+t('Add a project')+'</h4><label class="f" for="p_f" style="margin-top:0">'+t('Shared Drive folder link')+'</label><input type="text" id="p_f" autocomplete="off" placeholder="https://drive.google.com/drive/folders/…">'+
-    '<p class="sub" style="margin-top:8px">'+t('Make a new folder in Drive for the new project and paste its link. The component list of the current project is offered as the starting list.')+'</p><button class="btn" data-act="addproj">'+t('Add project')+'</button></div>';
+    '<div class="box"><h4>'+t('Add a project')+'</h4><label class="f" for="p_f" style="margin-top:0">'+t('Server link (from the project admin)')+'</label><input type="text" id="p_f" autocomplete="off" autocapitalize="none" placeholder="https://script.google.com/macros/s/…/exec">'+
+    '<p class="sub" style="margin-top:8px">'+t('Each project has its own server link, users and Drive folder. After adding it, sign in with your username for that project.')+'</p><button class="btn" data-act="addproj">'+t('Add project')+'</button></div>';
 }
-const folderOf=raw=>{const m=/folders\/([\w-]+)/.exec(raw)||/[?&]id=([\w-]+)/.exec(raw);return m?m[1]:raw.trim();};
+const serverOf=raw=>{const s=String(raw||'').trim();return /^https:\/\/script\.google\.com\/.+\/exec$/.test(s)?s:'';};
 async function useProject(f,tpl){
-  if(f!==L.folderId){S.template=tpl||null;L.folderId=f;lsSet('np_local',L);await loadProject();}
-  go({name:'home'});sync(true);
+  if(f===L.folderId){go({name:'home'});return;}
+  S.template=tpl||null;L.folderId=f;L.email='';lsSet('np_local',L);await loadProject();
+  signOut();
 }
 function addProject(){
-  const f=folderOf($('#p_f').value.trim());
-  if(!/^[\w-]{10,}$/.test(f)){toast(t('That does not look like a Drive folder link'));return;}
+  const f=serverOf($('#p_f').value);
+  if(!f){toast(t('The server link should start with https://script.google.com/ and end with /exec'),5000);return;}
   const tpl=(comps().length||freeCats().length)?setupMods():null;
   if(!L.projects.find(p=>p.f===f))L.projects.push({f,name:''});
   useProject(f,tpl);
+}
+/* users (admin only): the admin gives each person a username and password */
+async function vUsers(){
+  app.innerHTML='<div class="note">'+t('Loading users…')+'</div>';
+  let list;try{if(!(await ensureToken()))throw new Error(t('Sign out and sign in again to sync.'));list=(await call('users')).users;}catch(e){if(S.view.name==='users')app.innerHTML='<div class="note">'+esc(e.message==='auth'?t('sign in again'):netMsg(e))+'</div>';return;}
+  if(S.view.name!=='users')return;
+  S.users=list;
+  const roleName={admin:t('Admin'),user:t('User'),viewer:t('View only')};
+  app.innerHTML=list.map(u=>'<button class="row" data-act="edituser" data-u="'+esc(u.u)+'"><i class="ic '+(u.active?'done':'')+'">'+(u.active?'✓':'')+'</i><span class="t"><b>'+esc(u.name||u.u)+'</b><small class="sn">'+esc(u.u)+'</small></span><span class="n">'+esc(roleName[u.role]||u.role)+(u.active?'':'<br>'+t('Disabled'))+'</span></button>').join('')+
+    '<div class="box"><h4 id="u_h">'+t('Add a user')+'</h4>'+
+    '<label class="f" for="u_name" style="margin-top:0">'+t('Full name')+'</label><input type="text" id="u_name" maxlength="40">'+
+    '<label class="f" for="u_u">'+t('Username')+'</label><input type="text" id="u_u" maxlength="30" autocapitalize="none" spellcheck="false">'+
+    '<label class="f" for="u_p">'+t('Password (at least 6 characters)')+'</label><input type="text" id="u_p" maxlength="60" autocapitalize="none" spellcheck="false" autocomplete="off">'+
+    '<label class="f" for="u_role">'+t('Role')+'</label><select id="u_role"><option value="user">'+t('User')+' — '+t('adds photos and data')+'</option><option value="admin">'+t('Admin')+' — '+t('also setup and users')+'</option><option value="viewer">'+t('View only')+'</option></select>'+
+    '<label class="chk"><input type="checkbox" id="u_act" checked style="accent-color:var(--ok)"> '+t('Active (can sign in)')+'</label>'+
+    '<div class="tools"><button class="btn" data-act="saveuser">'+t('Save user')+'</button><button class="btn ghost" data-act="newuser">'+t('Clear form')+'</button></div>'+
+    '<p class="sub">'+t('To change a password, tap the user, type a new password and save. Leave the password empty to keep the old one.')+'</p></div>';
+}
+function editUser(u){
+  const x=(S.users||[]).find(y=>y.u===u);if(!x)return;
+  $('#u_h').textContent=t('Edit user')+': '+x.u;$('#u_name').value=x.name||'';$('#u_u').value=x.u;$('#u_u').readOnly=true;$('#u_p').value='';$('#u_role').value=x.role;$('#u_act').checked=!!x.active;
+  $('#u_h').scrollIntoView({behavior:'smooth'});
+}
+async function saveUser(){
+  const u=$('#u_u').value.trim().toLowerCase(),name=$('#u_name').value.trim(),pw=$('#u_p').value;
+  if(!u){toast(t('Type a username'));return;}
+  try{await call('userset',{u,name:name||u,p:pw||undefined,role:$('#u_role').value,active:$('#u_act').checked});toast(t('User saved'));vUsers();}
+  catch(e){toast(e.message==='auth'?t('sign in again'):netMsg(e),5000);}
 }
 
 /* ---------- component form ---------- */
@@ -850,7 +783,7 @@ function vForm(){
   try{if(!S.pos&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{S.pos=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5);},()=>{}, {maximumAge:600000,timeout:15000});}catch(e){}
 }
 function thumbHtml(links,blobs,rmL,rmB,warn){
-  return links.map((l,i)=>'<div class="ph" data-id="'+esc(linkId(l))+'"><a href="'+esc(l)+'" target="_blank" rel="noopener">'+t('On Drive, tap to open')+'</a><button data-act="'+rmL+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button></div>').join('')+
+  return links.map((l,i)=>'<div class="ph" data-id="'+esc(linkId(l))+'"><a>'+t('Saved on Drive')+'</a><button data-act="'+rmL+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button></div>').join('')+
     blobs.map((b,i)=>'<div class="ph'+(warn&&warn[i]?' bad':'')+'"><img alt="'+esc(t('Photo, not synced yet'))+'" src="'+URL.createObjectURL(b)+'"><button data-act="'+rmB+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button></div>').join('');
 }
 function thumbs(){
@@ -863,8 +796,7 @@ function thumbs(){
   $('#qw').innerHTML=msgs.map(m=>'<div class="alert">'+m+'</div>').join('');
   if(navigator.onLine!==false&&tokenOk())app.querySelectorAll('.ph[data-id]').forEach(async d=>{
     const id=d.dataset.id;if(!id)return;
-    try{let u=thumbCache.get(id);if(!u){u=URL.createObjectURL(await api(DRIVE+'/files/'+id+'?alt=media&supportsAllDrives=true',{blob:true}));thumbCache.set(id,u);}
-      const a=d.querySelector('a');if(a)a.innerHTML='<img alt="'+esc(t('Nameplate photo'))+'" src="'+u+'">';}catch(e){}
+    try{const u=await photoSrc(id);const a=d.querySelector('a');if(a)a.outerHTML='<img alt="'+esc(t('Nameplate photo'))+'" src="'+u+'">';}catch(e){}
   });
 }
 /* photo quality: brightness and sharpness on a small grey copy */
@@ -945,11 +877,13 @@ function renderHistory(){
 }
 async function addComment(){
   const text=$('#cmt').value.trim();if(!text)return;
+  if(S.role==='viewer'){toast(t('This account can only view.'));return;}
   const j={id:newId(),f:L.folderId,kind:'log',tab:'Comments',rows:[[new Date().toISOString(),L.name||L.email||'',F.w,F.c,F.comp.n,text]],busy:false};
   Q.push(j);await qPut(j);$('#cmt').value='';renderComments();sync(false);
 }
 async function saveForm(next){
   const {w,c,comp}=F;
+  if(S.role==='viewer'){toast(t('This account can only view.'));return;}
   if(Q.find(j=>j.kind==='rec'&&j.wtg===w&&j.comp===c&&j.busy)){toast(t('This item is syncing right now. Try again in a moment.'));return;}
   const serial=$('#f_serial').value.trim();
   const dup=isNp(comp)?findDup(serial,w,c):null;
@@ -1023,25 +957,41 @@ function addTurbine(){
   withDrive(()=>t('Turbine added'),()=>provision(CFG.name||'',CFG.prefix||'WTG',n,comps(),freeCats()));
 }
 async function saveConn(){
-  const cid=$('#c_id').value.trim(),fid=folderOf($('#c_f').value.trim());
-  if(!/\.apps\.googleusercontent\.com$/.test(cid)){toast(t('The Client ID should end with .apps.googleusercontent.com'));return;}
-  if(!/^[\w-]{10,}$/.test(fid)){toast(t('That does not look like a Drive folder link'));return;}
-  L.clientId=cid;
-  if(!L.projects.find(p=>p.f===fid))L.projects.push({f:fid,name:''});
-  if(fid!==L.folderId){L.folderId=fid;await loadProject();}
+  const f=serverOf($('#c_s').value);
+  if(!f){toast(t('The server link should start with https://script.google.com/ and end with /exec'),5000);return;}
+  if(!L.projects.find(p=>p.f===f))L.projects.push({f,name:''});
+  if(f!==L.folderId){L.folderId=f;L.email='';await loadProject();}
   lsSet('np_local',L);
-  go({name:'home'});
+  T=null;S.cred=null;S.entered=false;go({name:'welcome'});
 }
 async function invite(){
-  const url=location.origin+location.pathname+'#c='+enc(L.clientId)+'&f='+enc(L.folderId);
-  try{await navigator.clipboard.writeText(url);toast(t('Invite link copied. Send it to your team.'));}
+  const url=location.origin+location.pathname+'#s='+enc(L.folderId);
+  try{await navigator.clipboard.writeText(url);toast(t('Invite link copied. Send it to your team with their username and password.'),4500);}
   catch(e){app.insertAdjacentHTML('afterbegin','<div class="note" style="margin-bottom:12px">'+t('Copy this link and send it to your team:')+'<br><input type="text" readonly value="'+esc(url)+'"></div>');}
 }
+
+/* ---------- back: header arrow and the phone's back button do the same thing ---------- */
+function doBack(){const v=S.view.name;go(v==='form'?(S.view.from==='issues'?{name:'issues'}:{name:'wtg',w:S.view.w,m:S.view.m}):v==='entry'?(S.view.from==='issues'?{name:'issues'}:{name:'ents',w:S.view.w,m:S.view.m}):(v==='wtg'||v==='ents')?{name:'cat',m:S.view.m}:{name:'home'});}
+const isRoot=n=>n==='home'||n==='welcome'||(n==='connect'&&!L.folderId);
+let guard=false,ignorePop=false;
+/* keep one extra history entry while inside the app, so the phone's back button comes here instead of closing the app */
+function syncGuard(){
+  try{
+    const root=isRoot(S.view.name);
+    if(!root&&!guard){history.pushState({np:1},'');guard=true;}
+    else if(root&&guard){guard=false;ignorePop=true;history.back();}
+  }catch(e){}
+}
+window.addEventListener('popstate',()=>{
+  if(ignorePop){ignorePop=false;return;}
+  guard=false;
+  if(!isRoot(S.view.name))doBack();
+});
 
 /* ---------- taps ---------- */
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
-  if(a==='back'){const v=S.view.name;go(v==='form'?(S.view.from==='issues'?{name:'issues'}:{name:'wtg',w:S.view.w,m:S.view.m}):v==='entry'?(S.view.from==='issues'?{name:'issues'}:{name:'ents',w:S.view.w,m:S.view.m}):(v==='wtg'||v==='ents')?{name:'cat',m:S.view.m}:{name:'home'});}
+  if(a==='back')doBack();
   else if(a==='newent')go({name:'entry',w:S.view.w,m:S.view.m});
   else if(a==='openent')go({name:'entry',w:b.dataset.w,m:b.dataset.m,e:b.dataset.e,from:S.view.name});
   else if(a==='saveent')saveEntry(false);
@@ -1052,8 +1002,11 @@ document.addEventListener('click',e=>{
   else if(a==='smod'){setupKeep();S.smCur=b.dataset.m;setupChips();}
   else if(a==='addmod'){setupKeep();const n=$('#s_new').value.replace(/[^A-Za-z0-9 -]/g,'').trim().slice(0,24);if(!n||S.sm[n]!==undefined){toast(t('Type a new category name'));return;}S.sm[n]='';S.smCur=n;$('#s_new').value='';setupChips();}
   else if(a==='sync')sync(true);
-  else if(a==='enter'){S.entered=true;go({name:'home'});sync(false);}
   else if(a==='signin')signIn();
+  else if(a==='users')go({name:'users'});
+  else if(a==='edituser')editUser(b.dataset.u);
+  else if(a==='saveuser')saveUser();
+  else if(a==='newuser')vUsers();
   else if(a==='signout')signOut();
   else if(a==='lang'){LANG=LANG==='zh'?'en':'zh';lsSet('np_lang',LANG);render(true);}
   else if(a==='wtg'){S.q='';S.filter='all';go({name:isFree(S.view.m)?'ents':'wtg',w:b.dataset.w,m:S.view.m});}
@@ -1089,29 +1042,29 @@ let hiddenAt=0;
 document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='hidden'){hiddenAt=Date.now();return;}
   const v=S.view.name;
-  if(hiddenAt&&Date.now()-hiddenAt>15*60000&&S.entered&&v!=='form'&&v!=='entry'&&v!=='setup'){T=null;S.entered=false;go({name:'welcome'});}
+  if(hiddenAt&&Date.now()-hiddenAt>15*60000&&S.entered&&v!=='form'&&v!=='entry'&&v!=='setup'){signOut();}
 });
-setInterval(()=>{const v=S.view.name;if(document.visibilityState==='visible'&&S.entered&&(Q.length||(v!=='form'&&v!=='entry'&&v!=='setup'&&v!=='connect'&&v!=='projects')))sync(false);else pill();},60000);
+setInterval(()=>{const v=S.view.name;if(document.visibilityState==='visible'&&S.entered&&(Q.length||(v!=='form'&&v!=='entry'&&v!=='setup'&&v!=='connect'&&v!=='projects'&&v!=='users')))sync(false);else pill();},120000);
 
 /* ---------- start ---------- */
 (async()=>{
-  const h=new URLSearchParams(location.hash.slice(1));
-  if(h.get('c')&&h.get('f')){
-    L.clientId=h.get('c');L.folderId=h.get('f');
-    if(!L.projects.find(p=>p.f===L.folderId))L.projects.push({f:L.folderId,name:''});
+  const h=new URLSearchParams(location.hash.slice(1)),hs=serverOf(h.get('s'));
+  if(hs){
+    if(hs!==L.folderId)L.email='';
+    L.folderId=hs;
+    if(!L.projects.find(p=>p.f===hs))L.projects.push({f:hs,name:''});
     lsSet('np_local',L);
     try{history.replaceState(null,'',location.pathname);}catch(e){}
   }
   idb=await idbOpen();
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-  if(L.folderId&&!(await kvGet(pk('cfg')))){const o=await kvGet('cfg');if(o){await kvSet(pk('cfg'),o);const od=await kvGet('data');if(od)await kvSet(pk('data'),od);}}
   const js=await qAll();
   if(Array.isArray(js))REST=js.map(j=>({...j,f:j.f||L.folderId,kind:j.kind||'rec',iblobs:j.iblobs||[],idone:j.idone||[],blobs:j.blobs||[],done:j.done||[],busy:false}));
   if(L.folderId)await loadProject();
   render(true);
   setTimeout(()=>{const s=$('#splash');if(s){s.classList.add('off');setTimeout(()=>s.remove(),500);}},1600);
   if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}}
-  if(navigator.onLine!==false){loadGis().catch(()=>{});loadXlsx().catch(()=>{});}
+  if(navigator.onLine!==false){loadXlsx().catch(()=>{});}
 })();
 </script>
 </body>
