@@ -1,5 +1,5 @@
 // Keeps the app itself on the phone so it opens with no internet.
-const CACHE = 'nameplate-v12';
+const CACHE = 'nameplate-v13';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 // Excel tool used for "Export Excel"; saved on the phone so export also works offline.
 const XLSX_URL = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
@@ -36,7 +36,7 @@ self.addEventListener('fetch', e => {
   }
 
   // Text-reading (OCR) files from the CDN: saved after the first use so they work offline later.
-  if (url.hostname === 'cdn.jsdelivr.net' || url.hostname === 'tessdata.projectnaptha.com') {
+  if (url.hostname === 'cdn.jsdelivr.net' || url.hostname === 'tessdata.projectnaptha.com' || url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
     e.respondWith(
       caches.match(e.request).then(hit => hit || fetch(e.request).then(r => {
         if (r.ok || r.type === 'opaque') { const copy = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
