@@ -1,5 +1,5 @@
 // Keeps the app itself on the phone so it opens with no internet.
-const CACHE = 'nameplate-v16';
+const CACHE = 'nameplate-v17';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 // Excel tool used for "Export Excel"; saved on the phone so export also works offline.
 const XLSX_URL = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
