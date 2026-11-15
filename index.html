@@ -477,7 +477,7 @@ async function ensureToken(){
 function blankCfg(){return {sheetId:'',name:'',prefix:'WTG',count:27,comps:[],free:[],folders:{}};}
 async function pull(){
   const d=await call('pull',{vers:S.vers||null});
-  S.role=d.role||S.role;if(d.name)L.name=d.name;
+  S.role=d.role||S.role;if(d.name)L.name=d.name;S.outdated=(d.ver||'')!==SERVER_VER;
   if(!CFG)CFG=blankCfg();
   CFG.checked=true;
   if(!d.cfg){CFG.sheetId='';CFG.comps=[];CFG.free=[];CFG.name='';RECS={};HIST=[];COMM=[];ENT={};await saveCfgLocal();await kvSet(pk('data'),{recs:{},hist:[],comm:[],ent:{}});return;}
@@ -496,6 +496,7 @@ const rowVals=(rec,comp)=>[rec.serial,rec.maker,rec.model,status(rec,comp),rec.r
 const dayOf=iso=>{const d=iso?toDate(iso):new Date(),x=isNaN(d)?new Date():d,p2=n=>String(n).padStart(2,'0');return x.getFullYear()+'-'+p2(x.getMonth()+1)+'-'+p2(x.getDate());};
 async function sendPhoto(w,cat,name,blob){const d=await call('photo',{w,cat,name,b64:await toB64(blob)});return link(d.id);}
 let PUSH_ERR='';
+const SERVER_VER='v3';
 async function push(){
   const batch=Q.filter(j=>!j.busy);if(!batch.length)return [];
   batch.forEach(j=>j.busy=true);const touched=new Set(),bad=new Set();PUSH_ERR='';
@@ -536,6 +537,7 @@ async function push(){
     for(const j of delJobs){entdel.push(j.eid);fin.push([j,null]);}
     if(!recs.length&&!ents.length&&!logs.length&&!del.length&&!entdel.length)return [...touched];
     const res=await call('push',{recs,ents,logs,del:[...new Set(del)],entdel});
+    S.outdated=(res.ver||'')!==SERVER_VER;
     const miss=new Set((res.missing||[]).map(m=>m.w+'|'+m.c)),conf=res.conflicts||[];
     for(const [j,x] of fin){
       if(j.kind==='rec'){
@@ -554,7 +556,10 @@ async function push(){
         if(j.tab==='History')j.rows.forEach(r=>HIST.push({at:r[0],by:r[1],w:r[2],c:r[3],field:r[5],old:r[6],val:r[7]}));
         else j.rows.forEach(r=>COMM.push({at:r[0],by:r[1],w:r[2],c:r[3],text:r[5]}));
       }
-      else if(j.kind==='entdel'){if(ENT[j.wtg])ENT[j.wtg]=ENT[j.wtg].filter(z=>z.id!==j.eid);touched.add(j.wtg);}
+      else if(j.kind==='entdel'){
+        if(!(res.entdone||[]).includes(j.eid)){j.err=t('The server did not confirm this delete. Ask the admin to deploy the new server code.');S.outdated=true;await qPut(j);continue;}
+        if(ENT[j.wtg])ENT[j.wtg]=ENT[j.wtg].filter(z=>z.id!==j.eid);touched.add(j.wtg);
+      }
       const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);
     }
     if(res.missing&&res.missing.length)S.warn=t('{0} item(s) have no row in the sheet, so they are kept on this phone. Open Setup and save the project again.',res.missing.length);
@@ -740,18 +745,18 @@ function vHome(){
     else h='<p><b>'+t('No project loaded yet.')+'</b></p>'+(S.err?'<p>'+esc(S.err)+'</p>':'')+'<button class="btn" data-act="sync">'+t('Try again')+'</button>';
     app.innerHTML='<div class="note">'+h+'</div><div class="tools" style="margin-top:12px"><button class="btn ghost" data-act="projects">'+t('Projects')+'</button><button class="btn ghost" data-act="connect">'+t('Change connection')+'</button><button class="btn ghost" data-act="signout">'+t('Sign out')+'</button></div>';return;
   }
-  const ws=wtgIds(),ms=mods();let done=0,all=0,iss=0;
+  const ws=wtgIds(),ms=mods();let done=0,all=0,iss=0;const pcts=[];
   const cards=ms.map((m,i)=>{
     const st=modStyle(m);let sub,pct,is=0;
-    if(isFree(m)){const fs=freeStats(m);is=fs.is;sub=t('{0} entries',fs.n)+' · '+t('{0} of {1} turbines have photos',fs.tw,ws.length);pct=null;}
-    else{let d=0,tot=0;ws.forEach(w=>{const x=stats(w,m);d+=x.done;tot+=x.total;is+=x.issue;});done+=d;all+=tot;sub=t('{0} / {1} done',d.toLocaleString(),tot.toLocaleString())+' · '+t('{0} items per turbine',Math.round(tot/ws.length));pct=tot?d/tot:0;}
+    if(isFree(m)){const fs=freeStats(m);is=fs.is;sub=t('{0} entries',fs.n)+' · '+t('{0} of {1} turbines have photos',fs.tw,ws.length);pct=null;done+=fs.tw;all+=ws.length;pcts.push(ws.length?fs.tw/ws.length:0);}
+    else{let d=0,tot=0;ws.forEach(w=>{const x=stats(w,m);d+=x.done;tot+=x.total;is+=x.issue;});done+=d;all+=tot;sub=t('{0} / {1} done',d.toLocaleString(),tot.toLocaleString())+' · '+t('{0} items per turbine',Math.round(tot/ws.length));pct=tot?d/tot:0;pcts.push(pct);}
     iss+=is;
     return '<button class="gcard" style="animation-delay:'+(120+i*80)+'ms" data-act="cat" data-m="'+esc(m)+'"><span class="gi" style="background:'+st[0]+';color:'+st[1]+'">'+st[3]+'</span><span class="t"><b>'+esc(modLabel(m))+'</b><small>'+sub+(is?' · <span style="color:var(--bad);font-weight:700">'+t('{0} issues',is)+'</span>':'')+'</small></span>'+(pct===null?'<span class="fcount">'+freeStats(m).ph+'</span>':ring(pct,st[2]))+'</button>';}).join('');
   const cfN=conflicts().length,waitN=Q.length-cfN;
-  app.innerHTML=(S.err?'<div class="alert">'+t('Last sync problem')+': '+esc(S.err)+'</div>':'')+
+  app.innerHTML=(S.outdated?'<div class="alert"><b>'+t('The server needs an update.')+'</b> '+t('Changes are kept on this phone until the admin deploys the new server code (Code.txt).')+'</div>':'')+(S.err?'<div class="alert">'+t('Last sync problem')+': '+esc(S.err)+'</div>':'')+
     (cfN?'<button class="alert" data-act="issues" style="display:block;width:100%;border:0;text-align:left;font:inherit;cursor:pointer;background:var(--badbg);color:var(--badtx)"><b>'+t('{0} item(s) were also changed by someone else.',cfN)+'</b> '+t('Tap to open them and choose.')+'</button>':'')+
     (waitN>0?'<button class="alert" data-act="sync" style="display:block;width:100%;border:0;text-align:left;font:inherit;cursor:pointer"><b>'+t('{0} item(s) are saved only on this phone.',waitN)+'</b> '+t('Tap to sync now. Do not clear the app or change phones before this is done.')+'</button>':'')+
-    '<div class="hero2"><div class="hl"><span>'+esc(projName()||t('Overall progress'))+'</span><b id="ovn">'+done.toLocaleString()+' / '+all.toLocaleString()+'</b><span>'+t('items done overall')+'</span><button class="pillbtn" data-act="sync">'+t('Sync now')+'</button></div>'+ring(all?done/all:0,'#fff',true)+'</div>'+
+    '<div class="hero2"><div class="hl"><span>'+esc(projName()||t('Overall progress'))+'</span><b id="ovn">'+done.toLocaleString()+' / '+all.toLocaleString()+'</b><span>'+t('items done overall')+'</span><button class="pillbtn" data-act="sync">'+t('Sync now')+'</button></div>'+ring(pcts.length?pcts.reduce((a,b)=>a+b,0)/pcts.length:0,'#fff',true)+'</div>'+
     '<div class="meta2"><span>'+t('{0} turbines',ws.length)+'</span><span>'+t('{0} issues',iss)+'</span>'+(isAdmin()?'<span>'+t('Admin')+'</span>':S.role==='viewer'?'<span>'+t('View only')+'</span>':'')+'</div>'+
     '<h3 class="sec2">'+t('Categories')+' <span class="cnt">'+ms.length+'</span></h3>'+cards;
   if(S.fresh){S.fresh=false;countUp($('#ovn'),done,all);}
