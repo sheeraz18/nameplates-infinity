@@ -1,6 +1,6 @@
 {
-  "name": "WTG Nameplate Tracker",
-  "short_name": "Nameplates",
+  "name": "WTG Site Records",
+  "short_name": "Site Records",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

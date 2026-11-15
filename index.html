@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="icon-192.png">
-<title>Nameplate Tracker</title>
+<title>WTG Site Records</title>
 <style>
 :root{color-scheme:light;--bg:#F5F8FC;--card:#fff;--ink:#0B1F33;--mute:#55657A;--line:#E2E8F0;--line2:#C5D0DC;--head:#003163;--head2:#0B4A8A;--ok:#12804F;--okbg:#DFF3E8;--oktx:#0C5C38;--warn:#B37A00;--warnbg:#FFF0CC;--warntx:#6B4700;--bad:#B3361B;--badbg:#FDE4DE;--badtx:#8F2A14;--idle:#EEF1F4;--idletx:#46566A}
 *{box-sizing:border-box}
@@ -177,14 +177,16 @@ body.hasnav #toast{bottom:108px}
 .prof{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;padding:16px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,49,99,.07)}
 .prof b{display:block;font-size:17px}.prof small{color:var(--mute)}
 a.row{text-decoration:none}
+.ph button.re{top:auto;left:0;right:0;bottom:0;width:100%;height:auto;border-radius:0;background:rgba(0,49,99,.86);font:700 11px inherit;padding:6px 0}
 .row .n .tag{display:inline-block;margin-bottom:4px}
 </style>
 </head>
 <body>
-<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#FFFFFF"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Nameplate Tracker</b><span>TURBINE COMPONENT RECORDS</span><i></i></div>
-<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#FFFFFF"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="av" id="av"></span><h1 id="title">Nameplate Tracker</h1><button id="pill" data-act="sync">…</button></header>
+<div id="splash"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#FFFFFF"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>WTG Site Records</b><span>TURBINE COMPONENT RECORDS</span><i></i></div>
+<header><button id="back" data-act="back" aria-label="Back">&#8249;</button><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="7" fill="#FFFFFF"/><circle cx="13" cy="21" r="2" fill="#003163"/><circle cx="51" cy="21" r="2" fill="#003163"/><circle cx="13" cy="43" r="2" fill="#003163"/><circle cx="51" cy="43" r="2" fill="#003163"/><rect x="19" y="23" width="20" height="4" rx="2" fill="#003163"/><path d="M20 37l6 6 13-13" fill="none" stroke="#003163" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="av" id="av"></span><h1 id="title">WTG Site Records</h1><button id="pill" data-act="sync">…</button></header>
 <main id="app"></main>
 <nav id="nav" aria-label="Main"><button data-act="home" data-n="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg><span></span></button><button data-act="issues" data-n="issues"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><span></span></button><button id="fab" data-act="sync" aria-label="Sync"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14 5.300M4 12a8 8 0 0 1 14-5.300M18 3v4h-4M6 21v-4h4"/></svg></button><button data-act="navx" data-n="export"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span></span></button><button data-act="menu" data-n="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span></span></button></nav>
+<input type="file" accept="image/*" capture="environment" hidden id="recam">
 <div id="toast"></div>
 <script>
 const SCOPE='https://www.googleapis.com/auth/drive';
@@ -206,7 +208,7 @@ const ls=k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return nul
 const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
 
 /* ---------- language: English + Chinese ---------- */
-const ZH={"Google sign-in could not load. Check the internet connection.": "无法加载 Google 登录，请检查网络连接。", "The Excel tool is not on this phone yet. Open the app once with internet.": "此手机尚未下载 Excel 工具，请联网打开一次应用。", "Sign-in failed": "登录失败", "Sign-in was cancelled": "登录已取消", "No connection to Google": "无法连接 Google", "{0} item(s) have no row in the sheet. Open Setup and save the project again.": "{0} 个项目在表格中没有对应行。请打开设置并重新保存项目。", "No internet. Data stays on this phone until you are online.": "没有网络。数据会保存在手机上，联网后再同步。", "Excel file for {0} was not updated": "{0} 的 Excel 文件未更新", "Creating sheet tabs…": "正在创建表格页…", "Writing component lists…": "正在写入部件清单…", "Creating turbine folders…": "正在创建机组文件夹…", "This needs internet": "此操作需要网络", "Connecting to Drive…": "正在连接云端硬盘…", "Could not save": "保存失败", "sign in again": "请重新登录", "Excel saved to Downloads": "Excel 已保存到下载文件夹", "Not connected": "未连接", "Syncing…": "同步中…", "Offline": "离线", "{0} waiting": "{0} 条待同步", "Tap to sign in": "点击登录", "tap to sync": "点击同步", "Synced": "已同步", "Signed in": "已登录", "All turbines": "全部机组", "Project setup": "项目设置", "Connect to Google Drive": "连接 Google 云端硬盘", "Issues": "问题", "Projects": "项目", "TURBINE COMPONENT RECORDS": "风机部件铭牌记录", "Open the app from its web address": "请通过网址打开应用", "Google sign-in does not work when the app is opened as a file from the computer. Open the app link in the browser instead.": "从电脑文件打开应用时无法使用 Google 登录。请在浏览器中打开应用链接。", "No internet, so Google sign-in is not possible right now. You can keep working as {0}; everything syncs after the next sign-in.": "当前没有网络，无法进行 Google 登录。您可以以 {0} 的身份继续工作，下次登录后会全部同步。", "Continue offline": "离线继续", "Sign in": "登录", "The first sign-in needs internet. Connect and try again.": "首次登录需要网络，请联网后重试。", "Sign in with Google": "使用 Google 登录", "Use the Google account your team shared the project with.": "请使用团队共享项目时所用的 Google 账号。", "Last used by {0}": "上次使用者：{0}", "Secure sign-in with Google · Data stays in your team's Drive": "通过 Google 安全登录 · 数据保存在团队的云端硬盘", "Saved": "已保存", "Sign-in needs internet": "登录需要网络", "CONNECT THIS PHONE": "连接此手机", "One-time setup. If a teammate sent you an invite link, open that link instead.": "只需设置一次。如果同事发来了邀请链接，请直接打开该链接。", "Google OAuth Client ID": "Google OAuth 客户端 ID", "Shared Drive folder link": "共享的云端硬盘文件夹链接", "Save and continue": "保存并继续", "Sign in to load the project.": "请登录以加载项目。", "Loading project from Drive…": "正在从云端硬盘加载项目…", "This Drive folder has no project yet.": "此云端硬盘文件夹中还没有项目。", "Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.": "设置机组数量和部件清单后，应用会在云端硬盘文件夹中创建总表，并为每台机组创建一个文件夹。", "Set up project": "设置项目", "No project loaded yet.": "尚未加载项目。", "Load from Drive": "从云端硬盘加载", "Change connection": "更改连接", "Sign out": "退出登录", "{0} issues": "{0} 个问题", "Complete": "已完成", "In progress": "进行中", "Not started": "未开始", "{0} / {1} done": "已完成 {0} / {1}", "Last sync problem": "上次同步出现问题", "Overall progress": "总体进度", "{0} turbines": "{0} 台机组", "{0} components each": "每台 {0} 个部件", "Sync now": "立即同步", "Export Excel": "导出 Excel", "Open sheet": "打开表格", "Invite link": "邀请链接", "Setup": "设置", "Tap again to add {0}": "再点一次以添加 {0}", "Add turbine": "添加机组", "{0} partial": "{0} 个未完成", "{0} pending": "{0} 个待处理", "Next pending item": "下一个待处理项", "Open Drive folder": "打开云端硬盘文件夹", "Search component or serial no.": "搜索部件或序列号", "Issue": "问题", "issue resolved": "问题已解决", "Serial number missing": "缺少序列号", "Pending": "待处理", "{0} / {1} photos": "照片 {0} / {1}", "not synced": "未同步", "Nothing matches.": "没有匹配的项目。", "No open issues.": "没有未解决的问题。", "Items marked as issue on any turbine show up here.": "任何机组上标记为问题的项目都会显示在这里。", "Resolved": "已解决", "Unnamed project": "未命名项目", "Open now": "当前项目", "Tap to open": "点击打开", "Add a project": "添加项目", "Make a new folder in Drive for the new project and paste its link. The component list of the current project is offered as the starting list.": "请在云端硬盘中为新项目新建一个文件夹并粘贴其链接。系统会以当前项目的部件清单作为初始清单。", "Add project": "添加项目", "That does not look like a Drive folder link": "这不像是云端硬盘文件夹链接", "Take photo": "拍照", "From gallery": "从相册选择", "Serial number": "序列号", "Scan barcode / QR": "扫描条码 / 二维码", "Read number from photo": "从照片识别编号", "Manufacturer": "制造商", "Model / type / rating": "型号 / 类型 / 额定值", "Remarks": "备注", "Mark as issue": "标记为问题", "Issue details": "问题详情", "Issue type": "问题类型", "Take issue photo": "拍摄问题照片", "Issue resolved": "问题已解决", "Save and next": "保存并下一个", "Save": "保存", "Cancel": "取消", "Last saved {0}": "上次保存：{0}", "Write a note or question for the team": "给团队写备注或问题", "Add": "添加", "Code scanning is not supported on this device. Use Chrome on an Android phone.": "此设备不支持扫码，请在安卓手机上使用 Chrome。", "No barcode or QR code found in the photo.": "照片中未发现条码或二维码。", "On Drive, tap to open": "已在云端硬盘，点击打开", "Remove photo": "删除照片", "Photo, not synced yet": "照片，尚未同步", "{0} of {1} required photos": "必需照片 {0} / {1}", "Nameplate photo": "铭牌照片", "Number filled in. Check it against the nameplate.": "编号已填入，请与铭牌核对。", "Tap the correct number": "请点击正确的编号", "Take a photo first": "请先拍照", "Reading text from the photo…": "正在识别照片中的文字…", "No serial-like text found. Type it in.": "未识别到类似序列号的文字，请手动输入。", "Text reading is not available right now. It needs internet the first time.": "文字识别暂时不可用，首次使用需要网络。", "Comments": "备注留言", "No comments yet.": "暂无留言。", "Change history": "修改记录", "No changes recorded yet.": "暂无修改记录。", "This item is syncing right now. Try again in a moment.": "此项目正在同步，请稍后再试。", "Same serial number already saved on {0}.": "相同的序列号已保存在 {0}。", "Check the nameplate. Tap Save again to keep it anyway.": "请核对铭牌。如仍要保存，请再点一次保存。", "Saved, but this browser is not keeping data on the device. Stay online and sync now.": "已保存，但此浏览器不会在设备上保留数据。请保持联网并立即同步。", "All items of {0} are done or flagged.": "{0} 的所有项目均已完成或已标记。", "Project name": "项目名称", "Turbine prefix": "机组编号前缀", "Number of turbines": "机组数量", "Component list: one per line, as Section | Component | photos required": "部件清单：每行一个，格式为 位置 | 部件 | 所需照片数", "The photo number is optional; without it one photo is required. Saving needs internet. Renaming a component later detaches the data already saved for it.": "照片数可不填，默认需要 1 张。保存需要网络。之后重命名部件会使其已保存的数据脱离。", "Save project to Drive": "保存项目到云端硬盘", "Load master list (109 items)": "加载主清单（109 项）", "Add at least one component": "请至少添加一个部件", "Project saved: {0} components × {1} turbines": "项目已保存：{0} 个部件 × {1} 台机组", "200 turbines is the limit": "最多 200 台机组", "Turbine added": "机组已添加", "The Client ID should end with .apps.googleusercontent.com": "客户端 ID 应以 .apps.googleusercontent.com 结尾", "Invite link copied. Send it to your team.": "邀请链接已复制，请发给团队。", "Copy this link and send it to your team:": "请复制此链接并发给团队：", "A photo looks blurry. Retake it if the text is not readable.": "有照片看起来模糊。如果文字看不清，请重拍。", "A photo looks too dark. Use the torch and retake it.": "有照片太暗。请打开手电筒后重拍。", "A photo looks too bright. Avoid glare and retake it.": "有照片过亮。请避开反光后重拍。", "All": "全部", "Partial": "未完成", "Done": "已完成", "Damaged": "损坏", "Missing": "缺失", "Mismatch": "不符", "Other": "其他", "Model": "型号", "Photos": "照片", "Nameplates": "铭牌", "MCC photos": "MCC 照片", "Installation photos": "安装照片", "Commissioning photos": "调试照片", "{0} items per turbine": "每台 {0} 项", "{0} categories": "{0} 个类别", "Photos missing": "缺少照片", "Categories": "类别", "List for this category: one per line, as Section | Item | photos required": "此类别的清单：每行一个，格式为 位置 | 项目 | 所需照片数", "Reset this list": "重置此清单", "New category name": "新类别名称", "Add category": "添加类别", "Type a new category name": "请输入新的类别名称", "MCC, Installation and Commissioning start with sample lists; replace them with your own. The photo number is optional; without it one photo is required. Saving needs internet. Renaming an item later detaches the data already saved for it.": "MCC、安装和调试类别默认使用示例清单，请替换为您自己的清单。照片数可不填，默认需要 1 张。保存需要网络。之后重命名项目会使其已保存的数据脱离。", "Project saved: {0} items × {1} turbines": "项目已保存：{0} 项 × {1} 台机组", "{0} photos": "{0} 张照片", "General photos": "通用照片", "{0} of {1} turbines have photos": "{1} 台机组中有 {0} 台已有照片", "No photos": "暂无照片", "{0} entries": "{0} 条记录", "Add photo": "添加照片", "No photos yet.": "还没有照片。", "Tap Add photo, take the picture and write what it shows.": "点击“添加照片”，拍照并写明照片内容。", "New photo": "新照片", "Title: what does the photo show?": "标题：照片内容是什么？", "e.g. Tower S2 flange bolts": "例如：塔筒 S2 法兰螺栓", "Details": "详细说明", "Location, measurement, work step, anything worth recording": "位置、测量值、工序等任何需要记录的内容", "Save and add another": "保存并继续添加", "Photo": "照片", "Add at least one photo": "请至少添加一张照片", "Write a short title for the photo": "请为照片写一个简短标题", "general photos": "通用照片", "A category with an empty list is for general photos: the team takes a photo and writes its title and details. A category with a list becomes a checklist. Saving needs internet.": "清单为空的类别用于通用照片：团队拍照并填写标题和说明。有清单的类别则作为检查清单。保存需要网络。", "The server did not answer correctly. Check the server link.": "服务器响应不正确，请检查服务器链接。", "No connection to the server": "无法连接服务器", "Sign out and sign in again to sync.": "请退出后重新登录以同步。", "Saving the project on the server. This can take a minute…": "正在服务器上保存项目，可能需要一分钟…", "Connecting to the server…": "正在连接服务器…", "Saved on Drive": "已保存到云端硬盘", "No internet. You can sign in offline if you have signed in on this phone before.": "没有网络。如果您之前在此手机上登录过，可以离线登录。", "Username": "用户名", "Password": "密码", "Ask your project admin for a username and password.": "请向项目管理员索取用户名和密码。", "Your data is saved in the project's Google Drive": "数据保存在项目的 Google 云端硬盘中", "Server link": "服务器链接", "Type your username and password": "请输入用户名和密码", "Wrong username or password.": "用户名或密码错误。", "Cannot sign in offline: wrong password, or this user has not signed in on this phone before.": "无法离线登录：密码错误，或该用户未在此手机上登录过。", "Server link (from the project admin)": "服务器链接（由项目管理员提供）", "Loading the project…": "正在加载项目…", "This needs internet the first time.": "首次需要网络。", "This project is not set up yet.": "此项目尚未设置。", "Ask the project admin to set it up.": "请让项目管理员进行设置。", "Try again": "重试", "Users": "用户", "Admin": "管理员", "View only": "仅查看", "User": "用户", "Each project has its own server link, users and Drive folder. After adding it, sign in with your username for that project.": "每个项目都有自己的服务器链接、用户和云端硬盘文件夹。添加后，请使用该项目的用户名登录。", "The server link should start with https://script.google.com/ and end with /exec": "服务器链接应以 https://script.google.com/ 开头并以 /exec 结尾", "Loading users…": "正在加载用户…", "Disabled": "已停用", "Add a user": "添加用户", "Full name": "姓名", "Password (at least 6 characters)": "密码（至少 6 个字符）", "Role": "角色", "adds photos and data": "添加照片和数据", "also setup and users": "还可设置项目和管理用户", "Active (can sign in)": "启用（可以登录）", "Save user": "保存用户", "Clear form": "清空表单", "To change a password, tap the user, type a new password and save. Leave the password empty to keep the old one.": "如需修改密码，请点击该用户，输入新密码并保存。密码留空则保持不变。", "Edit user": "编辑用户", "Type a username": "请输入用户名", "User saved": "用户已保存", "Invite link copied. Send it to your team with their username and password.": "邀请链接已复制。请连同用户名和密码一起发给团队成员。", "This account can only view.": "此账号只能查看。", "Sign in to sync": "登录后同步", "Connect this phone": "连接此手机", "Home": "首页", "Export": "导出", "Menu": "菜单", "Hello": "你好", "nameplates done": "铭牌已完成", "Usernames, passwords and roles": "用户名、密码和角色", "Send the app to your team": "把应用发给团队", "Turbines, categories and lists": "机组、类别和清单", "The master sheet in Google Drive": "Google 云端硬盘中的总表", "Whole project as one file": "整个项目导出为一个文件", "Language": "语言", "Tap again to clear this phone": "再点一次以清除此手机上的数据", "Clear data on this phone": "清除此手机上的数据", "{0} unsynced items will be lost": "将丢失 {0} 条未同步的数据", "Removes saved copies from this phone only, not from Drive": "只删除此手机上的副本，不会删除云端硬盘中的数据"};
+const ZH={"Google sign-in could not load. Check the internet connection.": "无法加载 Google 登录，请检查网络连接。", "The Excel tool is not on this phone yet. Open the app once with internet.": "此手机尚未下载 Excel 工具，请联网打开一次应用。", "Sign-in failed": "登录失败", "Sign-in was cancelled": "登录已取消", "No connection to Google": "无法连接 Google", "{0} item(s) have no row in the sheet. Open Setup and save the project again.": "{0} 个项目在表格中没有对应行。请打开设置并重新保存项目。", "No internet. Data stays on this phone until you are online.": "没有网络。数据会保存在手机上，联网后再同步。", "Excel file for {0} was not updated": "{0} 的 Excel 文件未更新", "Creating sheet tabs…": "正在创建表格页…", "Writing component lists…": "正在写入部件清单…", "Creating turbine folders…": "正在创建机组文件夹…", "This needs internet": "此操作需要网络", "Connecting to Drive…": "正在连接云端硬盘…", "Could not save": "保存失败", "sign in again": "请重新登录", "Excel saved to Downloads": "Excel 已保存到下载文件夹", "Not connected": "未连接", "Syncing…": "同步中…", "Offline": "离线", "{0} waiting": "{0} 条待同步", "Tap to sign in": "点击登录", "tap to sync": "点击同步", "Synced": "已同步", "Signed in": "已登录", "All turbines": "全部机组", "Project setup": "项目设置", "Connect to Google Drive": "连接 Google 云端硬盘", "Issues": "问题", "Projects": "项目", "TURBINE COMPONENT RECORDS": "风机部件铭牌记录", "Open the app from its web address": "请通过网址打开应用", "Google sign-in does not work when the app is opened as a file from the computer. Open the app link in the browser instead.": "从电脑文件打开应用时无法使用 Google 登录。请在浏览器中打开应用链接。", "No internet, so Google sign-in is not possible right now. You can keep working as {0}; everything syncs after the next sign-in.": "当前没有网络，无法进行 Google 登录。您可以以 {0} 的身份继续工作，下次登录后会全部同步。", "Continue offline": "离线继续", "Sign in": "登录", "The first sign-in needs internet. Connect and try again.": "首次登录需要网络，请联网后重试。", "Sign in with Google": "使用 Google 登录", "Use the Google account your team shared the project with.": "请使用团队共享项目时所用的 Google 账号。", "Last used by {0}": "上次使用者：{0}", "Secure sign-in with Google · Data stays in your team's Drive": "通过 Google 安全登录 · 数据保存在团队的云端硬盘", "Saved": "已保存", "Sign-in needs internet": "登录需要网络", "CONNECT THIS PHONE": "连接此手机", "One-time setup. If a teammate sent you an invite link, open that link instead.": "只需设置一次。如果同事发来了邀请链接，请直接打开该链接。", "Google OAuth Client ID": "Google OAuth 客户端 ID", "Shared Drive folder link": "共享的云端硬盘文件夹链接", "Save and continue": "保存并继续", "Sign in to load the project.": "请登录以加载项目。", "Loading project from Drive…": "正在从云端硬盘加载项目…", "This Drive folder has no project yet.": "此云端硬盘文件夹中还没有项目。", "Set the number of turbines and the component list. The app then creates the master sheet and one folder per turbine in the Drive folder.": "设置机组数量和部件清单后，应用会在云端硬盘文件夹中创建总表，并为每台机组创建一个文件夹。", "Set up project": "设置项目", "No project loaded yet.": "尚未加载项目。", "Load from Drive": "从云端硬盘加载", "Change connection": "更改连接", "Sign out": "退出登录", "{0} issues": "{0} 个问题", "Complete": "已完成", "In progress": "进行中", "Not started": "未开始", "{0} / {1} done": "已完成 {0} / {1}", "Last sync problem": "上次同步出现问题", "Overall progress": "总体进度", "{0} turbines": "{0} 台机组", "{0} components each": "每台 {0} 个部件", "Sync now": "立即同步", "Export Excel": "导出 Excel", "Open sheet": "打开表格", "Invite link": "邀请链接", "Setup": "设置", "Tap again to add {0}": "再点一次以添加 {0}", "Add turbine": "添加机组", "{0} partial": "{0} 个未完成", "{0} pending": "{0} 个待处理", "Next pending item": "下一个待处理项", "Open Drive folder": "打开云端硬盘文件夹", "Search component or serial no.": "搜索部件或序列号", "Issue": "问题", "issue resolved": "问题已解决", "Serial number missing": "缺少序列号", "Pending": "待处理", "{0} / {1} photos": "照片 {0} / {1}", "not synced": "未同步", "Nothing matches.": "没有匹配的项目。", "No open issues.": "没有未解决的问题。", "Items marked as issue on any turbine show up here.": "任何机组上标记为问题的项目都会显示在这里。", "Resolved": "已解决", "Unnamed project": "未命名项目", "Open now": "当前项目", "Tap to open": "点击打开", "Add a project": "添加项目", "Make a new folder in Drive for the new project and paste its link. The component list of the current project is offered as the starting list.": "请在云端硬盘中为新项目新建一个文件夹并粘贴其链接。系统会以当前项目的部件清单作为初始清单。", "Add project": "添加项目", "That does not look like a Drive folder link": "这不像是云端硬盘文件夹链接", "Take photo": "拍照", "From gallery": "从相册选择", "Serial number": "序列号", "Scan barcode / QR": "扫描条码 / 二维码", "Read number from photo": "从照片识别编号", "Manufacturer": "制造商", "Model / type / rating": "型号 / 类型 / 额定值", "Remarks": "备注", "Mark as issue": "标记为问题", "Issue details": "问题详情", "Issue type": "问题类型", "Take issue photo": "拍摄问题照片", "Issue resolved": "问题已解决", "Save and next": "保存并下一个", "Save": "保存", "Cancel": "取消", "Last saved {0}": "上次保存：{0}", "Write a note or question for the team": "给团队写备注或问题", "Add": "添加", "Code scanning is not supported on this device. Use Chrome on an Android phone.": "此设备不支持扫码，请在安卓手机上使用 Chrome。", "No barcode or QR code found in the photo.": "照片中未发现条码或二维码。", "On Drive, tap to open": "已在云端硬盘，点击打开", "Remove photo": "删除照片", "Photo, not synced yet": "照片，尚未同步", "{0} of {1} required photos": "必需照片 {0} / {1}", "Nameplate photo": "铭牌照片", "Number filled in. Check it against the nameplate.": "编号已填入，请与铭牌核对。", "Tap the correct number": "请点击正确的编号", "Take a photo first": "请先拍照", "Reading text from the photo…": "正在识别照片中的文字…", "No serial-like text found. Type it in.": "未识别到类似序列号的文字，请手动输入。", "Text reading is not available right now. It needs internet the first time.": "文字识别暂时不可用，首次使用需要网络。", "Comments": "备注留言", "No comments yet.": "暂无留言。", "Change history": "修改记录", "No changes recorded yet.": "暂无修改记录。", "This item is syncing right now. Try again in a moment.": "此项目正在同步，请稍后再试。", "Same serial number already saved on {0}.": "相同的序列号已保存在 {0}。", "Check the nameplate. Tap Save again to keep it anyway.": "请核对铭牌。如仍要保存，请再点一次保存。", "Saved, but this browser is not keeping data on the device. Stay online and sync now.": "已保存，但此浏览器不会在设备上保留数据。请保持联网并立即同步。", "All items of {0} are done or flagged.": "{0} 的所有项目均已完成或已标记。", "Project name": "项目名称", "Turbine prefix": "机组编号前缀", "Number of turbines": "机组数量", "Component list: one per line, as Section | Component | photos required": "部件清单：每行一个，格式为 位置 | 部件 | 所需照片数", "The photo number is optional; without it one photo is required. Saving needs internet. Renaming a component later detaches the data already saved for it.": "照片数可不填，默认需要 1 张。保存需要网络。之后重命名部件会使其已保存的数据脱离。", "Save project to Drive": "保存项目到云端硬盘", "Load master list (109 items)": "加载主清单（109 项）", "Add at least one component": "请至少添加一个部件", "Project saved: {0} components × {1} turbines": "项目已保存：{0} 个部件 × {1} 台机组", "200 turbines is the limit": "最多 200 台机组", "Turbine added": "机组已添加", "The Client ID should end with .apps.googleusercontent.com": "客户端 ID 应以 .apps.googleusercontent.com 结尾", "Invite link copied. Send it to your team.": "邀请链接已复制，请发给团队。", "Copy this link and send it to your team:": "请复制此链接并发给团队：", "A photo looks blurry. Retake it if the text is not readable.": "有照片看起来模糊。如果文字看不清，请重拍。", "A photo looks too dark. Use the torch and retake it.": "有照片太暗。请打开手电筒后重拍。", "A photo looks too bright. Avoid glare and retake it.": "有照片过亮。请避开反光后重拍。", "All": "全部", "Partial": "未完成", "Done": "已完成", "Damaged": "损坏", "Missing": "缺失", "Mismatch": "不符", "Other": "其他", "Model": "型号", "Photos": "照片", "Nameplates": "铭牌", "MCC photos": "MCC 照片", "Installation photos": "安装照片", "Commissioning photos": "调试照片", "{0} items per turbine": "每台 {0} 项", "{0} categories": "{0} 个类别", "Photos missing": "缺少照片", "Categories": "类别", "List for this category: one per line, as Section | Item | photos required": "此类别的清单：每行一个，格式为 位置 | 项目 | 所需照片数", "Reset this list": "重置此清单", "New category name": "新类别名称", "Add category": "添加类别", "Type a new category name": "请输入新的类别名称", "MCC, Installation and Commissioning start with sample lists; replace them with your own. The photo number is optional; without it one photo is required. Saving needs internet. Renaming an item later detaches the data already saved for it.": "MCC、安装和调试类别默认使用示例清单，请替换为您自己的清单。照片数可不填，默认需要 1 张。保存需要网络。之后重命名项目会使其已保存的数据脱离。", "Project saved: {0} items × {1} turbines": "项目已保存：{0} 项 × {1} 台机组", "{0} photos": "{0} 张照片", "General photos": "通用照片", "{0} of {1} turbines have photos": "{1} 台机组中有 {0} 台已有照片", "No photos": "暂无照片", "{0} entries": "{0} 条记录", "Add photo": "添加照片", "No photos yet.": "还没有照片。", "Tap Add photo, take the picture and write what it shows.": "点击“添加照片”，拍照并写明照片内容。", "New photo": "新照片", "Title: what does the photo show?": "标题：照片内容是什么？", "e.g. Tower S2 flange bolts": "例如：塔筒 S2 法兰螺栓", "Details": "详细说明", "Location, measurement, work step, anything worth recording": "位置、测量值、工序等任何需要记录的内容", "Save and add another": "保存并继续添加", "Photo": "照片", "Add at least one photo": "请至少添加一张照片", "Write a short title for the photo": "请为照片写一个简短标题", "general photos": "通用照片", "A category with an empty list is for general photos: the team takes a photo and writes its title and details. A category with a list becomes a checklist. Saving needs internet.": "清单为空的类别用于通用照片：团队拍照并填写标题和说明。有清单的类别则作为检查清单。保存需要网络。", "The server did not answer correctly. Check the server link.": "服务器响应不正确，请检查服务器链接。", "No connection to the server": "无法连接服务器", "Sign out and sign in again to sync.": "请退出后重新登录以同步。", "Saving the project on the server. This can take a minute…": "正在服务器上保存项目，可能需要一分钟…", "Connecting to the server…": "正在连接服务器…", "Saved on Drive": "已保存到云端硬盘", "No internet. You can sign in offline if you have signed in on this phone before.": "没有网络。如果您之前在此手机上登录过，可以离线登录。", "Username": "用户名", "Password": "密码", "Ask your project admin for a username and password.": "请向项目管理员索取用户名和密码。", "Your data is saved in the project's Google Drive": "数据保存在项目的 Google 云端硬盘中", "Server link": "服务器链接", "Type your username and password": "请输入用户名和密码", "Wrong username or password.": "用户名或密码错误。", "Cannot sign in offline: wrong password, or this user has not signed in on this phone before.": "无法离线登录：密码错误，或该用户未在此手机上登录过。", "Server link (from the project admin)": "服务器链接（由项目管理员提供）", "Loading the project…": "正在加载项目…", "This needs internet the first time.": "首次需要网络。", "This project is not set up yet.": "此项目尚未设置。", "Ask the project admin to set it up.": "请让项目管理员进行设置。", "Try again": "重试", "Users": "用户", "Admin": "管理员", "View only": "仅查看", "User": "用户", "Each project has its own server link, users and Drive folder. After adding it, sign in with your username for that project.": "每个项目都有自己的服务器链接、用户和云端硬盘文件夹。添加后，请使用该项目的用户名登录。", "The server link should start with https://script.google.com/ and end with /exec": "服务器链接应以 https://script.google.com/ 开头并以 /exec 结尾", "Loading users…": "正在加载用户…", "Disabled": "已停用", "Add a user": "添加用户", "Full name": "姓名", "Password (at least 6 characters)": "密码（至少 6 个字符）", "Role": "角色", "adds photos and data": "添加照片和数据", "also setup and users": "还可设置项目和管理用户", "Active (can sign in)": "启用（可以登录）", "Save user": "保存用户", "Clear form": "清空表单", "To change a password, tap the user, type a new password and save. Leave the password empty to keep the old one.": "如需修改密码，请点击该用户，输入新密码并保存。密码留空则保持不变。", "Edit user": "编辑用户", "Type a username": "请输入用户名", "User saved": "用户已保存", "Invite link copied. Send it to your team with their username and password.": "邀请链接已复制。请连同用户名和密码一起发给团队成员。", "This account can only view.": "此账号只能查看。", "Sign in to sync": "登录后同步", "Connect this phone": "连接此手机", "Home": "首页", "Export": "导出", "Menu": "菜单", "Hello": "你好", "nameplates done": "铭牌已完成", "Usernames, passwords and roles": "用户名、密码和角色", "Send the app to your team": "把应用发给团队", "Turbines, categories and lists": "机组、类别和清单", "The master sheet in Google Drive": "Google 云端硬盘中的总表", "Whole project as one file": "整个项目导出为一个文件", "Language": "语言", "Tap again to clear this phone": "再点一次以清除此手机上的数据", "Clear data on this phone": "清除此手机上的数据", "{0} unsynced items will be lost": "将丢失 {0} 条未同步的数据", "Removes saved copies from this phone only, not from Drive": "只删除此手机上的副本，不会删除云端硬盘中的数据", "items done overall": "总体已完成项目", "Retake": "重拍", "New photo will replace the old one when you save": "保存后，新照片将替换旧照片", "Tap again to delete": "再点一次以删除", "Deleted": "已删除", "Delete this entry and its photos": "删除此记录及其照片", "Your version will be saved.": "将保存您的版本。", "Their version is kept.": "已保留对方的版本。", "{0} also changed this item at {1}.": "{0} 也在 {1} 修改了此项目。", "Your version is waiting on this phone. Choose which one to keep.": "您的版本仍保存在此手机上，请选择保留哪一个。", "Keep mine": "保留我的", "Use theirs": "使用对方的", "Changed by someone else: open and choose": "被他人修改：请打开并选择", "{0} item(s) were also changed by someone else.": "有 {0} 个项目同时被他人修改。", "Tap to open them and choose.": "点击打开并选择。", "{0} item(s) are saved only on this phone.": "有 {0} 条数据仅保存在此手机上。", "Tap to sync now. Do not clear the app or change phones before this is done.": "点击立即同步。同步完成前请勿清除应用或更换手机。", "{0} item(s) are not synced yet. They stay on this phone. Tap Sign out again to leave.": "有 {0} 条数据尚未同步，它们会留在此手机上。再点一次“退出登录”即可离开。", "Category removed. Press Save project to apply.": "类别已移除。请点击保存项目以生效。", "Making a backup copy of the sheet…": "正在备份表格…", "Backup saved in the Backups folder": "备份已保存到 Backups 文件夹", "Nothing to back up yet.": "暂无可备份的内容。", "Type the new name": "请输入新名称", "Item renamed": "项目已重命名", "Renaming on the server…": "正在服务器上重命名…", "Tap again to remove {0}": "再点一次以移除 {0}", "{0} removed from the project": "{0} 已从项目中移除", "Removing the turbine on the server…": "正在服务器上移除机组…", "Backup now": "立即备份", "Copy of the master sheet, also made automatically once a day": "总表的副本，系统每天也会自动备份一次", "Rename this item": "重命名此项目", "New name (data and photos stay with the item)": "新名称（数据和照片仍保留在该项目中）", "Save name": "保存名称", "Remove this category": "移除此类别", "Remove a turbine": "移除机组", "Only the last turbine can be removed. Its sheet tab is kept under an OLD name and its photos stay in Drive.": "只能移除最后一台机组。其表格页会以 OLD 名称保留，照片仍保留在云端硬盘中。", "Remove last turbine ({0})": "移除最后一台机组（{0}）"};
 let LANG=ls('np_lang')==='zh'?'zh':'en';
 function t(s,...a){let r=(LANG==='zh'&&ZH[s])||s;a.forEach((v,i)=>{r=r.split('{'+i+'}').join(v);});return r;}
 
@@ -377,7 +379,7 @@ async function loadProject(){
   CFG=(await kvGet(pk('cfg')))||null;
   const d=await kvGet(pk('data'));RECS=(d&&d.recs)||{};ROWS=(d&&d.rows)||{};HIST=(d&&d.hist)||[];COMM=(d&&d.comm)||[];ENT=(d&&d.ent)||{};EROW=(d&&d.erow)||{};
   const all=[...Q,...REST];Q=all.filter(j=>j.f===L.folderId);REST=all.filter(j=>j.f!==L.folderId);
-  thumbCache.clear();S.err='';S.last=0;
+  thumbCache.clear();S.err='';S.last=0;S.vers=null;
 }
 
 /* ---------- model ---------- */
@@ -407,7 +409,9 @@ const clean=s=>String(s).replace(/[^\w.-]+/g,'_').replace(/^_+|_+$/g,'');
 const link=id=>'https://drive.google.com/file/d/'+id+'/view';
 const linkId=l=>{const m=/\/d\/([\w-]+)/.exec(l);return m?m[1]:'';};
 const issueStr=r=>(r&&r.issue)?((r.itype||'Issue')+(r.resolved?' (resolved)':'')):'';
-const when=iso=>{const d=new Date(iso);return isNaN(d)?String(iso||''):d.toLocaleString();};
+const toDate=s=>new Date(/^\d{4}-\d\d-\d\d \d\d:\d\d/.test(String(s))?String(s).replace(' ','T'):s);
+const stamp=()=>{const d=new Date(),p2=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes())+':'+p2(d.getSeconds());};
+const when=iso=>{const d=toDate(iso);return isNaN(d)?String(iso||''):d.toLocaleString();};
 function findDup(serial,w,c){
   const s=serial.trim().toLowerCase();if(!s)return null;
   for(const x of wtgIds())for(const cc of comps()){if(!isNp(cc)||(x===w&&cc.id===c))continue;const r=recOf(x,cc.id);if(r&&r.serial&&r.serial.trim().toLowerCase()===s)return x+' · '+cc.n;}
@@ -417,7 +421,8 @@ function findDup(serial,w,c){
 function entsOf(w,m){
   const list=(ENT[w]||[]).filter(e=>e.cat===m).map(e=>({...e}));
   for(const j of Q)if(j.kind==='ent'&&j.wtg===w&&j.cat===m){const e={id:j.eid,cat:m,w,...j.ent,photos:[...(j.ent.photos||[]),...j.done],_blobs:j.blobs.slice(j.done.length),_pending:true};const i=list.findIndex(x=>x.id===j.eid);if(i>=0)list[i]=e;else list.push(e);}
-  return list.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
+  const dead=new Set(Q.filter(j=>j.kind==='entdel').map(j=>j.eid));
+  return list.filter(e=>!dead.has(e.id)).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
 }
 const entPhotos=e=>(e.photos||[]).length+((e._blobs||[]).length);
 function freeStats(m,w){let n=0,ph=0,tw=0,is=0;for(const x of (w?[w]:wtgIds())){const l=entsOf(x,m);if(l.length)tw++;n+=l.length;l.forEach(e=>{ph+=entPhotos(e);if(e.issue&&!e.resolved)is++;});}return {n,ph,tw,is};}
@@ -450,7 +455,7 @@ async function pwHash(pw,salt){
 const accKey=u=>L.folderId+'|'+u;
 async function doLogin(u,pw){
   const d=await call('login',{u,p:pw});
-  T=d.tok;L.email=d.u;L.name=d.name||d.u;S.role=d.role||'user';
+  S.vers=null;T=d.tok;L.email=d.u;L.name=d.name||d.u;S.role=d.role||'user';
   if(!L.acc)L.acc={};
   try{const salt=newId();L.acc[accKey(d.u)]={name:L.name,role:S.role,salt,hash:await pwHash(pw,salt)};}catch(e){}
   lsSet('np_local',L);
@@ -467,7 +472,7 @@ async function ensureToken(){
 }
 function blankCfg(){return {sheetId:'',name:'',prefix:'WTG',count:27,comps:[],free:[],folders:{}};}
 async function pull(){
-  const d=await call('pull');
+  const d=await call('pull',{vers:S.vers||null});
   S.role=d.role||S.role;if(d.name)L.name=d.name;
   if(!CFG)CFG=blankCfg();
   CFG.checked=true;
@@ -475,17 +480,22 @@ async function pull(){
   Object.assign(CFG,{sheetId:'server',name:d.cfg.name||'',prefix:d.cfg.prefix||'WTG',count:+d.cfg.count||1,free:d.cfg.free||[],comps:d.cfg.comps||[],sheetUrl:d.cfg.sheetUrl||''});
   const pr=L.projects.find(x=>x.f===L.folderId);if(pr&&pr.name!==CFG.name){pr.name=CFG.name;}
   lsSet('np_local',L);
-  RECS=d.recs||{};HIST=d.hist||[];COMM=d.comm||[];ENT=d.ent||{};
+  const part=d.full===false;
+  if(part)Object.assign(RECS,d.recs||{});else RECS=d.recs||{};
+  if(d.hist||!part)HIST=d.hist||[];
+  if(d.comm||!part)COMM=d.comm||[];
+  if(d.ent||!part)ENT=d.ent||{};
+  S.vers=d.vers||null;
   await saveCfgLocal();await kvSet(pk('data'),{recs:RECS,hist:HIST,comm:COMM,ent:ENT});
 }
 const rowVals=(rec,comp)=>[rec.serial,rec.maker,rec.model,status(rec,comp),rec.remarks,(rec.photos||[]).join('\n'),rec.by,rec.at,rec.issue?(rec.itype||'Other'):'',rec.issue&&rec.resolved?'yes':'',(rec.iphotos||[]).join('\n')];
-const dayOf=iso=>{const d=new Date(iso||Date.now()),x=isNaN(d)?new Date():d,p2=n=>String(n).padStart(2,'0');return x.getFullYear()+'-'+p2(x.getMonth()+1)+'-'+p2(x.getDate());};
+const dayOf=iso=>{const d=iso?toDate(iso):new Date(),x=isNaN(d)?new Date():d,p2=n=>String(n).padStart(2,'0');return x.getFullYear()+'-'+p2(x.getMonth()+1)+'-'+p2(x.getDate());};
 async function sendPhoto(w,cat,name,blob){const d=await call('photo',{w,cat,name,b64:await toB64(blob)});return link(d.id);}
 async function push(){
   const batch=Q.filter(j=>!j.busy);if(!batch.length)return [];
   batch.forEach(j=>j.busy=true);const touched=new Set();
   try{
-    const recJobs=batch.filter(j=>j.kind==='rec'),entJobs=batch.filter(j=>j.kind==='ent'),logJobs=batch.filter(j=>j.kind==='log');
+    const recJobs=batch.filter(j=>j.kind==='rec'&&!j.conflict),trashJobs=batch.filter(j=>j.kind==='trash'),entJobs=batch.filter(j=>j.kind==='ent'),logJobs=batch.filter(j=>j.kind==='log'),delJobs=batch.filter(j=>j.kind==='entdel');
     for(const j of recJobs){
       const comp=comps().find(c=>c.id===j.comp)||{s:'',n:j.comp};
       const m=modOf(comp),base=clean(isNp(comp)?j.wtg+'_'+comp.s+'_'+comp.n+'_SN-'+(j.rec.serial||'NA'):j.wtg+'_'+m+'_'+comp.s+'_'+comp.n)+'_'+dayOf(j.rec.at);
@@ -500,17 +510,27 @@ async function push(){
     for(const j of recJobs){
       const comp=comps().find(c=>c.id===j.comp);
       const rec={...j.rec,photos:[...(j.rec.photos||[]),...j.done],iphotos:[...(j.rec.iphotos||[]),...j.idone]};
-      recs.push({w:j.wtg,c:j.comp,vals:rowVals(rec,comp)});(j.log||[]).forEach(r=>hist.push(r));fin.push([j,rec]);
+      recs.push({w:j.wtg,c:j.comp,vals:rowVals(rec,comp),base:j.base,log:j.log||[]});fin.push([j,rec]);
     }
     for(const j of entJobs){
       const e={...j.ent,photos:[...(j.ent.photos||[]),...j.done]};
       ents.push({eid:j.eid,cat:j.cat,w:j.wtg,vals:[e.title,e.details,e.photos.join('\n'),e.issue?(e.itype||'Other'):'',e.issue&&e.resolved?'yes':'',e.by,e.at]});fin.push([j,e]);
     }
     for(const j of logJobs){(j.tab==='History'?hist:comm).push(...j.rows);fin.push([j,null]);}
-    const res=await call('push',{recs,ents,hist,comm});
+    const del=[],entdel=[];
+    for(const j of [...recJobs,...entJobs,...delJobs,...trashJobs])(j.del||[]).forEach(x=>del.push(x));
+    for(const j of trashJobs)fin.push([j,null]);
+    for(const j of delJobs){entdel.push(j.eid);fin.push([j,null]);}
+    const res=await call('push',{recs,ents,hist,comm,del:[...new Set(del)],entdel});
+    const conf=(res&&res.conflicts)||[];
     for(const [j,x] of fin){
-      if(j.kind==='rec'){if(!RECS[j.wtg])RECS[j.wtg]={};RECS[j.wtg][j.comp]=x;touched.add(j.wtg);}
+      if(j.kind==='rec'){
+        const cf=conf.find(z=>z.w===j.wtg&&z.c===j.comp);
+        if(cf){j.conflict={by:cf.by,at:cf.at};await qPut(j);continue;}
+        if(!RECS[j.wtg])RECS[j.wtg]={};RECS[j.wtg][j.comp]=x;touched.add(j.wtg);(j.log||[]).forEach(r=>hist.push(r));
+      }
       else if(j.kind==='ent'){const l=(ENT[j.wtg]=ENT[j.wtg]||[]),y={id:j.eid,cat:j.cat,w:j.wtg,...x},i=l.findIndex(z=>z.id===j.eid);if(i>=0)l[i]=y;else l.push(y);touched.add(j.wtg);}
+      else if(j.kind==='entdel'){if(ENT[j.wtg])ENT[j.wtg]=ENT[j.wtg].filter(z=>z.id!==j.eid);touched.add(j.wtg);}
       const k=Q.indexOf(j);if(k>=0)Q.splice(k,1);await qDel(j.id);
     }
     for(const r of hist)HIST.push({at:r[0],by:r[1],w:r[2],c:r[3],field:r[5],old:r[6],val:r[7]});
@@ -532,7 +552,7 @@ async function sync(interactive){
   S.syncing=true;S.warn='';pill();let xerr='';
   try{
     let touched=[];
-    if(Q.length&&comps().length)touched=await push();
+    if(Q.some(j=>!j.conflict)&&comps().length)touched=await push();
     await pull();
     for(const w of touched){try{await uploadStatus(w);}catch(e){if(e.message==='auth')throw e;xerr=t('Excel file for {0} was not updated',w)+': '+netMsg(e);}}
     S.err=S.warn||xerr;S.last=Date.now();
@@ -611,7 +631,7 @@ function render(force){
   updateNav();
   const tt=$('#title');
   if(v==='home')tt.innerHTML='<small>'+t('Hello')+'</small>'+esc(L.name||L.email||'');
-  else tt.textContent=v==='welcome'?'Nameplate Tracker':v==='users'?t('Users'):v==='menu'?t('Menu'):v==='cat'?modLabel(S.view.m):v==='setup'?t('Project setup'):v==='connect'?t('Connect this phone'):v==='issues'?t('Issues'):v==='projects'?t('Projects'):S.view.w;
+  else tt.textContent=v==='welcome'?'WTG Site Records':v==='users'?t('Users'):v==='menu'?t('Menu'):v==='cat'?modLabel(S.view.m):v==='setup'?t('Project setup'):v==='connect'?t('Connect this phone'):v==='issues'?t('Issues'):v==='projects'?t('Projects'):S.view.w;
   if(!force&&app.dataset.v===v){
     if(v==='form'||v==='entry'||v==='setup'||v==='connect'||v==='welcome'||v==='projects'||v==='users'||v==='menu')return;
     if(v==='wtg'&&app.dataset.w===S.view.w&&app.dataset.m===S.view.m){renderList();return;}
@@ -619,12 +639,12 @@ function render(force){
   app.dataset.v=v;app.dataset.w=S.view.w||'';app.dataset.m=S.view.m||'';
   ({home:vHome,wtg:vWtg,form:vForm,setup:vSetup,connect:vConnect,issues:vIssues,welcome:vWelcome,projects:vProjects,cat:vCat,ents:vEnts,entry:vEntry,users:vUsers,menu:vMenu})[v]();
 }
-function go(view){S.view=view;S.addArm=false;S.wipeArm=false;S.fresh=true;render(true);window.scrollTo(0,0);syncGuard();}
+function go(view){S.view=view;S.addArm=false;S.wipeArm=false;S.delArm=false;S.outArm=false;S.rmArm=false;S.fresh=true;render(true);window.scrollTo(0,0);syncGuard();}
 
 function vWelcome(){
   const off=navigator.onLine===false;
   const tag=esc(projName()?projName().toUpperCase():t('TURBINE COMPONENT RECORDS'));
-  app.innerHTML='<div class="lock-top"><button class="lang" data-act="lang">'+(LANG==='zh'?'English':'中文')+'</button>'+LOGO+'<h2>Nameplate Tracker</h2><div class="tl">'+tag+'</div></div>'+
+  app.innerHTML='<div class="lock-top"><button class="lang" data-act="lang">'+(LANG==='zh'?'English':'中文')+'</button>'+LOGO+'<h2>WTG Site Records</h2><div class="tl">'+tag+'</div></div>'+
     '<div class="lock-card" style="text-align:left"><h3 style="text-align:center">'+t('Sign in')+'</h3>'+
     (off?'<div class="alert" style="margin-top:8px">'+t('No internet. You can sign in offline if you have signed in on this phone before.')+'</div>':'')+
     '<label class="f" for="w_u">'+t('Username')+'</label><input type="text" id="w_u" autocapitalize="none" autocomplete="username" spellcheck="false" value="'+esc(L.email||'')+'">'+
@@ -655,6 +675,23 @@ async function signIn(){
     S.cred={u,p:pw};S.entered=true;go({name:'home'});sync(true);
   }finally{S.signing=false;}
 }
+async function backupNow(){
+  if(navigator.onLine===false){toast(t('This needs internet'));return;}
+  toast(t('Making a backup copy of the sheet…'),20000);
+  try{if(!(await ensureToken()))throw new Error(t('Sign out and sign in again to sync.'));const d=await call('backup');toast(d.name?t('Backup saved in the Backups folder')+': '+d.name:t('Nothing to back up yet.'),6000);}
+  catch(e){toast(e.message==='auth'?t('sign in again'):netMsg(e),5000);}
+}
+function renameItem(){
+  const n=$('#rn_n').value.trim(),id=F.c,w=F.w,m=modOf(F.comp);
+  if(!n){toast(t('Type the new name'));return;}
+  withDrive(()=>t('Item renamed'),async()=>{S.working=t('Renaming on the server…');render(true);await call('rename',{id,n});await pull();});
+}
+function removeTurbine(){
+  const last=wtgIds().pop();
+  if(!S.rmArm){S.rmArm=true;const b=$('[data-act=delwtg]');if(b)b.textContent=t('Tap again to remove {0}',last);return;}
+  S.rmArm=false;
+  withDrive(()=>t('{0} removed from the project',last),async()=>{S.working=t('Removing the turbine on the server…');render(true);await call('delwtg');await pull();});
+}
 async function wipePhone(){
   const keep={folderId:L.folderId,projects:L.projects,email:'',name:''};
   try{await tx('jobs','readwrite',s=>s.clear());await tx('kv','readwrite',s=>s.clear());}catch(e){}
@@ -663,7 +700,7 @@ async function wipePhone(){
 }
 function signOut(){T=null;S.cred=null;S.entered=false;go({name:'welcome'});}
 function vConnect(){
-  app.innerHTML=hero('Nameplate Tracker',t('CONNECT THIS PHONE'),'<p style="margin:0">'+t('One-time setup. If a teammate sent you an invite link, open that link instead.')+'</p>')+
+  app.innerHTML=hero('WTG Site Records',t('CONNECT THIS PHONE'),'<p style="margin:0">'+t('One-time setup. If a teammate sent you an invite link, open that link instead.')+'</p>')+
     '<label class="f" for="c_s">'+t('Server link (from the project admin)')+'</label><input type="text" id="c_s" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec" value="'+esc(L.folderId)+'">'+
     '<div class="tools" style="margin-top:14px"><button class="btn" data-act="saveconn">'+t('Save and continue')+'</button></div>';
 }
@@ -683,8 +720,11 @@ function vHome(){
     else{let d=0,tot=0;ws.forEach(w=>{const x=stats(w,m);d+=x.done;tot+=x.total;is+=x.issue;});done+=d;all+=tot;sub=t('{0} / {1} done',d.toLocaleString(),tot.toLocaleString())+' · '+t('{0} items per turbine',Math.round(tot/ws.length));pct=tot?d/tot:0;}
     iss+=is;
     return '<button class="gcard" style="animation-delay:'+(120+i*80)+'ms" data-act="cat" data-m="'+esc(m)+'"><span class="gi" style="background:'+st[0]+';color:'+st[1]+'">'+st[3]+'</span><span class="t"><b>'+esc(modLabel(m))+'</b><small>'+sub+(is?' · <span style="color:var(--bad);font-weight:700">'+t('{0} issues',is)+'</span>':'')+'</small></span>'+ring(pct,st[2])+'</button>';}).join('');
+  const cfN=conflicts().length,waitN=Q.length-cfN;
   app.innerHTML=(S.err?'<div class="alert">'+t('Last sync problem')+': '+esc(S.err)+'</div>':'')+
-    '<div class="hero2"><div class="hl"><span>'+esc(projName()||t('Overall progress'))+'</span><b id="ovn">'+done.toLocaleString()+' / '+all.toLocaleString()+'</b><span>'+t('nameplates done')+'</span><button class="pillbtn" data-act="sync">'+t('Sync now')+'</button></div>'+ring(all?done/all:0,'#fff',true)+'</div>'+
+    (cfN?'<button class="alert" data-act="issues" style="display:block;width:100%;border:0;text-align:left;font:inherit;cursor:pointer;background:var(--badbg);color:var(--badtx)"><b>'+t('{0} item(s) were also changed by someone else.',cfN)+'</b> '+t('Tap to open them and choose.')+'</button>':'')+
+    (waitN>0?'<button class="alert" data-act="sync" style="display:block;width:100%;border:0;text-align:left;font:inherit;cursor:pointer"><b>'+t('{0} item(s) are saved only on this phone.',waitN)+'</b> '+t('Tap to sync now. Do not clear the app or change phones before this is done.')+'</button>':'')+
+    '<div class="hero2"><div class="hl"><span>'+esc(projName()||t('Overall progress'))+'</span><b id="ovn">'+done.toLocaleString()+' / '+all.toLocaleString()+'</b><span>'+t('items done overall')+'</span><button class="pillbtn" data-act="sync">'+t('Sync now')+'</button></div>'+ring(all?done/all:0,'#fff',true)+'</div>'+
     '<div class="meta2"><span>'+t('{0} turbines',ws.length)+'</span><span>'+t('{0} issues',iss)+'</span>'+(isAdmin()?'<span>'+t('Admin')+'</span>':S.role==='viewer'?'<span>'+t('View only')+'</span>':'')+'</div>'+
     '<h3 class="sec2">'+t('Categories')+' <span class="cnt">'+ms.length+'</span></h3>'+cards;
   if(S.fresh){S.fresh=false;countUp($('#ovn'),done,all);}
@@ -696,6 +736,7 @@ function vMenu(){
     item('projects',t('Projects'),esc(projName()||''),IC.folder)+
     (isAdmin()?item('users',t('Users'),t('Usernames, passwords and roles'),IC.users,'#E2F6EE')+item('invite',t('Invite link'),t('Send the app to your team'),IC.link,'#FFF1D6')+item('setup',t('Setup'),t('Turbines, categories and lists'),IC.gear,'#FCE6EE')+
       (CFG&&CFG.sheetUrl?'<a class="row" target="_blank" rel="noopener" href="'+esc(CFG.sheetUrl)+'"><span class="gi" style="background:#E2F6EE;color:#0C6B46">'+IC.sheet+'</span><span class="t"><b>'+t('Open sheet')+'</b><small>'+t('The master sheet in Google Drive')+'</small></span><span class="n" style="font-size:20px">›</span></a>':''):'')+
+    (isAdmin()?item('backup',t('Backup now'),t('Copy of the master sheet, also made automatically once a day'),IC.sheet,'#E2F6EE'):'')+
     item('xlsxall',t('Export Excel'),t('Whole project as one file'),IC.down)+
     item('lang',LANG==='zh'?'English':'中文',t('Language'),IC.globe)+
     item('signout',t('Sign out'),'',IC.out,'#FDE4DE')+
@@ -731,7 +772,7 @@ function entRow(e,showW){
 }
 function vEntry(){
   const {w,m,e:eid}=S.view,r=(eid&&entsOf(w,m).find(x=>x.id===eid))||{};
-  E={w,m,eid:eid||null,links:[...(r.photos||[])],blobs:[...(r._blobs||[])],warn:{}};
+  E={w,m,eid:eid||null,links:[...(r.photos||[])],blobs:[...(r._blobs||[])],warn:{},removed:[]};
   const fileBtn=(id,label,cls,cap,multi)=>'<label class="btn '+cls+'"><input type="file" accept="image/*"'+(cap?' capture="environment"':'')+(multi?' multiple':'')+' hidden id="'+id+'">'+label+'</label>';
   app.innerHTML='<h2 style="margin:0">'+esc(modLabel(m))+'</h2><p class="sub">'+esc(w)+(eid?'':' · '+t('New photo'))+'</p>'+
     '<div class="photos" id="eph"></div><div id="eqw"></div>'+
@@ -742,7 +783,8 @@ function vEntry(){
     '<div class="box'+(r.issue?'':' hide')+'" id="ebox"><label class="f" for="e_itype" style="margin-top:0">'+t('Issue type')+'</label><select id="e_itype">'+ITYPES.map(x=>'<option value="'+x+'"'+((r.itype||'Damaged')===x?' selected':'')+'>'+t(x)+'</option>').join('')+'</select>'+
     '<label class="chk" style="margin-bottom:0"><input type="checkbox" id="e_res" style="accent-color:var(--ok)"'+(r.resolved?' checked':'')+'> '+t('Issue resolved')+'</label></div>'+
     '<div class="tools">'+(eid?'':'<button class="btn go" data-act="saveentmore" style="flex:1">'+t('Save and add another')+'</button>')+'<button class="btn '+(eid?'go':'ghost')+'" data-act="saveent"'+(eid?' style="flex:1"':'')+'>'+t('Save')+'</button><button class="btn ghost" data-act="back">'+t('Cancel')+'</button></div>'+
-    '<p class="sub">'+(r.at?t('Last saved {0}',esc(when(r.at)))+(r.by?' · '+esc(r.by):''):'')+'</p>';
+    '<p class="sub">'+(r.at?t('Last saved {0}',esc(when(r.at)))+(r.by?' · '+esc(r.by):''):'')+'</p>'+
+    (eid?'<div class="tools"><button class="btn ghost" data-act="delent" style="color:var(--bad)">'+t('Delete this entry and its photos')+'</button></div>':'');
   const add=async ev=>{const fs=[...ev.target.files];ev.target.value='';for(const f of fs){let bmp=null;try{bmp=await createImageBitmap(f);}catch(x){}const b=await compress(f,w+' · '+modLabel(m),bmp);b.__k=newId();if(bmp){const q=quality(bmp);if(q)E.warn[b.__k]=q;}E.blobs.push(b);}entThumbs();};
   $('#ecam').addEventListener('change',add);$('#egal').addEventListener('change',add);
   $('#e_issue').addEventListener('change',ev=>$('#ebox').classList.toggle('hide',!ev.target.checked));
@@ -752,12 +794,24 @@ function vEntry(){
 function entThumbs(){
   const el=$('#eph');if(!el)return;
   const wl=E.blobs.map(b=>E.warn[b.__k]||'');
-  el.innerHTML=thumbHtml(E.links,E.blobs,'rmelink','rmeblob',wl);
+  el.innerHTML=thumbHtml(E.links,E.blobs,'rmelink','rmeblob',wl,'reelink','reeblob');
   $('#eqw').innerHTML=[...new Set(wl.filter(Boolean))].map(x=>'<div class="alert">'+t(x==='blurry'?'A photo looks blurry. Retake it if the text is not readable.':x==='dark'?'A photo looks too dark. Use the torch and retake it.':'A photo looks too bright. Avoid glare and retake it.')+'</div>').join('');
   if(navigator.onLine!==false&&tokenOk())el.querySelectorAll('.ph[data-id]').forEach(async d=>{
     const id=d.dataset.id;if(!id)return;
     try{const u=await photoSrc(id);const a=d.querySelector('a');if(a)a.outerHTML='<img alt="'+esc(t('Photo'))+'" src="'+u+'">';}catch(e){}
   });
+}
+async function deleteEntry(){
+  if(S.role==='viewer'){toast(t('This account can only view.'));return;}
+  if(!S.delArm){S.delArm=true;const b=$('[data-act=delent]');if(b)b.textContent=t('Tap again to delete');return;}
+  S.delArm=false;
+  const {w,m,eid}=E;
+  if(Q.find(j=>j.kind==='ent'&&j.eid===eid&&j.busy)){toast(t('This item is syncing right now. Try again in a moment.'));return;}
+  const del=[...E.links,...E.removed].map(linkId).filter(Boolean);
+  for(const j of Q.filter(x=>x.kind==='ent'&&x.eid===eid)){(j.del||[]).forEach(x=>del.push(x));(j.done||[]).forEach(x=>del.push(linkId(x)));Q.splice(Q.indexOf(j),1);await qDel(j.id);}
+  const j={id:newId(),f:L.folderId,kind:'entdel',eid,wtg:w,cat:m,del:[...new Set(del)],busy:false};
+  Q.push(j);await qPut(j);
+  toast(t('Deleted'));go({name:'ents',w,m});sync(false);
 }
 async function saveEntry(again){
   const {w,m}=E,title=$('#e_title').value.trim();
@@ -767,10 +821,11 @@ async function saveEntry(again){
   const eid=E.eid||('e'+newId());
   if(Q.find(j=>j.kind==='ent'&&j.eid===eid&&j.busy)){toast(t('This item is syncing right now. Try again in a moment.'));return;}
   const issue=$('#e_issue').checked;
-  const ent={title,details:$('#e_details').value.trim(),issue,itype:issue?$('#e_itype').value:'',resolved:issue&&$('#e_res').checked,photos:E.links,by:L.name||L.email||'',at:new Date().toISOString()};
+  const ent={title,details:$('#e_details').value.trim(),issue,itype:issue?$('#e_itype').value:'',resolved:issue&&$('#e_res').checked,photos:E.links,by:L.name||L.email||'',at:stamp()};
   let j=Q.find(x=>x.kind==='ent'&&x.eid===eid);
-  if(j){j.ent=ent;j.blobs=E.blobs;j.done=[];}
-  else{j={id:newId(),f:L.folderId,kind:'ent',eid,wtg:w,cat:m,ent,blobs:E.blobs,done:[],busy:false};Q.push(j);}
+  const gone=E.removed.map(linkId).filter(Boolean);
+  if(j){j.ent=ent;j.blobs=E.blobs;j.done=[];j.del=[...(j.del||[]),...gone];}
+  else{j={id:newId(),f:L.folderId,kind:'ent',eid,wtg:w,cat:m,ent,blobs:E.blobs,done:[],del:gone,busy:false};Q.push(j);}
   await qPut(j);
   if(idb)flashSaved();else toast(t('Saved, but this browser is not keeping data on the device. Stay online and sync now.'),6000);
   go(again?{name:'entry',w,m}:{name:'ents',w,m});sync(false);
@@ -808,7 +863,8 @@ function vIssues(){
   let open='',res='';
   for(const w of wtgIds())for(const c of comps()){const r=recOf(w,c.id);if(!r||!r.issue)continue;if(r.resolved)res+=rowHtml(w,c,true);else open+=rowHtml(w,c,true);}
   for(const w of wtgIds())for(const m of freeCats())for(const e of entsOf(w,m)){if(!e.issue)continue;if(e.resolved)res+=entRow(e,true);else open+=entRow(e,true);}
-  app.innerHTML=(open||'<div class="note"><b>'+t('No open issues.')+'</b> '+t('Items marked as issue on any turbine show up here.')+'</div>')+(res?'<h3 class="sec">'+t('Resolved')+'</h3>'+res:'');
+  const cf=conflicts().map(j=>{const c=comps().find(x=>x.id===j.comp);return c?rowHtml(j.wtg,c,true):'';}).join('');
+  app.innerHTML=(cf?'<h3 class="sec">'+t('Changed by someone else: open and choose')+'</h3>'+cf:'')+(open||'<div class="note"><b>'+t('No open issues.')+'</b> '+t('Items marked as issue on any turbine show up here.')+'</div>')+(res?'<h3 class="sec">'+t('Resolved')+'</h3>'+res:'');
 }
 function vProjects(){
   app.innerHTML=L.projects.map(p=>{const on=p.f===L.folderId;return '<button class="row" data-act="useproj" data-f="'+esc(p.f)+'"><i class="ic '+(on?'done':'')+'">'+(on?'✓':'')+'</i><span class="t"><b>'+esc(p.name||t('Unnamed project'))+'</b><small>'+(on?t('Open now'):t('Tap to open'))+'</small></span></button>';}).join('')+
@@ -862,9 +918,11 @@ function vForm(){
   const {w,c}=S.view,comp=comps().find(x=>x.id===c);
   if(!comp){go({name:'home'});return;}
   const r=recOf(w,c)||{},np=isNp(comp);
-  F={w,c,comp,links:[...(r.photos||[])],blobs:[...(r._blobs||[])],ilinks:[...(r.iphotos||[])],iblobs:[...(r._iblobs||[])],warn:{},dupOk:'',last:null};
+  F={w,c,comp,links:[...(r.photos||[])],blobs:[...(r._blobs||[])],ilinks:[...(r.iphotos||[])],iblobs:[...(r._iblobs||[])],warn:{},dupOk:'',last:null,removed:[],base:(RECS[w]&&RECS[w][c]&&RECS[w][c].at)||''};
   const fileBtn=(id,label,cls,cap,multi)=>'<label class="btn '+cls+'"><input type="file" accept="image/*"'+(cap?' capture="environment"':'')+(multi?' multiple':'')+' hidden id="'+id+'">'+label+'</label>';
-  app.innerHTML='<h2 style="margin:0">'+esc(comp.n)+'</h2><p class="sub">'+esc(w)+' · '+esc(comp.s)+' · <span id="pc"></span></p>'+
+  const cj=Q.find(x=>x.kind==='rec'&&x.conflict&&x.wtg===w&&x.comp===c);
+  app.innerHTML=(cj?'<div class="alert"><b>'+t('{0} also changed this item at {1}.',esc(cj.conflict.by||'?'),esc(when(cj.conflict.at)))+'</b> '+t('Your version is waiting on this phone. Choose which one to keep.')+'<div class="tools" style="margin:10px 0 0"><button class="btn" data-act="keepmine">'+t('Keep mine')+'</button><button class="btn ghost" data-act="usetheirs">'+t('Use theirs')+'</button></div></div>':'')+
+    '<h2 style="margin:0">'+esc(comp.n)+'</h2><p class="sub">'+esc(w)+' · '+esc(comp.s)+' · <span id="pc"></span></p>'+
     '<div class="photos" id="ph"></div><div id="qw"></div>'+
     '<div class="tools">'+fileBtn('cam',t('Take photo'),'',1,0)+fileBtn('gal',t('From gallery'),'ghost',0,1)+'</div>'+
     '<div'+(np?'':' class="hide"')+'><label class="f" for="f_serial">'+t('Serial number')+'</label><input type="text" id="f_serial" autocapitalize="characters" autocomplete="off" value="'+esc(r.serial)+'">'+
@@ -879,6 +937,7 @@ function vForm(){
     '<label class="chk" style="margin-bottom:0"><input type="checkbox" id="f_res" style="accent-color:var(--ok)"'+(r.resolved?' checked':'')+'> '+t('Issue resolved')+'</label></div>'+
     '<div class="tools"><button class="btn go" data-act="savenext" style="flex:1">'+t('Save and next')+'</button><button class="btn ghost" data-act="save">'+t('Save')+'</button><button class="btn ghost" data-act="back">'+t('Cancel')+'</button></div>'+
     '<p class="sub">'+(r.at?t('Last saved {0}',esc(when(r.at)))+(r.by?' · '+esc(r.by):''):'')+'</p>'+
+    (isAdmin()?'<div class="tools"><button class="btn ghost" data-act="rename">'+t('Rename this item')+'</button></div><div class="box hide" id="rnbox"><label class="f" for="rn_n" style="margin-top:0">'+t('New name (data and photos stay with the item)')+'</label><input type="text" id="rn_n" maxlength="80" value="'+esc(comp.n)+'"><div class="tools" style="margin:10px 0 0"><button class="btn" data-act="renamesave">'+t('Save name')+'</button></div></div>':'')+
     '<div class="box"><h4 id="cmh"></h4><div id="cml"></div><div class="cmrow"><input type="text" id="cmt" maxlength="300" placeholder="'+esc(t('Write a note or question for the team'))+'"><button class="btn ghost" data-act="addcm">'+t('Add')+'</button></div></div>'+
     '<div class="box"><h4 id="hih"></h4><div id="hil"></div></div>';
   $('#cam').addEventListener('change',e=>addPhotos(e,false));$('#gal').addEventListener('change',e=>addPhotos(e,false));
@@ -888,15 +947,15 @@ function vForm(){
   thumbs();renderComments();renderHistory();
   try{if(!S.pos&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{S.pos=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5);},()=>{}, {maximumAge:600000,timeout:15000});}catch(e){}
 }
-function thumbHtml(links,blobs,rmL,rmB,warn){
-  return links.map((l,i)=>'<div class="ph" data-id="'+esc(linkId(l))+'"><a>'+t('Saved on Drive')+'</a><button data-act="'+rmL+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button></div>').join('')+
-    blobs.map((b,i)=>'<div class="ph'+(warn&&warn[i]?' bad':'')+'"><img alt="'+esc(t('Photo, not synced yet'))+'" src="'+URL.createObjectURL(b)+'"><button data-act="'+rmB+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button></div>').join('');
+function thumbHtml(links,blobs,rmL,rmB,warn,reL,reB){
+  return links.map((l,i)=>'<div class="ph" data-id="'+esc(linkId(l))+'"><a>'+t('Saved on Drive')+'</a><button data-act="'+rmL+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button>'+(reL?'<button class="re" data-act="'+reL+'" data-i="'+i+'">'+t('Retake')+'</button>':'')+'</div>').join('')+
+    blobs.map((b,i)=>'<div class="ph'+(warn&&warn[i]?' bad':'')+'"><img alt="'+esc(t('Photo, not synced yet'))+'" src="'+URL.createObjectURL(b)+'"><button data-act="'+rmB+'" data-i="'+i+'" aria-label="'+esc(t('Remove photo'))+'">×</button>'+(reB?'<button class="re" data-act="'+reB+'" data-i="'+i+'">'+t('Retake')+'</button>':'')+'</div>').join('');
 }
 function thumbs(){
   const el=$('#ph');if(!el)return;
   const n=F.links.length+F.blobs.length,pc=$('#pc');if(pc)pc.textContent=t('{0} of {1} required photos',n,need(F.comp));
   const wl=F.blobs.map(b=>F.warn[b.__k]||'');
-  el.innerHTML=thumbHtml(F.links,F.blobs,'rmlink','rmblob',wl);
+  el.innerHTML=thumbHtml(F.links,F.blobs,'rmlink','rmblob',wl,'relink','reblob');
   $('#iph').innerHTML=thumbHtml(F.ilinks,F.iblobs,'rmilink','rmiblob',null);
   const msgs=[...new Set(wl.filter(Boolean))].map(x=>t(x==='blurry'?'A photo looks blurry. Retake it if the text is not readable.':x==='dark'?'A photo looks too dark. Use the torch and retake it.':'A photo looks too bright. Avoid glare and retake it.'));
   $('#qw').innerHTML=msgs.map(m=>'<div class="alert">'+m+'</div>').join('');
@@ -968,6 +1027,18 @@ async function runOcr(){
     toast(t('Tap the correct number'));
   }catch(e){toast(t('Text reading is not available right now. It needs internet the first time.'),5000);}
 }
+const conflicts=()=>Q.filter(j=>j.kind==='rec'&&j.conflict);
+async function resolveConflict(mine){
+  const j=Q.find(x=>x.kind==='rec'&&x.conflict&&x.wtg===F.w&&x.comp===F.c);if(!j)return;
+  if(mine){j.base=j.conflict.at;delete j.conflict;await qPut(j);toast(t('Your version will be saved.'));}
+  else{
+    const del=[...(j.done||[]),...(j.idone||[])].map(linkId).filter(Boolean);
+    Q.splice(Q.indexOf(j),1);await qDel(j.id);
+    if(del.length){const tj={id:newId(),f:L.folderId,kind:'trash',del,busy:false};Q.push(tj);await qPut(tj);}
+    toast(t('Their version is kept.'));
+  }
+  go({name:'wtg',w:F.w,m:modOf(F.comp)});sync(true);
+}
 function logJobs(tab){return Q.filter(j=>(j.kind==='log'&&j.tab===tab)).flatMap(j=>j.rows).concat(tab==='History'?Q.filter(j=>j.kind==='rec').flatMap(j=>j.log||[]):[]);}
 function renderComments(){
   const el=$('#cml');if(!el)return;
@@ -984,7 +1055,7 @@ function renderHistory(){
 async function addComment(){
   const text=$('#cmt').value.trim();if(!text)return;
   if(S.role==='viewer'){toast(t('This account can only view.'));return;}
-  const j={id:newId(),f:L.folderId,kind:'log',tab:'Comments',rows:[[new Date().toISOString(),L.name||L.email||'',F.w,F.c,F.comp.n,text]],busy:false};
+  const j={id:newId(),f:L.folderId,kind:'log',tab:'Comments',rows:[[stamp(),L.name||L.email||'',F.w,F.c,F.comp.n,text]],busy:false};
   Q.push(j);await qPut(j);$('#cmt').value='';renderComments();sync(false);
 }
 async function saveForm(next){
@@ -994,13 +1065,14 @@ async function saveForm(next){
   const serial=$('#f_serial').value.trim();
   const dup=isNp(comp)?findDup(serial,w,c):null;
   if(dup&&F.dupOk!==serial){F.dupOk=serial;$('#dup').innerHTML='<div class="alert"><b>'+t('Same serial number already saved on {0}.',esc(dup))+'</b> '+t('Check the nameplate. Tap Save again to keep it anyway.')+'</div>';return;}
-  const old=recOf(w,c)||{},issue=$('#f_issue').checked,at=new Date().toISOString(),by=L.name||L.email||'';
+  const old=recOf(w,c)||{},issue=$('#f_issue').checked,at=stamp(),by=L.name||L.email||'';
   const rec={serial,maker:$('#f_maker').value.trim(),model:$('#f_model').value.trim(),remarks:$('#f_remarks').value.trim(),issue,itype:issue?$('#f_itype').value:'',resolved:issue&&$('#f_res').checked,photos:F.links,iphotos:F.ilinks,by,at};
   const log=[['Serial number',old.serial,rec.serial],['Manufacturer',old.maker,rec.maker],['Model',old.model,rec.model],['Remarks',old.remarks,rec.remarks],['Issue',issueStr(old),issueStr(rec)],['Photos',nPhotos(old)||'',(F.links.length+F.blobs.length)||'']]
     .filter(x=>String(x[1]||'')!==String(x[2]||'')).map(x=>[at,by,w,c,comp.n,x[0],String(x[1]||''),String(x[2]||'')]);
   let j=Q.find(x=>x.kind==='rec'&&x.wtg===w&&x.comp===c);
-  if(j){j.rec=rec;j.blobs=F.blobs;j.done=[];j.iblobs=F.iblobs;j.idone=[];j.log=[...(j.log||[]),...log];}
-  else{j={id:newId(),f:L.folderId,kind:'rec',wtg:w,comp:c,rec,blobs:F.blobs,done:[],iblobs:F.iblobs,idone:[],log,busy:false};Q.push(j);}
+  const gone=F.removed.map(linkId).filter(Boolean);
+  if(j){j.rec=rec;j.blobs=F.blobs;j.done=[];j.iblobs=F.iblobs;j.idone=[];j.log=[...(j.log||[]),...log];j.del=[...(j.del||[]),...gone];if(j.base===undefined)j.base=F.base;}
+  else{j={id:newId(),f:L.folderId,kind:'rec',wtg:w,comp:c,rec,blobs:F.blobs,done:[],iblobs:F.iblobs,idone:[],log,del:gone,base:F.base,busy:false};Q.push(j);}
   await qPut(j);
   if(idb)flashSaved();else toast(t('Saved, but this browser is not keeping data on the device. Stay online and sync now.'),6000);
   const m=modOf(comp),n=next?nextPending(w,c,m):null;
@@ -1012,7 +1084,7 @@ function setupMods(){
   const o={};
   comps().forEach(c=>{const m=modOf(c);o[m]=(o[m]?o[m]+'\n':'')+c.s+' | '+c.n+(need(c)>1?' | '+need(c):'');});
   if(!o.Nameplates)o.Nameplates=MASTER;
-  for(const m of (freeCats().length?freeCats():['MCC','Installation','Commissioning']))if(o[m]===undefined)o[m]='';
+  for(const m of ((CFG&&CFG.sheetId)?freeCats():['MCC','Installation','Commissioning']))if(o[m]===undefined)o[m]='';
   return o;
 }
 function vSetup(){
@@ -1024,10 +1096,11 @@ function vSetup(){
     '<label class="f">'+t('Categories')+'</label><div class="chips" id="s_mods" style="margin-top:0"></div>'+
     '<label class="f" for="s_list" style="margin-top:0">'+t('List for this category: one per line, as Section | Item | photos required')+'</label>'+
     '<textarea id="s_list" spellcheck="false"></textarea>'+
-    '<div class="tools" style="margin-top:8px"><button class="btn ghost" data-act="sample">'+t('Reset this list')+'</button></div>'+
+    '<div class="tools" style="margin-top:8px"><button class="btn ghost" data-act="sample">'+t('Reset this list')+'</button><button class="btn ghost" data-act="rmmod" style="color:var(--bad)">'+t('Remove this category')+'</button></div>'+
     '<div class="cmrow"><input type="text" id="s_new" maxlength="24" placeholder="'+esc(t('New category name'))+'"><button class="btn ghost" data-act="addmod">'+t('Add category')+'</button></div>'+
     '<p class="sub" style="margin-top:10px">'+t('A category with an empty list is for general photos: the team takes a photo and writes its title and details. A category with a list becomes a checklist. Saving needs internet.')+'</p>'+
-    '<div class="tools"><button class="btn" data-act="savecfg">'+t('Save project to Drive')+'</button><button class="btn ghost" data-act="connect">'+t('Change connection')+'</button></div>';
+    '<div class="tools"><button class="btn" data-act="savecfg">'+t('Save project to Drive')+'</button><button class="btn ghost" data-act="connect">'+t('Change connection')+'</button></div>'+
+    (comps().length&&wtgIds().length>1?'<div class="box"><h4>'+t('Remove a turbine')+'</h4><p class="sub" style="margin:0 0 10px">'+t('Only the last turbine can be removed. Its sheet tab is kept under an OLD name and its photos stay in Drive.')+'</p><button class="btn ghost" data-act="delwtg" style="color:var(--bad)">'+t('Remove last turbine ({0})',wtgIds().pop())+'</button></div>':'');
   setupChips();
 }
 function setupChips(){
@@ -1094,6 +1167,20 @@ window.addEventListener('popstate',()=>{
   if(!isRoot(S.view.name))doBack();
 });
 
+/* ---------- retake: the new photo takes the place of the old one ---------- */
+$('#recam').addEventListener('change',async e=>{
+  const f=e.target.files[0];e.target.value='';const re=S.re;S.re=null;if(!f||!re)return;
+  const ent=re.a==='reelink'||re.a==='reeblob',X=ent?E:F;if(!X)return;
+  let bmp=null;try{bmp=await createImageBitmap(f);}catch(x){}
+  const label=ent?X.w+' · '+modLabel(X.m):X.w+' · '+X.comp.n;
+  const b=await compress(f,label,bmp);b.__k=newId();if(bmp){const q=quality(bmp);if(q)X.warn[b.__k]=q;}
+  if(re.a==='relink'||re.a==='reelink'){const old=X.links.splice(re.i,1);X.removed.push(...old);X.blobs.push(b);}
+  else X.blobs[re.i]=b;
+  if(!ent)F.last=f;
+  if(ent)entThumbs();else thumbs();
+  toast(t('New photo will replace the old one when you save'),3500);
+});
+
 /* ---------- taps ---------- */
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
@@ -1102,7 +1189,9 @@ document.addEventListener('click',e=>{
   else if(a==='openent')go({name:'entry',w:b.dataset.w,m:b.dataset.m,e:b.dataset.e,from:S.view.name});
   else if(a==='saveent')saveEntry(false);
   else if(a==='saveentmore')saveEntry(true);
-  else if(a==='rmelink'){E.links.splice(+b.dataset.i,1);entThumbs();}
+  else if(a==='rmelink'){E.removed.push(...E.links.splice(+b.dataset.i,1));entThumbs();}
+  else if(a==='relink'||a==='reblob'||a==='reelink'||a==='reeblob'){S.re={a,i:+b.dataset.i};$('#recam').click();}
+  else if(a==='delent')deleteEntry();
   else if(a==='rmeblob'){E.blobs.splice(+b.dataset.i,1);entThumbs();}
   else if(a==='cat')go({name:'cat',m:b.dataset.m});
   else if(a==='smod'){setupKeep();S.smCur=b.dataset.m;setupChips();}
@@ -1112,12 +1201,19 @@ document.addEventListener('click',e=>{
   else if(a==='home')go({name:'home'});
   else if(a==='menu')go({name:'menu'});
   else if(a==='wipe'){if(!S.wipeArm){S.wipeArm=true;render(true);vMenu();return;}wipePhone();}
-  else if(a==='navx'){if(S.view.name==='wtg')exportLocal([S.view.w],S.view.w+'_status.xlsx');else if(comps().length)exportLocal(wtgIds(),clean(projName()||'Nameplates')+'_status.xlsx');}
+  else if(a==='navx'){if(S.view.name==='wtg')exportLocal([S.view.w],S.view.w+'_status.xlsx');else if(comps().length)exportLocal(wtgIds(),clean(projName()||'Site_Records')+'_status.xlsx');}
   else if(a==='users')go({name:'users'});
   else if(a==='edituser')editUser(b.dataset.u);
   else if(a==='saveuser')saveUser();
   else if(a==='newuser')vUsers();
-  else if(a==='signout')signOut();
+  else if(a==='signout'){if(Q.length&&!S.outArm){S.outArm=true;toast(t('{0} item(s) are not synced yet. They stay on this phone. Tap Sign out again to leave.',Q.length),6000);return;}signOut();}
+  else if(a==='keepmine')resolveConflict(true);
+  else if(a==='usetheirs')resolveConflict(false);
+  else if(a==='backup')backupNow();
+  else if(a==='rename'){const bx=$('#rnbox');if(bx)bx.classList.toggle('hide');}
+  else if(a==='renamesave')renameItem();
+  else if(a==='rmmod'){if(S.smCur==='Nameplates')return;delete S.sm[S.smCur];S.smCur='Nameplates';setupChips();toast(t('Category removed. Press Save project to apply.'),4000);}
+  else if(a==='delwtg')removeTurbine();
   else if(a==='lang'){LANG=LANG==='zh'?'en':'zh';lsSet('np_lang',LANG);render(true);}
   else if(a==='wtg'){S.q='';S.filter='all';go({name:isFree(S.view.m)?'ents':'wtg',w:b.dataset.w,m:S.view.m});}
   else if(a==='open'){const cc=comps().find(x=>x.id===b.dataset.c);go({name:'form',w:b.dataset.w,c:b.dataset.c,m:modOf(cc),from:S.view.name});}
@@ -1139,11 +1235,11 @@ document.addEventListener('click',e=>{
   else if(a==='usesn'){$('#f_serial').value=b.dataset.v;$('#sug').innerHTML='';}
   else if(a==='addcm')addComment();
   else if(a==='invite')invite();
-  else if(a==='xlsxall')exportLocal(wtgIds(),clean(projName()||'Nameplates')+'_status.xlsx');
+  else if(a==='xlsxall')exportLocal(wtgIds(),clean(projName()||'Site_Records')+'_status.xlsx');
   else if(a==='xlsxwtg')exportLocal([S.view.w],S.view.w+'_status.xlsx');
-  else if(a==='rmlink'){F.links.splice(+b.dataset.i,1);thumbs();}
+  else if(a==='rmlink'){F.removed.push(...F.links.splice(+b.dataset.i,1));thumbs();}
   else if(a==='rmblob'){F.blobs.splice(+b.dataset.i,1);thumbs();}
-  else if(a==='rmilink'){F.ilinks.splice(+b.dataset.i,1);thumbs();}
+  else if(a==='rmilink'){F.removed.push(...F.ilinks.splice(+b.dataset.i,1));thumbs();}
   else if(a==='rmiblob'){F.iblobs.splice(+b.dataset.i,1);thumbs();}
 });
 window.addEventListener('online',()=>{pill();sync(false);});
