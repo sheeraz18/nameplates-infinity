@@ -1,0 +1,534 @@
+/************************************************************
+ * WTG SITE RECORDS — SERVER
+ * Runs in YOUR Google account as an Apps Script web app.
+ * The phone app signs in with a username and password (no Google
+ * account needed for the team) and this script saves the photos
+ * and data into YOUR Google Drive folder and sheet.
+ *
+ * CHANGE THE THREE LINES BELOW, then Deploy > New deployment > Web app
+ *   Execute as: Me          Who has access: Anyone
+ ************************************************************/
+const FOLDER     = 'PASTE_YOUR_DRIVE_FOLDER_LINK_HERE';   // link of the Drive folder for this project
+const ADMIN_USER = 'admin';                               // first admin username
+const ADMIN_PASS = 'ChangeMe123';                         // first admin password (used only when the Users list is empty)
+/************************************************************/
+
+const SHEET_NAME = 'Nameplate Master';
+const HEAD      = ['id','Section','Component','Serial number','Manufacturer','Model / type','Status','Remarks','Photos','Saved by','Saved at','Issue type','Issue resolved','Issue photos'];
+const HIST_HEAD = ['Time','User','WTG','Component id','Component','Field','Old value','New value'];
+const COMM_HEAD = ['Time','User','WTG','Component id','Component','Comment'];
+const ENT_HEAD  = ['Entry id','Category','WTG','Title','Details','Photos','Issue type','Issue resolved','Saved by','Saved at'];
+const USER_HEAD = ['Username','Name','Role','Active','Salt','Hash','Created'];
+const TOKEN_DAYS = 7;
+const VERSION = 'v3';   // the phone app checks this: when it differs, the server must be redeployed
+
+/* ---------- entry points ---------- */
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  if (p.action === 'export') return out(exportSummary(p.key));
+  return out({ ok: true, app: 'WTG Site Records server', version: VERSION });
+}
+function doPost(e) {
+  let res;
+  try { res = route(JSON.parse(e.postData.contents)); }
+  catch (err) { res = { err: String((err && err.message) || err) }; }
+  return out(res);
+}
+function out(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+
+function route(q) {
+  const a = q.a;
+  if (a === 'ping') return { ok: true, ver: VERSION };
+  if (a === 'login') return login(q);
+  const user = auth(q.tok);
+  if (a === 'pull') return pull(user, q);
+  if (a === 'file') return fileGet(q);
+  if (a === 'users') { needAdmin(user); return { users: listUsers() }; }
+  if (a === 'userset') { needAdmin(user); return userSet(user, q); }
+  if (a === 'provision') { needAdmin(user); return provision(q); }
+  if (a === 'rename') { needAdmin(user); return renameItem(q); }
+  if (a === 'delwtg') { needAdmin(user); return removeLastTurbine(); }
+  if (a === 'backup') { needAdmin(user); return { name: backupNow(true) }; }
+  if (user.role === 'viewer') throw new Error('This account can only view.');
+  if (a === 'photo') return photo(q);
+  if (a === 'push') return push(user, q);
+  if (a === 'status') return statusFile(q);
+  throw new Error('Unknown action');
+}
+function needAdmin(user) { if (user.role !== 'admin') throw new Error('Only an admin can do this.'); }
+
+/* ---------- Drive folder and sheet ---------- */
+function folderId() {
+  const m = /folders\/([\w-]+)/.exec(FOLDER) || /[?&]id=([\w-]+)/.exec(FOLDER);
+  const id = m ? m[1] : String(FOLDER).trim();
+  if (!/^[\w-]{10,}$/.test(id)) throw new Error('Server setup: put your Drive folder link in the FOLDER line of Code.gs.');
+  return id;
+}
+function root() { return DriveApp.getFolderById(folderId()); }
+function ss(create) {
+  const p = PropertiesService.getScriptProperties(), key = 'SS_' + folderId();
+  const id = p.getProperty(key);
+  if (id) { try { return SpreadsheetApp.openById(id); } catch (e) {} }
+  const it = root().getFilesByName(SHEET_NAME);
+  while (it.hasNext()) {
+    const f = it.next();
+    if (!f.isTrashed() && f.getMimeType() === MimeType.GOOGLE_SHEETS) { p.setProperty(key, f.getId()); return SpreadsheetApp.openById(f.getId()); }
+  }
+  if (!create) return null;
+  const s = SpreadsheetApp.create(SHEET_NAME);
+  DriveApp.getFileById(s.getId()).moveTo(root());
+  s.getSheets()[0].setName('Summary');
+  p.setProperty(key, s.getId());
+  return s;
+}
+function tab(s, name, head) {
+  let sh = s.getSheetByName(name);
+  if (!sh) sh = s.insertSheet(name);
+  if (head) { sh.getRange(1, 1, 1, head.length).setNumberFormat('@').setValues([head]); sh.setFrozenRows(1); }
+  return sh;
+}
+function appendRows(sh, rows) {
+  if (!rows || !rows.length) return;
+  sh.getRange(sh.getLastRow() + 1, 1, rows.length, rows[0].length).setNumberFormat('@').setValues(rows);
+}
+function nowIso() { return Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd'T'HH:mm:ssXXX"); }
+function uniqueName(folder, name) {
+  const base = name.replace(/\.jpg$/i, '');
+  let n = name, k = 2;
+  for (;;) {
+    const it = folder.getFilesByName(n); let taken = false;
+    while (it.hasNext()) { if (!it.next().isTrashed()) { taken = true; break; } }
+    if (!taken) return n;
+    n = base + '_v' + k + '.jpg'; k++;
+  }
+}
+function cleanName(x) { return String(x || '').replace(/[^\w .-]+/g, '_').slice(0, 120); }
+function wtgIds(cfg) { const out = []; for (let i = 1; i <= cfg.count; i++) out.push(cfg.prefix + ('0' + i).slice(-2)); return out; }
+function subFolder(parent, name) {
+  const it = parent.getFoldersByName(name);
+  while (it.hasNext()) { const f = it.next(); if (!f.isTrashed()) return f; }
+  return parent.createFolder(name);
+}
+function folderFor(w, cat) {
+  const cache = CacheService.getScriptCache(), key = 'fd:' + folderId() + ':' + w + '|' + (cat || '');
+  const hit = cache.get(key);
+  if (hit) { try { return DriveApp.getFolderById(hit); } catch (e) {} }
+  let f = subFolder(root(), cleanName(w));
+  if (cat) f = subFolder(f, cleanName(cat));
+  cache.put(key, f.getId(), 21600);
+  return f;
+}
+
+/* ---------- change counters: the app downloads only the turbine tabs that changed since its last sync ---------- */
+function getVers() {
+  try { return JSON.parse(PropertiesService.getScriptProperties().getProperty('VERS_' + folderId()) || '{}'); } catch (e) { return {}; }
+}
+function bump(keys, all) {
+  const v = getVers();
+  if (all) v.epoch = (v.epoch || 0) + 1;
+  (keys || []).forEach(function (k) { v[k] = (v[k] || 0) + 1; });
+  PropertiesService.getScriptProperties().setProperty('VERS_' + folderId(), JSON.stringify(v));
+}
+
+/* ---------- backup: a dated copy of the master sheet in the Backups folder (once a day automatically, or on demand) ---------- */
+function backupNow(force) {
+  const p = PropertiesService.getScriptProperties(), key = 'BK_' + folderId(), tz = Session.getScriptTimeZone();
+  const today = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd');
+  if (!force && p.getProperty(key) === today) return null;
+  const s = ss(false);
+  if (!s) return null;
+  const folder = subFolder(root(), 'Backups');
+  const name = SHEET_NAME + ' backup ' + Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HHmm');
+  DriveApp.getFileById(s.getId()).makeCopy(name, folder);
+  p.setProperty(key, today);
+  const files = [], it = folder.getFiles();
+  while (it.hasNext()) files.push(it.next());
+  files.sort(function (a, b) { return b.getDateCreated().getTime() - a.getDateCreated().getTime(); }).slice(14).forEach(function (f) { f.setTrashed(true); });
+  return name;
+}
+
+/* ---------- users, passwords, tokens ---------- */
+/* stronger hash for new and changed passwords: 2000 rounds of HMAC-SHA256 with the salt. Old hashes still work and are upgraded at the next sign-in. */
+function hashPw2(salt, pw) {
+  let b = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, salt + '|' + pw, Utilities.Charset.UTF_8);
+  for (let i = 0; i < 2000; i++) b = Utilities.computeHmacSha256Signature(b, salt);
+  return 'v2$' + Utilities.base64Encode(b);
+}
+function checkPw(user, pw) {
+  const h = String(user.hash || '');
+  return h.indexOf('v2$') === 0 ? hashPw2(user.salt, pw) === h : hashPw(user.salt, pw) === h;
+}
+function hashPw(salt, pw) {
+  let d = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, salt + '|' + pw, Utilities.Charset.UTF_8);
+  for (let i = 0; i < 300; i++) d = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, d);
+  return Utilities.base64Encode(d);
+}
+function usersSheet() {
+  const s = ss(true);
+  let sh = s.getSheetByName('Users');
+  if (!sh) { sh = s.insertSheet('Users'); sh.getRange(1, 1, 1, USER_HEAD.length).setValues([USER_HEAD]); sh.setFrozenRows(1); }
+  if (sh.getLastRow() < 2) {
+    const salt = Utilities.getUuid();
+    sh.getRange(2, 1, 1, 7).setNumberFormat('@').setValues([[String(ADMIN_USER).toLowerCase(), 'Admin', 'admin', 'yes', salt, hashPw2(salt, ADMIN_PASS), nowIso()]]);
+  }
+  return sh;
+}
+function readUsers() {
+  const sh = usersSheet();
+  return sh.getRange(2, 1, sh.getLastRow() - 1, 7).getDisplayValues()
+    .map(function (r, i) { return { row: i + 2, u: r[0], name: r[1], role: r[2] || 'user', active: r[3] === 'yes', salt: r[4], hash: r[5] }; })
+    .filter(function (x) { return x.u; });
+}
+function listUsers() { return readUsers().map(function (x) { return { u: x.u, name: x.name, role: x.role, active: x.active }; }); }
+function secret() {
+  const p = PropertiesService.getScriptProperties();
+  let s = p.getProperty('SECRET');
+  if (!s) { s = Utilities.getUuid() + Utilities.getUuid(); p.setProperty('SECRET', s); }
+  return s;
+}
+function sign(payload) { return Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature(payload, secret())); }
+function login(q) {
+  const u = String(q.u || '').trim().toLowerCase(), pw = String(q.p || '');
+  const cache = CacheService.getScriptCache(), fk = 'fail:' + u, all = 'failall';
+  if (+(cache.get(fk) || 0) >= 8) throw new Error('Too many wrong passwords. Wait 10 minutes.');
+  if (+(cache.get(all) || 0) >= 40) throw new Error('Too many wrong passwords on this server. Wait 10 minutes.');
+  const user = readUsers().filter(function (x) { return x.u === u; })[0];
+  if (!user || !user.active || !checkPw(user, pw)) {
+    cache.put(fk, String(+(cache.get(fk) || 0) + 1), 600);
+    cache.put(all, String(+(cache.get(all) || 0) + 1), 600);
+    throw new Error('Wrong username or password.');
+  }
+  cache.remove(fk);
+  if (String(user.hash).indexOf('v2$') !== 0) {
+    const sh = usersSheet(), salt = user.salt;
+    sh.getRange(user.row, 6).setNumberFormat('@').setValue(hashPw2(salt, pw));
+  }
+  const payload = u + '|' + (Date.now() + TOKEN_DAYS * 86400000);
+  return { tok: Utilities.base64EncodeWebSafe(payload) + '.' + sign(payload), u: u, name: user.name || u, role: user.role };
+}
+function auth(tok) {
+  try {
+    const parts = String(tok || '').split('.');
+    const payload = Utilities.newBlob(Utilities.base64DecodeWebSafe(parts[0])).getDataAsString();
+    if (sign(payload) !== parts[1]) throw 0;
+    const bits = payload.split('|');
+    if (+bits[1] < Date.now()) throw 0;
+    const user = readUsers().filter(function (x) { return x.u === bits[0]; })[0];
+    if (!user || !user.active) throw 0;
+    return user;
+  } catch (e) { throw new Error('auth'); }
+}
+function userSet(me, q) {
+  const u = String(q.u || '').trim().toLowerCase();
+  if (!/^[a-z0-9._-]{2,30}$/.test(u)) throw new Error('Username: 2 to 30 letters, numbers, dot, dash or underscore.');
+  const role = ['admin', 'user', 'viewer'].indexOf(q.role) >= 0 ? q.role : 'user';
+  const active = q.active !== false;
+  if (u === me.u && (!active || role !== 'admin')) throw new Error('You cannot disable or downgrade your own admin account.');
+  const sh = usersSheet(), ex = readUsers().filter(function (x) { return x.u === u; })[0];
+  if (!ex) {
+    if (!q.p || String(q.p).length < 6) throw new Error('Password: at least 6 characters.');
+    const salt = Utilities.getUuid();
+    appendRows(sh, [[u, String(q.name || u), role, active ? 'yes' : 'no', salt, hashPw2(salt, String(q.p)), nowIso()]]);
+  } else {
+    let salt = ex.salt, hash = ex.hash;
+    if (q.p) { if (String(q.p).length < 6) throw new Error('Password: at least 6 characters.'); salt = Utilities.getUuid(); hash = hashPw2(salt, String(q.p)); }
+    sh.getRange(ex.row, 2, 1, 5).setNumberFormat('@').setValues([[String(q.name || ex.name || u), role, active ? 'yes' : 'no', salt, hash]]);
+  }
+  return { users: listUsers() };
+}
+
+/* ---------- read everything for the app ---------- */
+function links(x) { return String(x || '').split(/\s+/).filter(String); }
+function readConfig(s) {
+  const t = s && s.getSheetByName('Config');
+  if (!t || t.getLastRow() < 2) return null;
+  const cv = t.getDataRange().getDisplayValues(), comps = [], kv = {};
+  for (let i = 1; i < cv.length; i++) {
+    const r = cv[i];
+    if (r[0] && r[2]) comps.push({ id: r[0], s: r[1] || 'General', n: r[2], p: Math.max(1, parseInt(r[3], 10) || 1), m: r[4] || 'Nameplates' });
+  }
+  for (let i = 0; i < Math.min(cv.length, 8); i++) if (cv[i][5]) kv[cv[i][5]] = cv[i][6];
+  return {
+    name: kv.name || '', prefix: kv.prefix || 'WTG', count: Math.max(1, parseInt(kv.count, 10) || 1),
+    free: String(kv.free || '').split(',').map(function (x) { return x.trim(); }).filter(String), comps: comps
+  };
+}
+function tabValues(s, name, cols) {
+  const sh = s.getSheetByName(name);
+  if (!sh || sh.getLastRow() < 2) return [];
+  if (sh.getMaxColumns() < cols) sh.insertColumnsAfter(sh.getMaxColumns(), cols - sh.getMaxColumns());
+  return sh.getRange(2, 1, sh.getLastRow() - 1, cols).getDisplayValues();
+}
+function pull(user, q) {
+  const base = { role: user.role, name: user.name, u: user.u, ver: VERSION };
+  const s = ss(false), cfg = readConfig(s);
+  if (!cfg) { base.cfg = null; return base; }
+  if (user.role === 'admin') cfg.sheetUrl = s.getUrl();
+  const v = getVers(), mine = (q && q.vers) || null;
+  const full = !mine || (mine.epoch || 0) !== (v.epoch || 0);
+  const changed = function (k) { return full || (mine[k] || 0) !== (v[k] || 0); };
+  const recs = {};
+  wtgIds(cfg).forEach(function (w) {
+    if (!changed(w)) return;
+    recs[w] = {};
+    tabValues(s, w, 14).forEach(function (r) {
+      if (!r[0]) return;
+      const rec = { serial: r[3], maker: r[4], model: r[5], issue: r[6] === 'issue' || !!r[11], itype: r[11], resolved: r[12] === 'yes', remarks: r[7], photos: links(r[8]), iphotos: links(r[13]), by: r[9], at: r[10] };
+      if (rec.serial || rec.maker || rec.model || rec.issue || rec.remarks || rec.photos.length || rec.at) recs[w][r[0]] = rec;
+    });
+  });
+  base.cfg = cfg; base.recs = recs; base.vers = v; base.full = full;
+  if (changed('hist')) base.hist = tabValues(s, 'History', 8).map(function (r) { return { at: r[0], by: r[1], w: r[2], c: r[3], field: r[5], old: r[6], val: r[7] }; });
+  if (changed('comm')) base.comm = tabValues(s, 'Comments', 6).map(function (r) { return { at: r[0], by: r[1], w: r[2], c: r[3], text: r[5] }; });
+  if (changed('ent')) {
+    const ent = {};
+    tabValues(s, 'Entries', 10).forEach(function (r) {
+      if (!r[0]) return;
+      (ent[r[2]] = ent[r[2]] || []).push({ id: r[0], cat: r[1], w: r[2], title: r[3], details: r[4], photos: links(r[5]), issue: !!r[6], itype: r[6], resolved: r[7] === 'yes', by: r[8], at: r[9] });
+    });
+    base.ent = ent;
+  }
+  return base;
+}
+
+/* ---------- save data ---------- */
+function idRows(sh) {
+  const map = {};
+  if (sh.getLastRow() < 2) return map;
+  sh.getRange(2, 1, sh.getLastRow() - 1, 1).getDisplayValues().forEach(function (r, i) { if (r[0]) map[r[0]] = i + 2; });
+  return map;
+}
+function push(user, q) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    const s = ss(false);
+    if (!s) throw new Error('The project is not set up yet.');
+    const cache = CacheService.getScriptCache();
+    const missing = [], conflicts = [], bumped = {}, wrote = {}, toTrash = [];
+    const byW = {};
+    (q.recs || []).forEach(function (r) { (byW[r.w] = byW[r.w] || []).push(r); });
+    Object.keys(byW).forEach(function (w) {
+      const sh = s.getSheetByName(w);
+      const cur = {};
+      if (sh) tabValues(s, w, 11).forEach(function (r, i) { if (r[0]) cur[r[0]] = { row: i + 2, by: r[9], at: r[10] }; });
+      byW[w].forEach(function (r) {
+        const c = sh && cur[r.c];
+        if (!c) { missing.push({ w: w, c: r.c }); return; }
+        /* someone else saved this item after the sender opened it: do not overwrite, let the sender choose */
+        if (r.base !== undefined && r.base !== null && c.at && c.at !== r.base && c.at !== r.vals[7]) { conflicts.push({ kind: 'rec', w: w, c: r.c, by: c.by, at: c.at }); return; }
+        const v = r.vals.slice(0, 11); if (!v[6]) v[6] = user.name;
+        sh.getRange(c.row, 4, 1, 11).setNumberFormat('@').setValues([v]);
+        wrote[w + '|' + r.c] = 1;
+        toTrash.push.apply(toTrash, r.del || []);
+        bumped[w] = 1;
+      });
+    });
+    if ((q.ents || []).length) {
+      const sh = tab(s, 'Entries', ENT_HEAD), rows = idRows(sh), all = tabValues(s, 'Entries', 10), at = {};
+      all.forEach(function (r) { if (r[0]) at[r[0]] = { by: r[8], at: r[9] }; });
+      const add = [];
+      q.ents.forEach(function (e) {
+        const c = at[e.eid];
+        if (c && e.base !== undefined && e.base !== null && c.at && c.at !== e.base && c.at !== e.vals[6]) { conflicts.push({ kind: 'ent', eid: e.eid, w: e.w, cat: e.cat, by: c.by, at: c.at }); return; }
+        const v = [e.eid, e.cat, e.w].concat(e.vals.slice(0, 7)); if (!v[8]) v[8] = user.name;
+        if (rows[e.eid]) sh.getRange(rows[e.eid], 1, 1, 10).setNumberFormat('@').setValues([v]); else add.push(v);
+        toTrash.push.apply(toTrash, e.del || []);
+        bumped.ent = 1;
+      });
+      appendRows(sh, add);
+    }
+    if ((q.entdel || []).length) {
+      const sh = tab(s, 'Entries', ENT_HEAD), rows = idRows(sh);
+      q.entdel.map(function (id) { return rows[id]; }).filter(Boolean).sort(function (a, b) { return b - a; }).forEach(function (r) { sh.deleteRow(r); });
+      bumped.ent = 1;
+    }
+    if (bumped.ent) refreshCatTabs(s, (readConfig(s) || { free: [] }).free);
+    trashPhotos(toTrash.concat(q.del || []));
+    /* logs: each one carries an id, so a retry after a lost reply does not write it twice */
+    (q.logs || []).forEach(function (L) {
+      if (L.on && !wrote[L.on]) return;
+      const key = 'jid:' + L.jid;
+      if (cache.get(key)) return;
+      if (L.rows && L.rows.length) {
+        const head = L.tab === 'Comments' ? COMM_HEAD : HIST_HEAD;
+        appendRows(tab(s, L.tab, head), L.rows.map(function (r) { return r.slice(0, head.length); }));
+        bumped[L.tab === 'Comments' ? 'comm' : 'hist'] = 1;
+      }
+      cache.put(key, '1', 21600);
+    });
+    bump(Object.keys(bumped), false);
+    try { backupNow(false); } catch (e) {}
+    return { ok: true, ver: VERSION, missing: missing, conflicts: conflicts, entdone: (q.entdel || []) };
+  } finally { lock.releaseLock(); }
+}
+function photo(q) {
+  const bytes = Utilities.base64Decode(q.b64);
+  if (bytes.length > 12 * 1024 * 1024) throw new Error('Photo is too large.');
+  const folder = folderFor(q.w, q.cat);
+  const f = folder.createFile(Utilities.newBlob(bytes, 'image/jpeg', uniqueName(folder, cleanName(q.name || 'photo.jpg'))));
+  return { id: f.getId() };
+}
+function statusFile(q) {
+  const folder = folderFor(q.w, ''), name = cleanName(q.name);
+  const it = folder.getFilesByName(name);
+  while (it.hasNext()) it.next().setTrashed(true);
+  folder.createFile(Utilities.newBlob(Utilities.base64Decode(q.b64), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', name));
+  return { ok: true };
+}
+/* true when the file is a photo that lives inside the project folder (so nothing else in your Drive can be touched) */
+function inProject(f) {
+  if (String(f.getMimeType()).indexOf('image/') !== 0) return false;
+  const rootId = folderId();
+  let level = [f];
+  for (let depth = 0; depth < 4 && level.length; depth++) {
+    const next = [];
+    for (let i = 0; i < level.length; i++) { const it = level[i].getParents(); while (it.hasNext()) { const p = it.next(); if (p.getId() === rootId) return true; next.push(p); } }
+    level = next;
+  }
+  return false;
+}
+/* photo for the app's thumbnails */
+function fileGet(q) {
+  const f = DriveApp.getFileById(String(q.id));
+  if (!inProject(f)) throw new Error('Photo is not part of this project.');
+  return { b64: Utilities.base64Encode(f.getBlob().getBytes()), mime: f.getMimeType() };
+}
+/* photos that were replaced (retake) or removed in the app go to the Drive trash */
+function trashPhotos(ids) {
+  (ids || []).forEach(function (id) {
+    try { const f = DriveApp.getFileById(String(id)); if (inProject(f)) f.setTrashed(true); } catch (e) {}
+  });
+}
+
+/* ---------- read-only export for the Lark bridge ----------
+ * Only progress numbers and issue counts. No names, serials, photos, users or passwords.
+ * The key is kept in Script Properties as EXPORT_KEY (Project Settings > Script properties). */
+function exportSummary(key) {
+  const want = PropertiesService.getScriptProperties().getProperty('EXPORT_KEY') || '';
+  if (!want || String(key || '') !== want) return { ok: false, err: 'Wrong or missing export key' };
+  const s = ss(false), cfg = readConfig(s);
+  if (!s || !cfg) return { ok: false, err: 'Project not set up yet' };
+  const turbines = wtgIds(cfg).map(function (w) {
+    const rows = tabValues(s, w, 14).filter(function (r) { return r[0]; });
+    let done = 0, partial = 0, pending = 0, issues = 0, last = '';
+    rows.forEach(function (r) {
+      const st = String(r[6] || '').toLowerCase();
+      const openIssue = !!r[11] && String(r[12] || '').toLowerCase() !== 'yes';
+      if (st === 'issue' || openIssue) issues++;
+      if (st === 'done') done++; else if (st === 'partial') partial++; else if (st !== 'issue') pending++;
+      if (r[10] && r[10] > last) last = r[10];
+    });
+    return { wtg: w, total: rows.length, done: done, partial: partial, pending: pending, issues: issues, lastSaved: last };
+  });
+  const cats = {};
+  (cfg.free || []).forEach(function (c) { cats[c] = { category: c, entries: 0, turbinesWithPhotos: {} }; });
+  tabValues(s, 'Entries', 10).forEach(function (r) {
+    if (!r[0] || !cats[r[1]]) return;
+    cats[r[1]].entries++;
+    if (r[5] && r[2]) cats[r[1]].turbinesWithPhotos[r[2]] = 1;
+  });
+  return {
+    ok: true, ver: VERSION, project: cfg.name, generated: nowIso(), turbineCount: turbines.length,
+    turbines: turbines,
+    categories: Object.keys(cats).map(function (k) { return { category: k, entries: cats[k].entries, turbinesWithPhotos: Object.keys(cats[k].turbinesWithPhotos).length }; })
+  };
+}
+
+/* ---------- project setup (admin) ---------- */
+function provision(q) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    const s = ss(true);
+    const cfg = { name: String(q.name || ''), prefix: String(q.prefix || 'WTG').replace(/[^A-Za-z0-9-]/g, '') || 'WTG', count: Math.max(1, Math.min(200, parseInt(q.count, 10) || 1)) };
+    const list = q.list || [], free = (q.free || []).map(cleanName);
+    const c = tab(s, 'Config', null);
+    c.clear();
+    const rows = [['id', 'Section', 'Component', 'Photos required', 'Category']].concat(list.map(function (x) { return [x.id, x.s, x.n, String(x.p || 1), x.m || 'Nameplates']; }));
+    c.getRange(1, 1, rows.length, 5).setNumberFormat('@').setValues(rows);
+    c.getRange(1, 6, 4, 2).setNumberFormat('@').setValues([['prefix', cfg.prefix], ['count', String(cfg.count)], ['name', cfg.name], ['free', free.join(',')]]);
+    c.setFrozenRows(1);
+    tab(s, 'History', HIST_HEAD); tab(s, 'Comments', COMM_HEAD); tab(s, 'Entries', ENT_HEAD);
+    const ws = wtgIds(cfg);
+    ws.forEach(function (w) {
+      const sh = tab(s, w, HEAD), have = idRows(sh);
+      const add = list.filter(function (x) { return !have[x.id]; }).map(function (x) { return [x.id, ((x.m && x.m !== 'Nameplates') ? x.m + ' · ' : '') + x.s, x.n, '', '', '', 'pending']; });
+      if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 7).setNumberFormat('@').setValues(add);
+      folderFor(w, '');
+    });
+    writeSummary(s, ws);
+    usersSheet();
+    bump([], true);
+    return { ok: true };
+  } finally { lock.releaseLock(); }
+}
+
+function writeSummary(s, ws) {
+  const sum = tab(s, 'Summary', null);
+  sum.clear();
+  sum.getRange(1, 1, 1, 6).setValues([['WTG', 'Total', 'Done', 'Partial', 'Pending', 'Issues']]);
+  if (!ws.length) return;
+  sum.getRange(2, 1, ws.length, 1).setValues(ws.map(function (w) { return [w]; }));
+  sum.getRange(2, 2, ws.length, 5).setFormulas(ws.map(function (w) {
+    const g = "'" + w + "'!G2:G";
+    return ["=COUNTA('" + w + "'!A2:A)", '=COUNTIF(' + g + ',"done")', '=COUNTIF(' + g + ',"partial")', '=COUNTIF(' + g + ',"pending")', '=COUNTIF(' + g + ',"issue")'];
+  }));
+  sum.setFrozenRows(1);
+}
+/* one tab per free category (MCC, Installation, Commissioning, ...) rebuilt from the Entries list, so each category reads on its own */
+function catTabName(cat) { return ('Photos - ' + String(cat).replace(/[\[\]:*?\/\\]/g, '')).slice(0, 31); }
+function refreshCatTabs(s, cats) {
+  const all = tabValues(s, 'Entries', 10);
+  (cats || []).forEach(function (cat) {
+    const sh = tab(s, catTabName(cat), ENT_HEAD);
+    sh.getRange(2, 1, Math.max(1, sh.getMaxRows() - 1), ENT_HEAD.length).clearContent();
+    const rows = all.filter(function (r) { return r[1] === cat; }).sort(function (a, b) { return a[2] < b[2] ? -1 : a[2] > b[2] ? 1 : 0; });
+    if (rows.length) sh.getRange(2, 1, rows.length, ENT_HEAD.length).setNumberFormat('@').setValues(rows.map(function (r) { return r.slice(0, ENT_HEAD.length); }));
+  });
+}
+
+/* rename one item everywhere without losing its data (admin) */
+function renameItem(q) {
+  const name = String(q.n || '').trim();
+  if (!name) throw new Error('Type the new name.');
+  const lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    const s = ss(false), cfg = readConfig(s);
+    if (!cfg) throw new Error('The project is not set up yet.');
+    const c = s.getSheetByName('Config'), row = idRows(c)[q.id];
+    if (!row) throw new Error('Item not found.');
+    c.getRange(row, 3).setNumberFormat('@').setValue(name);
+    wtgIds(cfg).forEach(function (w) {
+      const sh = s.getSheetByName(w); if (!sh) return;
+      const r = idRows(sh)[q.id];
+      if (r) sh.getRange(r, 3).setNumberFormat('@').setValue(name);
+    });
+    bump([], true);
+    return { ok: true };
+  } finally { lock.releaseLock(); }
+}
+/* remove the last turbine from the project (admin). Its sheet tab is kept under an OLD name and its Drive folder is not touched. */
+function removeLastTurbine() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    const s = ss(false), cfg = readConfig(s);
+    if (!cfg) throw new Error('The project is not set up yet.');
+    if (cfg.count < 2) throw new Error('The project needs at least one turbine.');
+    const w = wtgIds(cfg).pop(), sh = s.getSheetByName(w);
+    if (sh) sh.setName('OLD ' + w + ' ' + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd HHmmss'));
+    const c = s.getSheetByName('Config'), kv = c.getRange(1, 6, 4, 2).getDisplayValues();
+    for (let i = 0; i < kv.length; i++) if (kv[i][0] === 'count') c.getRange(i + 1, 7).setNumberFormat('@').setValue(String(cfg.count - 1));
+    writeSummary(s, wtgIds(readConfig(s)));
+    bump([], true);
+    return { ok: true, removed: w };
+  } finally { lock.releaseLock(); }
+}
+
+/* Run this once from the editor (Run button) if you want to check the setup before deploying. */
+function testSetup() {
+  Logger.log('Folder: ' + root().getName());
+  Logger.log('Users: ' + JSON.stringify(listUsers()));
+}
